@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/Appons">
+        <file>res/ApponsView Icon 32.ico</file>
+        <file>res/ApponsView Icon 64.ico</file>
+        <file>res/contrast.ico</file>
+        <file>res/autoContrast.ico</file>
+        <file>res/DE.ico</file>
+        <file>res/down.ico</file>
+        <file>res/dualScan.ico</file>
+        <file>res/exit.ico</file>
+        <file>res/fakeColor.ico</file>
+        <file>res/grayScale.ico</file>
+        <file>res/gun.ico</file>
+        <file>res/invert.ico</file>
+        <file>res/move.ico</file>
+        <file>res/open.ico</file>
+        <file>res/rotate.ico</file>
+        <file>res/save.ico</file>
+        <file>res/setting.ico</file>
+        <file>res/singleScan.ico</file>
+        <file>res/up.ico</file>
+        <file>res/zoomIn.ico</file>
+        <file>res/background.bmp</file>
+        <file>res/background-3.bmp</file>
+    </qresource>
+</RCC>
