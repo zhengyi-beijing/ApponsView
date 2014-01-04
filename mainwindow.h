@@ -48,13 +48,14 @@
 #include <ActiveQt/QAxWidget>
 #include "view.h"
 #include <QGraphicsScene>
-
+#include "dtcontrol.h"
 
 class MainWindow : public QWidget
 {
     Q_OBJECT
 public:
     MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
 public slots:
     void open_clicked();
@@ -79,10 +80,11 @@ private:
     View *view;
 
     QGraphicsProxyWidget *proxy;
-    QAxWidget* axDisplay;
-    QAxWidget* axImage;
-    QAxWidget* axDetector;
-    QAxWidget* axCommander;
+    DTControl::CDTDisplay* axDisplay;
+    DTControl::CDTImage* axImage;
+    DTControl::CDTDetector* axDetector;
+    DTControl::CDTCommanderF3* axCommander;
+    DTControl::CImageObject* imageObject;
 
 private slots:
     void ImageOpened();

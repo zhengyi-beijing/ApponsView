@@ -72,8 +72,8 @@ public:
     QGraphicsView *view() const;
 
 public slots:
-    void zoomIn(int level = 1);
-    void zoomOut(int level = 1);
+    void zoomIn();
+    void zoomOut();
 
 private slots:
     void resetView();
@@ -85,6 +85,9 @@ private slots:
 
 private:
     GraphicsView *graphicsView;
+    qreal scale;
+    qreal rotate;
+
 };
 
 class PanelButton: public QToolButton
@@ -112,7 +115,16 @@ signals:
     void dualScanButton_click();
 
 public slots:
+    void openButton_handle();
+    void saveButton_handle();
+    void powerButton_handle();
+    void contrastButton_handle();
+    void autoContrastButton_handle();
+    void zoomButton_handle();
+    void moveButton_handle();
     void singleScanButton_handle();
+    void dualScanButton_handle();
+    //void invertButton_handle();
 
 private:
     void setBackgroundImage();
@@ -128,6 +140,9 @@ private:
     PanelButton *moveButton;
     PanelButton *singleScanButton;
     PanelButton *dualScanButton;
+
+    PanelButton *invertButton;
+    PanelButton *rotateButton;
 
 };
 

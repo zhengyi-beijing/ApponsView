@@ -50,9 +50,9 @@ void GraphicsView::wheelEvent(QWheelEvent *e)
 {
     if (e->modifiers() & Qt::ControlModifier) {
         if (e->delta() > 0)
-            view->zoomIn(6);
+            view->zoomIn();
         else
-            view->zoomOut(6);
+            view->zoomOut();
         e->accept();
     } else {
         QGraphicsView::wheelEvent(e);
@@ -76,6 +76,8 @@ View::View(const QString &name, QWidget *parent)
     topLayout->addWidget(graphicsView);
     setLayout(topLayout);
 
+    scale = 1.0;
+    rotate = 0;
     setupMatrix();
 }
 
@@ -90,11 +92,15 @@ void View::resetView()
     graphicsView->ensureVisible(QRectF(0, 0, 0, 0));
 }
 
-
 void View::setupMatrix()
 {
     //QMatrix matrix;
     //graphicsView->setMatrix(matrix);
+    QMatrix matrix;
+    matrix.scale(scale, scale);
+    matrix.rotate(rotate);
+
+    graphicsView->setMatrix(matrix);
 }
 
 
@@ -110,24 +116,24 @@ void View::toggleAntialiasing()
     graphicsView->setRenderHint(QPainter::Antialiasing);
 }
 
-void View::zoomIn(int level)
+void View::zoomIn()
 {
-//    zoomSlider->setValue(zoomSlider->value() + level);
+    scale *= 1.2;
 }
 
-void View::zoomOut(int level)
+void View::zoomOut()
 {
-//    zoomSlider->setValue(zoomSlider->value() - level);
+    scale /= 1.2;
 }
 
 void View::rotateLeft()
 {
-//    rotateSlider->setValue(rotateSlider->value() - 10);
+    rotate -= 90;
 }
 
 void View::rotateRight()
 {
-//    rotateSlider->setValue(rotateSlider->value() + 10);
+    rotate += 90;
 }
 
 
@@ -207,13 +213,60 @@ void Panel::setBackgroundImage()
     */
 }
 
+void Panel::openButton_handle()
+{
+    emit openButton_click();
+}
+
+void Panel::saveButton_handle()
+{
+    emit saveButton_click();
+}
+
+void Panel::powerButton_handle()
+{
+    emit powerButton_click();
+}
+
+void Panel::contrastButton_handle()
+{
+    emit contrastButton_click();
+}
+
+void Panel::autoContrastButton_handle()
+{
+    emit autoContrastButton_click();
+}
+
+void Panel::zoomButton_handle()
+{
+    emit zoomButton_click();
+}
+
+void Panel::moveButton_handle()
+{
+    //emit moveButton_clcik();
+}
+
 void Panel::singleScanButton_handle()
 {
     emit singleScanButton_click();
-    qDebug()<<"singleScan button clicked";
+}
+
+void Panel::dualScanButton_handle()
+{
+    emit dualScanButton_click();
 }
 
 void Panel::signalInit()
 {
+    connect(openButton, SIGNAL(clicked()),this,SLOT(openButton_handle()));
+    connect(saveButton, SIGNAL(clicked()),this,SLOT(saveButton_handle()));
+    connect(powerButton, SIGNAL(clicked()),this,SLOT(powerButton_handle()));
+    connect(contrastButton, SIGNAL(clicked()),this,SLOT(contrastButton_handle()));
+    connect(autoContrastButton, SIGNAL(clicked()),this,SLOT(autoContrastButton_handle()));
+    connect(zoomButton, SIGNAL(clicked()),this,SLOT(zoomButton_handle()));
+//    connect(moveButton, SIGNAL(clicked()),this,SLOT(moveButton_clcik()));
+    connect(dualScanButton, SIGNAL(clicked()),this,SLOT(dualScanButton_handle()));
     connect(singleScanButton, SIGNAL(clicked()), this, SLOT(singleScanButton_handle()));
 }

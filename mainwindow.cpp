@@ -71,6 +71,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowTitle(tr("ApponsView"));
     connectSignals();
+
+    imageObject = NULL;
+}
+
+MainWindow::~MainWindow()
+{
+    if(imageObject) {
+        delete imageObject;
+        imageObject = NULL;
+    }
 }
 
 void MainWindow::populateScene()
@@ -92,44 +102,50 @@ void MainWindow::FrameReady(int)
     static int framecount = 0;
     framecount++;
     qDebug()<< "Frame count: "<< framecount;
+    int min = 0;
+    qDebug() << "Pixel 0,0 is" << imageObject->Pixel(0,0);
+    qDebug() << "image width is " << imageObject->Width();
+
     view->view()->viewport()->update();
 }
 
 void MainWindow::initAxWidget()
 {
-    axDetector->dynamicCall("SetChannelType(int)", 2);
-    axDetector->dynamicCall("SetIPAddress(QString)", "192.168.1.25");
-    axDetector->dynamicCall("SetCmdPort(int)", 3000);
+    axDetector->SetChannelType(2);
+    axDetector->SetIPAddress("192.168.1.25");
+    axDetector->SetCmdPort(3000);
 
-    QAxObject* detector = axDetector->querySubObject("ObjectHandle");
+    IUnknown* detector = axDetector->ObjectHandle();
+
     if(detector) {
-        axImage->dynamicCall("SetDetectorObject(QAxObject)",detector->asVariant());
-        axCommander->setProperty("DetectorObject", detector->asVariant());
+        axImage->SetDetectorObject(detector);
+        axCommander->SetDetectorObject(detector);
         axCommander->setVisible(false);
         qDebug()<<"Get detecor";
-        axCommander->setProperty("DataPattern", 1);
+        axCommander->SetDataPattern(1);
     }
 
-    axImage->dynamicCall("SetChannelType(int)", 2);
-    axImage->dynamicCall("SetImgHeight(int)", 1024);
-    axImage->dynamicCall("SetImgWidth(int)", 1024);
-    axImage->dynamicCall("SetImagePort(int)", 4001);
-    axImage->dynamicCall("SetBytesPerPixel(int)", 2);
+    axImage->SetChannelType(2);
+    axImage->SetImgHeight(1024);
+    axImage->SetImgWidth(1024);
+    axImage->SetImagePort(4001);
+    axImage->SetBytesPerPixel(2);
     axImage->setVisible(false);
 
-    axDisplay->dynamicCall("SetImgHeight(int)", 1024);
-    axDisplay->dynamicCall("SetImgWidth(int)", 1024);
-    axDisplay->dynamicCall("SetDisplayScale(int)", 0);
-    axDisplay->setProperty("InfoDisplay",1);
-    axDisplay->setProperty("MapStart",0);
-    axDisplay->setProperty("MapEnd",5000);
+    axDisplay->SetImgHeight(1024);
+    axDisplay->SetImgWidth(1024);
+    axDisplay->SetDisplayScale(0);
+    axDisplay->SetInfoDisplay(1);
+    axDisplay->SetMapStart(0);
+    axDisplay->SetMapEnd(5000);
     axDisplay->setMinimumSize(512,512);
+
     qDebug()<<"get ImageObject";
-    QAxObject* imgsrcHandle =  axImage->querySubObject("ObjectHandle");
+    IUnknown* imgsrcHandle =  axImage->ObjectHandle();
     qDebug()<<"get ImageObject end";
     if (imgsrcHandle) {
         qDebug()<<"Set Display Source";
-        axDisplay->dynamicCall("SetDataSource(QAxObject)", imgsrcHandle->asVariant());
+        axDisplay->SetDataSource(imgsrcHandle);
     }
     QObject::connect(axImage, SIGNAL(OnImageOpen()), this, SLOT(ImageOpened()));
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
@@ -139,13 +155,14 @@ void MainWindow::initAxWidget()
 void MainWindow::openDetector()
 {
 
-    int opened = axDetector->dynamicCall("Open()").toInt();
+    int opened = axDetector->Open();
     if (opened){
         qDebug()<< "Detector Opened";
-        int rt = axImage->dynamicCall("Open()").toInt();
+        int rt = axImage->Open();
+        imageObject = new DTControl::CImageObject(axImage->ImageObject());
         if(rt) {
             qDebug()<<"open image ";
-            rt = axDisplay->dynamicCall("Open()").toInt();
+            rt = axDisplay->Open();
             if(rt)
                 qDebug()<<"open Display sucesful";
             else
@@ -160,28 +177,17 @@ void MainWindow::openDetector()
 
 void MainWindow::createAxWidget()
 {
-    axDetector = new QAxWidget(this);
-    axDetector->setControl(QStringLiteral("{d3120961-c570-471d-b62e-5b2636502d85}"));
-    axDetector->setObjectName(QStringLiteral("axDetector"));
-    axDetector->setProperty("geometry", QVariant(QRect(790, 770, 71, 71)));
+    axDetector = new DTControl::CDTDetector(this);
     axDetector->setVisible(false);
 
-    axDisplay = new QAxWidget();
-    axDisplay->setControl(QStringLiteral("{f984b792-41db-4d78-95a7-1c80e40938fd}"));
-    axDisplay->setObjectName(QStringLiteral("axDisplay"));
-    axDisplay->setProperty("geometry", QVariant(QRect(40, 10, 741, 841)));
-    axCommander = new QAxWidget(this);
-    axCommander->setControl(QStringLiteral("{7d934547-7258-4c06-9ad3-a3143e9056ca}"));
-    axCommander->setObjectName(QStringLiteral("axCommander"));
-    axCommander->setProperty("geometry", QVariant(QRect(900, 770, 80, 70)));
+    axDisplay = new DTControl::CDTDisplay();
+    axDisplay->setVisible(true);
+
+    axCommander = new DTControl::CDTCommanderF3(this);
     axCommander->setVisible(false);
 
-    axImage = new QAxWidget(this);
-    axImage->setControl(QStringLiteral("{addec18d-6a72-4873-9be7-b708463b8adc}"));
-    axImage->setObjectName(QStringLiteral("axImage"));
-    axImage->setProperty("geometry", QVariant(QRect(790, 680, 80, 70)));
+    axImage = new DTControl::CDTImage(this);
     axImage->setVisible(false);
-
 }
 
 void MainWindow::connectSignals()

@@ -16,11 +16,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     mainwindow.cpp \
-    view.cpp
+    view.cpp \
+    dtcontrol.cpp
 
 HEADERS  += \
     mainwindow.h \
-    view.h
+    view.h \
+    dtcontrol.h
 
 OTHER_FILES +=
 
