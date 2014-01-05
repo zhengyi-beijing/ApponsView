@@ -17,14 +17,25 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     view.cpp \
-    dtcontrol.cpp
+    dtcontrol.cpp \
+    filestoreserver.cpp \
+    QLogger.cpp
 
 HEADERS  += \
     mainwindow.h \
     view.h \
-    dtcontrol.h
+    dtcontrol.h \
+    QLogger.h \
+    filestoreserver.h
 
+#LIBS += "c:\work\apponsview\QLogger.lib"
 OTHER_FILES +=
 
 RESOURCES += \
     Appons.qrc
+
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/ -lQLogger
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/ -lQLogger
+
+INCLUDEPATH += $$PWD/
+DEPENDPATH += $$PWD/

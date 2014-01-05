@@ -49,6 +49,7 @@
 #include "view.h"
 #include <QGraphicsScene>
 #include "dtcontrol.h"
+#include "filestoreserver.h"
 
 class MainWindow : public QWidget
 {
@@ -78,6 +79,7 @@ private:
     QGraphicsScene *scene;
     Panel *panel;
     View *view;
+    FileStoreServer fileServer;
 
     QGraphicsProxyWidget *proxy;
     DTControl::CDTDisplay* axDisplay;

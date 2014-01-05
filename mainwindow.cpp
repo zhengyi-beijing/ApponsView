@@ -73,6 +73,8 @@ MainWindow::MainWindow(QWidget *parent)
     connectSignals();
 
     imageObject = NULL;
+
+    fileServer.start();
 }
 
 MainWindow::~MainWindow()
@@ -102,11 +104,14 @@ void MainWindow::FrameReady(int)
     static int framecount = 0;
     framecount++;
     qDebug()<< "Frame count: "<< framecount;
-    int min = 0;
-    qDebug() << "Pixel 0,0 is" << imageObject->Pixel(0,0);
-    qDebug() << "image width is " << imageObject->Width();
+    int size = imageObject->Width()*imageObject->Height()*imageObject->BytesPerPixel();
+    qDebug()<< "FrameSize is "<< size;
+    qDebug()<<"First Pixel is " << imageObject->Pixel(0,0);
 
+    ImageData* data = new ImageData((char*)imageObject->ImageDataAddress(), size);
+    fileServer.append(data);
     view->view()->viewport()->update();
+
 }
 
 void MainWindow::initAxWidget()
@@ -149,6 +154,7 @@ void MainWindow::initAxWidget()
     }
     QObject::connect(axImage, SIGNAL(OnImageOpen()), this, SLOT(ImageOpened()));
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
+    QObject::connect(axImage, SIGNAL(DataLost(int)), this, SLOT(DataLost(int)));
 
 }
 
