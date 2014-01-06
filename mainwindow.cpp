@@ -46,6 +46,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QMessageBox>
+#include "pixelorderconverter.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
@@ -59,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     view->view()->setScene(scene);
     view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     view->setMinimumSize(512,512);
+    view->view()->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
     panel = new Panel("Command Pannel");
     panel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -73,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
     connectSignals();
 
     imageObject = NULL;
+    dualScanEnabled = false;
 
     fileServer.start();
 }
@@ -99,6 +102,13 @@ void MainWindow::ImageOpened()
     qDebug()<<"ImageOpened";
 }
 
+
+void MainWindow::Datalost(int num)
+{
+    qDebug() << "DataLost Happen Lost************* " << num << "lines ";
+    QMessageBox::information(this, "", "Data Lost Happend", "确定", "取消");
+}
+
 void MainWindow::FrameReady(int)
 {
     static int framecount = 0;
@@ -108,9 +118,16 @@ void MainWindow::FrameReady(int)
     qDebug()<< "FrameSize is "<< size;
     qDebug()<<"First Pixel is " << imageObject->Pixel(0,0);
 
+    if(dualScanEnabled) {
+        qDebug() << "dualScan ^^^^^^";
+        DualToSingleConverter converter(8, 64);
+        converter.process(imageObject);
+    }
+
     ImageData* data = new ImageData((char*)imageObject->ImageDataAddress(), size);
-    fileServer.append(data);
-    view->view()->viewport()->update();
+    //fileServer.append(data);
+    //view->view()->viewport()->update();
+    view->view()->viewport()->repaint();
 
 }
 
@@ -127,22 +144,21 @@ void MainWindow::initAxWidget()
         axCommander->SetDetectorObject(detector);
         axCommander->setVisible(false);
         qDebug()<<"Get detecor";
-        axCommander->SetDataPattern(1);
     }
 
     axImage->SetChannelType(2);
     axImage->SetImgHeight(1024);
-    axImage->SetImgWidth(1024);
+    axImage->SetImgWidth(512);
     axImage->SetImagePort(4001);
     axImage->SetBytesPerPixel(2);
     axImage->setVisible(false);
 
     axDisplay->SetImgHeight(1024);
-    axDisplay->SetImgWidth(1024);
+    axDisplay->SetImgWidth(512);
     axDisplay->SetDisplayScale(0);
     axDisplay->SetInfoDisplay(1);
-    axDisplay->SetMapStart(0);
-    axDisplay->SetMapEnd(5000);
+    axDisplay->SetMapStart(1000);
+    axDisplay->SetMapEnd(10000);
     axDisplay->setMinimumSize(512,512);
 
     qDebug()<<"get ImageObject";
@@ -154,14 +170,22 @@ void MainWindow::initAxWidget()
     }
     QObject::connect(axImage, SIGNAL(OnImageOpen()), this, SLOT(ImageOpened()));
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
-    QObject::connect(axImage, SIGNAL(DataLost(int)), this, SLOT(DataLost(int)));
+    QObject::connect(axImage, SIGNAL(Datalost(int)), this, SLOT(Datalost(int)));
+}
 
+void MainWindow::initDetector()
+{
+        axCommander->SetDataPattern(1);
+        axCommander->SetIntegrationTime(1000);
+        axCommander->setProperty("DataPattern", 1);
 }
 
 void MainWindow::openDetector()
 {
 
     int opened = axDetector->Open();
+    initDetector();
+
     if (opened){
         qDebug()<< "Detector Opened";
         int rt = axImage->Open();
@@ -199,6 +223,7 @@ void MainWindow::createAxWidget()
 void MainWindow::connectSignals()
 {
     QObject::connect(panel, &Panel::singleScanButton_click, this, &MainWindow::singleScan_clicked);
+    QObject::connect(panel, &Panel::dualScanButton_click, this, &MainWindow::dualScan_clicked);
     QObject::connect(panel, SIGNAL(settingButton_click()), this, SLOT(setting_clicked()));
 }
 
@@ -232,9 +257,8 @@ void MainWindow::autoContrast_clicked()
 
 }
 
-void MainWindow::singleScan_clicked()
+void MainWindow::scan()
 {
-    qDebug()<<"MainWindow::singleScan_Clieked";
     int opened = false;
     opened = axDetector->property("IsOpened").toInt();
     if(!opened) {
@@ -242,7 +266,6 @@ void MainWindow::singleScan_clicked()
         opened = axDetector->property("IsOpened").toInt();
         if(!opened)
             QMessageBox::information(this, "", "Open Failed", "确定", "取消");
-        axCommander->setProperty("DataPattern", 1);
     }
 
     static int grabbing = 0;
@@ -255,8 +278,18 @@ void MainWindow::singleScan_clicked()
         grabbing = 0;
         qDebug()<<"call image stop()";
     }
+
+}
+
+void MainWindow::singleScan_clicked()
+{
+    dualScanEnabled = false;
+    qDebug()<<"MainWindow::singleScan_Clieked";
+    scan();
 }
 
 void MainWindow::dualScan_clicked()
 {
+    dualScanEnabled = true;
+    scan();
 }

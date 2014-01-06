@@ -34,12 +34,12 @@ protected:
     void run();
     void write(ImageData* block);
 private:
+    int id;
     QList<ImageData*> dataList;
     QReadWriteLock lock;
     QWaitCondition listEmpty;
     QMutex mutex;
     long fileSize;
-    long id;
     QString prefix;
     QFile* file;
     QFile* newFile();

@@ -6410,7 +6410,7 @@ inline void CDTDisplay::Load(const QString& FilePath)
 
 inline int CDTDisplay::Open()
 {
-    int qax_result;
+    int qax_result=1;//for the bug of DTControl open method
     void *_a[] = {(void*)&qax_result};
     qt_metacall(QMetaObject::InvokeMetaMethod, 38, _a);
     return qax_result;

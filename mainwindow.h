@@ -75,11 +75,14 @@ private:
     void initAxWidget();
     void createAxWidget();
     void openDetector();
+    void initDetector();
+    void scan();
 
     QGraphicsScene *scene;
     Panel *panel;
     View *view;
     FileStoreServer fileServer;
+    bool dualScanEnabled ;
 
     QGraphicsProxyWidget *proxy;
     DTControl::CDTDisplay* axDisplay;
@@ -92,6 +95,7 @@ private slots:
     void ImageOpened();
 
     void FrameReady(int);
+    void Datalost(int num);
 };
 
 #endif // MAINWINDOW_H

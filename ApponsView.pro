@@ -19,14 +19,16 @@ SOURCES += main.cpp \
     view.cpp \
     dtcontrol.cpp \
     filestoreserver.cpp \
-    QLogger.cpp
+    QLogger.cpp \
+    pixelorderconverter.cpp
 
 HEADERS  += \
     mainwindow.h \
     view.h \
     dtcontrol.h \
     QLogger.h \
-    filestoreserver.h
+    filestoreserver.h \
+    pixelorderconverter.h
 
 #LIBS += "c:\work\apponsview\QLogger.lib"
 OTHER_FILES +=
