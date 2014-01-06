@@ -124,10 +124,11 @@ void MainWindow::FrameReady(int)
         converter.process(imageObject);
     }
 
-    ImageData* data = new ImageData((char*)imageObject->ImageDataAddress(), size);
+    //ImageData* data = new ImageData((char*)imageObject->ImageDataAddress(), size);
     //fileServer.append(data);
     //view->view()->viewport()->update();
-    view->view()->viewport()->repaint();
+    scene->update();
+    //view->view()->viewport()->repaint();
 
 }
 
@@ -157,8 +158,8 @@ void MainWindow::initAxWidget()
     axDisplay->SetImgWidth(512);
     axDisplay->SetDisplayScale(0);
     axDisplay->SetInfoDisplay(1);
-    axDisplay->SetMapStart(1000);
-    axDisplay->SetMapEnd(10000);
+    axDisplay->SetMapStart(8000);
+    axDisplay->SetMapEnd(1000);
     axDisplay->setMinimumSize(512,512);
 
     qDebug()<<"get ImageObject";

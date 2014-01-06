@@ -57,7 +57,7 @@ public:
 
     void copyBlock(quint16* src, int srcIndex, int destIndex)
     {
-        memcpy (buffer+destIndex*pixelNum, src+srcIndex*pixelNum, pixelNum);
+        memcpy (buffer+destIndex*pixelNum, src+srcIndex*pixelNum, pixelNum*2);
     }
 
     void convertLine(quint16* src, int width)
@@ -73,11 +73,11 @@ public:
         }
         //High Energy Area. Sencond half part
         for(int i = blockNum/2; i < blockNum ; i++) {
-           // msg.sprintf("***** %d -> %d", i, blockNum -(blockNum-i)*2+1);
-           // qDebug() << msg;
-            copyBlock(src, i, blockNum -(blockNum-i)*2+1);
+            //msg.sprintf("***** %d -> %d", i, i*2-blockNum+1);
+            //qDebug() << msg;
+            copyBlock(src, i, i*2-blockNum+1);
         }
-        memcpy(src, buffer, width);
+        memcpy(src, buffer, width*2);
     }
 
 };
