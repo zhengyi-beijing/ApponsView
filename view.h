@@ -74,14 +74,14 @@ public:
 public slots:
     void zoomIn();
     void zoomOut();
+    void rotateLeft();
+    void rotateRight();
 
 private slots:
     void resetView();
     void setupMatrix();
     void toggleOpenGL();
     void toggleAntialiasing();
-    void rotateLeft();
-    void rotateRight();
 
 private:
     GraphicsView *graphicsView;
@@ -94,7 +94,7 @@ class PanelButton: public QToolButton
 {
     Q_OBJECT
 public:
-    explicit PanelButton(const QString resPath, QWidget *parent = 0);
+    explicit PanelButton(const QString resPath, QWidget *parent = 0, bool group = false);
 
 };
 
@@ -105,14 +105,17 @@ public:
     explicit Panel(const QString &name, QWidget *parent = 0);
 signals:
     void openButton_click();
-    void saveButton_click();
+    void autoSaveEnable(bool enable);
     void powerButton_click();
-    void contrastButton_click();
+    void contrastEnable(bool enable);
     void autoContrastButton_click();
-    void zoomButton_click();
-    void moveButton_clcik();
-    void singleScanButton_click();
-    void dualScanButton_click();
+    void zoomEnable(bool enable);
+    void moveEnable(bool enable);
+    void singleScanEnable(bool enable);
+    void dualScanEnable(bool enable);
+    void settingButton_click();
+    void invertButton_click();
+    void rotateButton_click();
 
 public slots:
     void openButton_handle();
@@ -124,7 +127,8 @@ public slots:
     void moveButton_handle();
     void singleScanButton_handle();
     void dualScanButton_handle();
-    //void invertButton_handle();
+    void invertButton_handle();
+    void rotateButton_handle();
 
 private:
     void setBackgroundImage();
@@ -144,6 +148,17 @@ private:
     PanelButton *invertButton;
     PanelButton *rotateButton;
 
+    void setMousePressGroupButton();
+
+    bool autoSaveEnabled;
+
+    bool dualScanEnabled;
+    bool singleScanEnabled;
+    void setScanButtonGroup();
+
+    bool zoomEnabled;
+    bool moveEnabled;
+    bool contrastEnabled;
 };
 
 #endif // VIEW_H

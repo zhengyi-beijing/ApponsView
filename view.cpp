@@ -78,6 +78,9 @@ View::View(const QString &name, QWidget *parent)
 
     scale = 1.0;
     rotate = 0;
+
+
+
     setupMatrix();
 }
 
@@ -119,25 +122,29 @@ void View::toggleAntialiasing()
 void View::zoomIn()
 {
     scale *= 1.2;
+    setupMatrix();
 }
 
 void View::zoomOut()
 {
     scale /= 1.2;
+    setupMatrix();
 }
 
 void View::rotateLeft()
 {
     rotate -= 90;
+    setupMatrix();
 }
 
 void View::rotateRight()
 {
     rotate += 90;
+    setupMatrix();
 }
 
 
-PanelButton::PanelButton(const QString resPath, QWidget *parent)
+PanelButton::PanelButton(const QString resPath, QWidget *parent, bool group)
     :QToolButton(parent)
 {
     int size = 96;
@@ -148,7 +155,14 @@ PanelButton::PanelButton(const QString resPath, QWidget *parent)
     setIcon(icon);
     setIconSize(iconSize);
     //openButton->setMask(img.mask());
-    setAutoRaise(true);
+    if(group) {
+        setCheckable(true);
+        setAutoRaise(false);
+    } else {
+        setAutoRaise(true);
+        setCheckable(false);
+    }
+
 }
 
 Panel::Panel(const QString &name, QWidget *parent)
@@ -159,17 +173,20 @@ Panel::Panel(const QString &name, QWidget *parent)
 
     openButton = new PanelButton(":/Appons/res/open.ico");
 
-    saveButton = new PanelButton(":/Appons/res/save.ico");
+    saveButton = new PanelButton(":/Appons/res/save.ico", 0, true);
 
     settingButton = new PanelButton(":/Appons/res/setting.ico");
     powerButton = new PanelButton(":/Appons/res/exit.ico");
-    contrastButton = new PanelButton(":/Appons/res/contrast.ico");
+    contrastButton = new PanelButton(":/Appons/res/contrast.ico", 0, true);
     autoContrastButton = new PanelButton(":/Appons/res/autoContrast.ico");
     //Todo proxy Panel
-    zoomButton = new PanelButton(":/Appons/res/zoomIn.ico");
-    moveButton = new PanelButton(":/Appons/res/move.ico");
-    singleScanButton = new PanelButton(":/Appons/res/singleScan.ico");
-    dualScanButton = new PanelButton(":/Appons/res/dualScan.ico");
+    zoomButton = new PanelButton(":/Appons/res/zoomIn.ico", 0, true);
+    moveButton = new PanelButton(":/Appons/res/move.ico", 0, true);
+    singleScanButton = new PanelButton(":/Appons/res/singleScan.ico", 0, true);
+    dualScanButton = new PanelButton(":/Appons/res/dualScan.ico", 0, true);
+    invertButton = new PanelButton(":/Appons/res/invert.ico", 0);
+    rotateButton = new PanelButton(":/Appons/res/rotate.ico", 0);
+
 
     QGridLayout *panelLayout = new QGridLayout;
     panelLayout->addWidget(openButton, 0,0);
@@ -182,10 +199,9 @@ Panel::Panel(const QString &name, QWidget *parent)
     panelLayout->addWidget(moveButton, 3,1);
     panelLayout->addWidget(singleScanButton, 4,0);
     panelLayout->addWidget(dualScanButton, 4,1);
-    //QSpacerItem* spacer1 = new QSpacerItem( size, size, QSizePolicy::Fixed, QSizePolicy::Expanding );
-    //QSpacerItem* spacer2 = new QSpacerItem( size, size, QSizePolicy::Fixed, QSizePolicy::Expanding );
-    //panelLayout->addItem(spacer1, 5,0);
-    //panelLayout->addItem(spacer2, 5,1);
+    panelLayout->addWidget(invertButton, 5,0);
+    panelLayout->addWidget(rotateButton, 5,1);
+
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(panelLayout);
     //vLayout->addSpacerItem(spacer1);
@@ -194,6 +210,13 @@ Panel::Panel(const QString &name, QWidget *parent)
 
     setBackgroundImage();
     signalInit();
+
+    dualScanEnabled = false;
+    singleScanEnabled = false;
+
+    zoomEnabled = false;
+    moveEnabled = false;
+    contrastEnabled = false;
 }
 
 void Panel::setBackgroundImage()
@@ -220,7 +243,8 @@ void Panel::openButton_handle()
 
 void Panel::saveButton_handle()
 {
-    emit saveButton_click();
+    autoSaveEnabled = !autoSaveEnabled;
+    emit autoSaveEnable(autoSaveEnabled);
 }
 
 void Panel::powerButton_handle()
@@ -230,7 +254,13 @@ void Panel::powerButton_handle()
 
 void Panel::contrastButton_handle()
 {
-    emit contrastButton_click();
+    contrastEnabled = !contrastEnabled;
+    if(contrastEnabled) {
+        zoomEnabled = false;
+        moveEnabled = false;
+    }
+    setMousePressGroupButton();
+    emit contrastEnable(contrastEnabled);
 }
 
 void Panel::autoContrastButton_handle()
@@ -240,22 +270,70 @@ void Panel::autoContrastButton_handle()
 
 void Panel::zoomButton_handle()
 {
-    emit zoomButton_click();
+    zoomEnabled = !zoomEnabled;
+    if(zoomEnabled){
+        contrastEnabled = false;
+        moveEnabled = false;
+    }
+
+    setMousePressGroupButton();
+    emit zoomEnable(zoomEnabled);
 }
 
 void Panel::moveButton_handle()
 {
-    //emit moveButton_clcik();
+    moveEnabled = !moveEnabled;
+    if(moveEnabled){
+        contrastEnabled = false;
+        zoomEnabled = false;
+    }
+    setMousePressGroupButton();
+    emit moveEnable(moveEnabled);
+}
+
+void Panel::setMousePressGroupButton()
+{
+   zoomButton->setChecked(zoomEnabled);
+   moveButton->setChecked(moveEnabled);
+   contrastButton->setChecked(contrastEnabled);
+}
+
+void Panel::setScanButtonGroup()
+{
+    singleScanButton->setChecked(singleScanEnabled);
+    dualScanButton->setChecked(dualScanEnabled);
 }
 
 void Panel::singleScanButton_handle()
 {
-    emit singleScanButton_click();
+    singleScanEnabled = !singleScanEnabled;
+    if (singleScanEnabled) {
+        dualScanEnabled = false;
+    }
+
+    setScanButtonGroup();
+    emit singleScanEnable(singleScanEnabled);
 }
 
 void Panel::dualScanButton_handle()
 {
-    emit dualScanButton_click();
+    dualScanEnabled = !dualScanEnabled;
+    if(dualScanEnabled) {
+        singleScanEnabled = false;
+    }
+    setScanButtonGroup();
+    qDebug() << __FUNCTION__;
+    emit dualScanEnable(dualScanEnabled);
+}
+
+void Panel::invertButton_handle()
+{
+    emit invertButton_click();
+}
+
+void Panel::rotateButton_handle()
+{
+    emit rotateButton_click();
 }
 
 void Panel::signalInit()
@@ -266,7 +344,9 @@ void Panel::signalInit()
     connect(contrastButton, SIGNAL(clicked()),this,SLOT(contrastButton_handle()));
     connect(autoContrastButton, SIGNAL(clicked()),this,SLOT(autoContrastButton_handle()));
     connect(zoomButton, SIGNAL(clicked()),this,SLOT(zoomButton_handle()));
-//    connect(moveButton, SIGNAL(clicked()),this,SLOT(moveButton_clcik()));
+    connect(moveButton, SIGNAL(clicked()),this,SLOT(moveButton_clcik()));
     connect(dualScanButton, SIGNAL(clicked()),this,SLOT(dualScanButton_handle()));
     connect(singleScanButton, SIGNAL(clicked()), this, SLOT(singleScanButton_handle()));
+    connect(invertButton, SIGNAL(clicked()),this,SLOT(invertButton_handle()));
+    connect(rotateButton, SIGNAL(clicked()), this, SLOT(rotateButton_handle()));
 }

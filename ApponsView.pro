@@ -30,14 +30,10 @@ HEADERS  += \
     filestoreserver.h \
     pixelorderconverter.h
 
-#LIBS += "c:\work\apponsview\QLogger.lib"
 OTHER_FILES +=
 
 RESOURCES += \
     Appons.qrc
-
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/ -lQLogger
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/ -lQLogger
 
 INCLUDEPATH += $$PWD/
 DEPENDPATH += $$PWD/

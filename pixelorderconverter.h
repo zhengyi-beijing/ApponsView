@@ -13,7 +13,7 @@ public:
     }
 
     virtual ~PixelOrderConverter() {}
-    virtual void process(DTControl::CImageObject* src)=0;
+    virtual void process(DTControl::IImageObject* src)=0;
 protected:
     int boardNum;
     int pixelNum;
@@ -27,23 +27,17 @@ public:
         int size = boardNum*pixelNum;
         Q_ASSERT(size == 512);
         buffer = new quint16[size];
-        if(buffer) {
-            for(int i=0; i < size; i++) {
-                buffer[i] = 1000;
-            }
-        }
     }
     ~DualToSingleConverter()
     {
         delete[] buffer;
     }
 
-    virtual void process(DTControl::CImageObject* src)
+    virtual void process(DTControl::IImageObject* src)
     {
         int width = src->Width();
         int height = src->Height();
-        qDebug() << __FUNCTION__<<"width = "<< width;
-        qDebug() << __FUNCTION__<<"height = "<< height;
+        //qDebug() << __FUNCTION__<<"height = "<< height;
         Q_ASSERT(width == boardNum*pixelNum);
         for(int i=0; i< height; i++) {
             quint16* pline = (quint16*)src->ImageLineAddress(i);
@@ -67,14 +61,10 @@ public:
         //Low Energy Area. First half part
         for(int i=0; i < blockNum/2 ; i++) {
             copyBlock(src, i, i*2);
-            //msg.sprintf("***** %d -> %d", i, i*2);
-            //qDebug() << msg;
             //QLogger::QLog_Trace("Appons", "App start");
         }
         //High Energy Area. Sencond half part
         for(int i = blockNum/2; i < blockNum ; i++) {
-            //msg.sprintf("***** %d -> %d", i, i*2-blockNum+1);
-            //qDebug() << msg;
             copyBlock(src, i, i*2-blockNum+1);
         }
         memcpy(src, buffer, width*2);

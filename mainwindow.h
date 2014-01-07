@@ -59,14 +59,18 @@ public:
     ~MainWindow();
 
 public slots:
-    void open_clicked();
-    void save_clicked();
+    void singleScanEnable(bool enable);
+    void dualScanEnable(bool enable);
     void setting_clicked();
-    void zoom_clicked();
-    void contrast_clicked();
+    void open_clicked();
+    void power_clicked();
+    void contrastEnable(bool enable);
+    void autoSaveEnable(bool enable);
     void autoContrast_clicked();
-    void singleScan_clicked();
-    void dualScan_clicked();
+    void zoomEnable(bool enable);
+    void moveEnable(bool enable);
+    void rotate_click();
+    void invert_click();
 
 private:
     void connectSignals();
@@ -82,14 +86,22 @@ private:
     Panel *panel;
     View *view;
     FileStoreServer fileServer;
+
     bool dualScanEnabled ;
+    bool autoSaveEnabled;
+    bool zoomEnabled;
+    bool moveEnabled;
+    bool contrastEnabled;
+    bool autoContrastEnabled;
+
 
     QGraphicsProxyWidget *proxy;
     DTControl::CDTDisplay* axDisplay;
+    DTControl::CDTDisplay* axDisplayWidget;
     DTControl::CDTImage* axImage;
     DTControl::CDTDetector* axDetector;
     DTControl::CDTCommanderF3* axCommander;
-    DTControl::CImageObject* imageObject;
+    DTControl::IImageObject* axImageObject;
 
 private slots:
     void ImageOpened();
