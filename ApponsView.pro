@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     dtcontrol.cpp \
     filestoreserver.cpp \
     QLogger.cpp \
-    pixelorderconverter.cpp
+    pixelorderconverter.cpp \
+    digitalclock.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -28,7 +29,8 @@ HEADERS  += \
     dtcontrol.h \
     QLogger.h \
     filestoreserver.h \
-    pixelorderconverter.h
+    pixelorderconverter.h \
+    digitalclock.h
 
 OTHER_FILES +=
 

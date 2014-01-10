@@ -980,6 +980,12 @@ public:
     inline void SetDetectorObject(IUnknown* value); //Sets the value of the DetectorObject property
 
     /*
+    Property DualScanMode
+    */
+    inline int DualScanMode() const; //Returns the value of DualScanMode
+    inline void SetDualScanMode(int value); //Sets the value of the DualScanMode property
+
+    /*
     Property ExFrameTrigger
 
     property ExFrameTrigger
@@ -2112,6 +2118,12 @@ public:
     */
     inline IUnknown* DetectorObject() const; //Returns the value of DetectorObject
     inline void SetDetectorObject(IUnknown* value); //Sets the value of the DetectorObject property
+
+    /*
+    Property DualScanMode
+    */
+    inline int DualScanMode() const; //Returns the value of DualScanMode
+    inline void SetDualScanMode(int value); //Sets the value of the DualScanMode property
 
     /*
     Property ExFrameTrigger
@@ -3776,6 +3788,14 @@ inline void CDTImage::SetDetectorObject(IUnknown* value){
     setProperty("DetectorObject", QVariant(typeId, &value));
 }
 
+inline int CDTImage::DualScanMode() const
+{
+    QVariant qax_result = property("DualScanMode");
+    Q_ASSERT(qax_result.isValid());
+    return *(int*)qax_result.constData();
+}
+inline void CDTImage::SetDualScanMode(int value){ setProperty("DualScanMode", QVariant(value)); }
+
 inline int CDTImage::ExFrameTrigger() const
 {
     QVariant qax_result = property("ExFrameTrigger");
@@ -3893,14 +3913,14 @@ inline int CDTImage::Snap(int FrameNum)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&FrameNum};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 52, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 53, _a);
     return qax_result;
 }
 
 inline void CDTImage::Stop()
 {
     void *_a[] = {0};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 53, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 54, _a);
 }
 
 
@@ -3938,6 +3958,14 @@ inline void IDTImage::SetDetectorObject(IUnknown* value){
     int typeId = qRegisterMetaType<IUnknown*>("IUnknown*", &value);
     setProperty("DetectorObject", QVariant(typeId, &value));
 }
+
+inline int IDTImage::DualScanMode() const
+{
+    QVariant qax_result = property("DualScanMode");
+    Q_ASSERT(qax_result.isValid());
+    return *(int*)qax_result.constData();
+}
+inline void IDTImage::SetDualScanMode(int value){ setProperty("DualScanMode", QVariant(value)); }
 
 inline int IDTImage::ExFrameTrigger() const
 {
@@ -4056,14 +4084,14 @@ inline int IDTImage::Snap(int FrameNum)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&FrameNum};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 21, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 22, _a);
     return qax_result;
 }
 
 inline void IDTImage::Stop()
 {
     void *_a[] = {0};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 22, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 23, _a);
 }
 
 

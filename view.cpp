@@ -48,6 +48,7 @@
 
 void GraphicsView::wheelEvent(QWheelEvent *e)
 {
+    qDebug() << __FUNCTION__;
     if (e->modifiers() & Qt::ControlModifier) {
         if (e->delta() > 0)
             view->zoomIn();
@@ -56,6 +57,34 @@ void GraphicsView::wheelEvent(QWheelEvent *e)
         e->accept();
     } else {
         QGraphicsView::wheelEvent(e);
+    }
+}
+
+void GraphicsView::mousePressEvent(QMouseEvent *event)
+{
+    qDebug() << __FUNCTION__<< event->pos();
+    qDebug() << __FUNCTION__<< event->button();
+    mousePressed = true;
+}
+
+void GraphicsView::mouseReleaseEvent ( QMouseEvent * event )
+{
+
+    mousePressed = false;
+}
+
+void GraphicsView::mouseMoveEvent(QMouseEvent *event)
+{
+    qDebug() << __FUNCTION__<< event->pos();
+    qDebug() << __FUNCTION__<< event->button();
+    if(mousePressed) {
+        if(mode == Move) {
+
+        } else if (mode == Zoom) {
+
+        } else { //contrast
+
+        }
     }
 }
 
@@ -69,18 +98,18 @@ View::View(const QString &name, QWidget *parent)
     graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
     graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
     graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    graphicsView->setCacheMode(QGraphicsView::CacheNone);
+    graphicsView->setDragMode(QGraphicsView::NoDrag);
     graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 
 
     QVBoxLayout *topLayout = new QVBoxLayout;
     topLayout->addWidget(graphicsView);
+    topLayout->setMargin(1);
     setLayout(topLayout);
 
     scale = 1.0;
     rotate = 0;
-
-
-
     setupMatrix();
 }
 
@@ -93,6 +122,7 @@ void View::resetView()
 {
     setupMatrix();
     graphicsView->ensureVisible(QRectF(0, 0, 0, 0));
+    graphicsView->fitInView(graphicsView->scene()->itemsBoundingRect(),Qt::KeepAspectRatio);
 }
 
 void View::setupMatrix()
@@ -143,11 +173,12 @@ void View::rotateRight()
     setupMatrix();
 }
 
+//void On
 
 PanelButton::PanelButton(const QString resPath, QWidget *parent, bool group)
     :QToolButton(parent)
 {
-    int size = 96;
+    int size = 64;
     QSize iconSize(size, size);
     QIcon icon;
     QPixmap pixmap = QPixmap(resPath).scaled(iconSize);
@@ -156,11 +187,11 @@ PanelButton::PanelButton(const QString resPath, QWidget *parent, bool group)
     setIconSize(iconSize);
     //openButton->setMask(img.mask());
     if(group) {
+        setAutoRaise(true);
         setCheckable(true);
-        setAutoRaise(false);
     } else {
         setAutoRaise(true);
-        setCheckable(false);
+        setCheckable(true);
     }
 
 }
@@ -187,6 +218,7 @@ Panel::Panel(const QString &name, QWidget *parent)
     invertButton = new PanelButton(":/Appons/res/invert.ico", 0);
     rotateButton = new PanelButton(":/Appons/res/rotate.ico", 0);
 
+    clock = new DigitalClock(this);
 
     QGridLayout *panelLayout = new QGridLayout;
     panelLayout->addWidget(openButton, 0,0);
@@ -197,15 +229,20 @@ Panel::Panel(const QString &name, QWidget *parent)
     panelLayout->addWidget(autoContrastButton, 2,1);
     panelLayout->addWidget(zoomButton, 3,0);
     panelLayout->addWidget(moveButton, 3,1);
-    panelLayout->addWidget(singleScanButton, 4,0);
-    panelLayout->addWidget(dualScanButton, 4,1);
-    panelLayout->addWidget(invertButton, 5,0);
-    panelLayout->addWidget(rotateButton, 5,1);
+    panelLayout->addWidget(invertButton, 4,0);
+    panelLayout->addWidget(rotateButton, 4,1);
+    panelLayout->addWidget(singleScanButton, 5,0);
+    panelLayout->addWidget(dualScanButton, 5,1);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(panelLayout);
-    //vLayout->addSpacerItem(spacer1);
+
+    //QSpacerItem *spacer = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Expanding);
+
+    //vLayout->addSpacerItem(spacer);
     vLayout->addStretch();
+    vLayout->addWidget(clock);
+    //vLayout->addSpacerItem(spacer1);
     setLayout(vLayout);
 
     setBackgroundImage();
@@ -217,6 +254,7 @@ Panel::Panel(const QString &name, QWidget *parent)
     zoomEnabled = false;
     moveEnabled = false;
     contrastEnabled = false;
+    autoSaveEnabled = false;
 }
 
 void Panel::setBackgroundImage()
@@ -344,7 +382,7 @@ void Panel::signalInit()
     connect(contrastButton, SIGNAL(clicked()),this,SLOT(contrastButton_handle()));
     connect(autoContrastButton, SIGNAL(clicked()),this,SLOT(autoContrastButton_handle()));
     connect(zoomButton, SIGNAL(clicked()),this,SLOT(zoomButton_handle()));
-    connect(moveButton, SIGNAL(clicked()),this,SLOT(moveButton_clcik()));
+    connect(moveButton, SIGNAL(clicked()),this,SLOT(moveButton_handle()));
     connect(dualScanButton, SIGNAL(clicked()),this,SLOT(dualScanButton_handle()));
     connect(singleScanButton, SIGNAL(clicked()), this, SLOT(singleScanButton_handle()));
     connect(invertButton, SIGNAL(clicked()),this,SLOT(invertButton_handle()));

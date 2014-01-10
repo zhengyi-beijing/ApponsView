@@ -50,6 +50,8 @@
 #include <QGraphicsScene>
 #include "dtcontrol.h"
 #include "filestoreserver.h"
+#include <QGraphicsProxyWidget>
+#include <QSettings>
 
 class MainWindow : public QWidget
 {
@@ -71,7 +73,10 @@ public slots:
     void moveEnable(bool enable);
     void rotate_click();
     void invert_click();
+    void widgetMoveto(QPoint pos);
+protected:
 
+    void showEvent ( QShowEvent * event );
 private:
     void connectSignals();
     void setupMatrix();
@@ -81,6 +86,7 @@ private:
     void openDetector();
     void initDetector();
     void scan();
+    void stop();
 
     QGraphicsScene *scene;
     Panel *panel;
@@ -88,20 +94,26 @@ private:
     FileStoreServer fileServer;
 
     bool dualScanEnabled ;
+    bool singleScanEnabled;
     bool autoSaveEnabled;
     bool zoomEnabled;
     bool moveEnabled;
     bool contrastEnabled;
     bool autoContrastEnabled;
 
+    int framecount ;
+    bool grabing;
 
-    QGraphicsProxyWidget *proxy;
+    QGraphicsProxyWidget* proxy;
     DTControl::CDTDisplay* axDisplay;
-    DTControl::CDTDisplay* axDisplayWidget;
+    //DTControl::CDTDisplay* axDisplayWidget;
     DTControl::CDTImage* axImage;
     DTControl::CDTDetector* axDetector;
     DTControl::CDTCommanderF3* axCommander;
+    DTControl::IImageObject* axDisplayObject;
     DTControl::IImageObject* axImageObject;
+
+    QString ip;
 
 private slots:
     void ImageOpened();

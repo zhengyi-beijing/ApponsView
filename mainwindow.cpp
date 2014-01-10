@@ -47,29 +47,30 @@
 #include <QDesktopWidget>
 #include <QMessageBox>
 #include "pixelorderconverter.h"
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
     qDebug() << "Main thread id = " << QThread::currentThreadId();
+    QString path =  QCoreApplication::applicationDirPath ();
+    QSettings setting(path+"/config.ini", QSettings ::IniFormat);
+    ip = setting.value("Network/ip").toString();
+    qDebug() << "ip is " << ip;
     populateScene();
     setMinimumSize(1024,768);
-    resize(QSize(1500,1000));
+    resize(QSize(1280,1024));
     move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
-    view = new View("X-ray view");
-    view->view()->setScene(scene);
-    view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    view->setMinimumSize(512,512);
-    view->view()->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
     panel = new Panel("Command Pannel");
     panel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    panel->setMinimumSize(128,128);
+    panel->setMinimumSize(64, 64);
 
     QHBoxLayout *layout = new QHBoxLayout;
+    layout->setMargin(1);
+    layout->setSpacing(1);
     layout->addWidget(view);
-    layout->addWidget(axDisplay);
     layout->addWidget(panel);
     setLayout(layout);
 
@@ -77,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent)
     connectSignals();
 
     dualScanEnabled = false;
+    autoSaveEnabled = false;
+    grabing = false;
 
     fileServer.start();
 }
@@ -88,15 +91,37 @@ MainWindow::~MainWindow()
 void MainWindow::populateScene()
 {
     scene = new QGraphicsScene;
+//    scene->setSceneRect(-1.25, -1.25, 2.5, 2.5);
     createAxWidget();
     initAxWidget();
-    proxy = scene->addWidget(axDisplayWidget);
+    axDisplay->setParent(NULL);
+    proxy = scene->addWidget(axDisplay);
+//    scene->setSceneRect(proxy->rect());
+    axDisplay->setVisible(true);
+
+    view = new View("X-ray view");
+    view->view()->setScene(scene);
+    view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    view->setMinimumSize(512, 512);
+//    qDebug()<< proxy->rect();
+//    QRectF bounds = scene->itemsBoundingRect();
+//    bounds.setWidth(bounds.width()*0.9);         // to tighten-up margins
+//    bounds.setHeight(bounds.height()*0.9);       // same as above
+//    view->view()->fitInView(bounds,Qt::KeepAspectRatio);
+//    view->view()->centerOn(0, 0);
+}
+
+void MainWindow::widgetMoveto(QPoint dpos)
+{
+    //proxy->move(proxy->pos()+dpos);
+    //scene->update();
 }
 
 void MainWindow::ImageOpened()
 {
     qDebug()<<"ImageOpened";
 }
+
 
 
 void MainWindow::Datalost(int num)
@@ -107,16 +132,9 @@ void MainWindow::Datalost(int num)
 
 void MainWindow::FrameReady(int)
 {
-    static int framecount = 0;
     framecount++;
     qDebug()<< "Frame count: "<< framecount;
     qDebug() << "Frame Ready thread id = " << QThread::currentThreadId();
-    //qDebug()<<"pixel 0,0=" << axImageObject->Pixel(0,0);
-    if(dualScanEnabled) {
-       DualToSingleConverter converter(8, 64);
-       converter.process(axImageObject);
-    }
-
     if (autoSaveEnabled) {
         int size = axImageObject->Width()*axImageObject->Height()*axImageObject->BytesPerPixel();
         ImageData* data = new ImageData((char*)axImageObject->ImageDataAddress(), size);
@@ -126,10 +144,26 @@ void MainWindow::FrameReady(int)
     view->view()->viewport()->update();
 }
 
+void MainWindow::createAxWidget()
+{
+    axDetector = new DTControl::CDTDetector(this);
+    axDetector->setVisible(false);
+
+    axDisplay = new DTControl::CDTDisplay(this);
+    axDisplay->setVisible(false);
+
+    axCommander = new DTControl::CDTCommanderF3(this);
+    axCommander->setVisible(false);
+
+    axImage = new DTControl::CDTImage(this);
+    axImage->setVisible(false);
+}
+
 void MainWindow::initAxWidget()
 {
     axDetector->SetChannelType(2);
-    axDetector->SetIPAddress("192.168.1.25");
+    //axDetector->SetIPAddress("192.168.1.25");
+    axDetector->SetIPAddress(ip);
     axDetector->SetCmdPort(3000);
 
     IUnknown* detector = axDetector->ObjectHandle();
@@ -143,7 +177,7 @@ void MainWindow::initAxWidget()
 
     axImage->SetChannelType(2);
     axImage->SetImgHeight(1024);
-    axImage->SetImgWidth(512);
+    axImage->SetImgWidth(1536);
     axImage->SetImagePort(4001);
     axImage->SetBytesPerPixel(2);
     axImage->setVisible(false);
@@ -153,14 +187,7 @@ void MainWindow::initAxWidget()
     axDisplay->SetMapEnd(10000);
     axDisplay->setMinimumSize(512,512);
     axDisplay->dynamicCall("SetDisplayScale(int)", 0);
-    axDisplay->setVisible(true);
-    //axDisplay->SetRefreshRate(30);
-    axDisplayWidget->SetDisplayScale(0);
-    axDisplayWidget->SetMapStart(100);
-    axDisplayWidget->SetMapEnd(10000);
-    axDisplayWidget->setMinimumSize(512,512);
-    axDisplayWidget->dynamicCall("SetDisplayScale(int)", 0);
-    axDisplayWidget->setVisible(true);
+    //axDisplay->setVisible(true);
 
     qDebug()<<"get ImageObject";
     IUnknown* imgsrcHandle =  axImage->ObjectHandle();
@@ -168,21 +195,25 @@ void MainWindow::initAxWidget()
     if (imgsrcHandle) {
         qDebug()<<"Set Display Source";
         axDisplay->SetDataSource(imgsrcHandle);
-        axDisplayWidget->SetDataSource(imgsrcHandle);
     }
 
     openDetector();
-    QObject::connect(axImage, SIGNAL(OnImageOpen()), this, SLOT(ImageOpened()));
+//    QObject::connect(axImage, SIGNAL(OnImageOpen()), this, SLOT(ImageOpened()));
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
     QObject::connect(axImage, SIGNAL(Datalost(int)), this, SLOT(Datalost(int)));
 }
 
+void MainWindow::showEvent ( QShowEvent * event )
+{
+    view->resetView();
+}
+
 void MainWindow::initDetector()
 {
-        axCommander->SetDataPattern(1);
-        axCommander->SetIntegrationTime(1400);
-        QString rt;
-        axDetector->SendCommand(QString("[ED,M,0]"), rt);
+       // axCommander->SetDataPattern(1);
+       // axCommander->SetIntegrationTime(1400);
+       // QString rt;
+       // axDetector->SendCommand(QString("[ED,M,0]"), rt);
 }
 
 void MainWindow::openDetector()
@@ -199,9 +230,12 @@ void MainWindow::openDetector()
         if(rt) {
             qDebug()<<"open image ";
             rt = axDisplay->Open();
-            rt = axDisplayWidget->Open();
-            if(rt)
+            //rt = axDisplayWidget->Open();
+
+            axDisplayObject = new DTControl::IImageObject((IDispatch*)axDisplay->ImageObject());
+            if(rt) {
                 qDebug()<<"open Display sucesful";
+            }
             else
                 qDebug()<<"open display failed";
         }
@@ -210,23 +244,6 @@ void MainWindow::openDetector()
     }
     else
         qDebug() << "OPen detector failed";
-}
-
-void MainWindow::createAxWidget()
-{
-    axDetector = new DTControl::CDTDetector(this);
-    axDetector->setVisible(false);
-
-    axDisplay = new DTControl::CDTDisplay(this);
-    axDisplay->setVisible(true);
-    axDisplayWidget = new DTControl::CDTDisplay();
-    axDisplayWidget->setVisible(true);
-
-    axCommander = new DTControl::CDTCommanderF3(this);
-    axCommander->setVisible(false);
-
-    axImage = new DTControl::CDTImage(this);
-    axImage->setVisible(false);
 }
 
 void MainWindow::connectSignals()
@@ -246,6 +263,12 @@ void MainWindow::connectSignals()
 
 }
 
+void MainWindow::stop()
+{
+    axImage->Stop();
+    grabing = false;
+}
+
 void MainWindow::scan()
 {
     int opened = false;
@@ -255,36 +278,44 @@ void MainWindow::scan()
         openDetector();
         opened = axDetector->property("IsOpened").toInt();
         if(!opened) {
-            QMessageBox::information(this, "", "Open Failed", "确定", "取消");
+            QMessageBox::information(this, "", "Open Failed", "OK", "CANCEL");
+
             return;
         }
     }
 
-    static int grabbing = 0;
-    if(grabbing == 0) {
-        //axImage->dynamicCall("grab(int)", 0);
-        axImage->Grab(0);
-        qDebug()<<"call image grab()";
-        grabbing = 1;
-    } else {
-        axImage->dynamicCall("stop()");
-        axImage->Stop();
-        grabbing = 0;
-        qDebug()<<"call image stop()";
-    }
+    framecount = 0;
+    axImage->Grab(0);
+    grabing = true;
 }
 
 void MainWindow::singleScanEnable(bool enable)
 {
-    dualScanEnabled = !enable;
-    qDebug() << __FUNCTION__;
-    scan();
+    qDebug()<<__FUNCTION__<<enable;
+    singleScanEnabled = enable;
+    if(singleScanEnabled) {
+        axImage->SetDualScanMode(0);
+        if(!grabing) {
+            scan();
+        }
+    } else {
+        stop();
+    }
 }
 
 void MainWindow::dualScanEnable(bool enable)
 {
+    qDebug()<<__FUNCTION__<<enable;
     dualScanEnabled = enable;
-    scan();
+
+    if(dualScanEnabled) {
+        axImage->SetDualScanMode(1);
+        if(!grabing) {
+            scan();
+        }
+    } else {
+        stop();
+    }
 }
 
 void MainWindow::setting_clicked()
@@ -299,6 +330,7 @@ void MainWindow::open_clicked()
 
 void MainWindow::autoSaveEnable(bool enable)
 {
+    qDebug() << "AutoSave is "<< enable;
     autoSaveEnabled = enable;
 }
 
@@ -311,16 +343,23 @@ void MainWindow::power_clicked()
 
 void MainWindow::contrastEnable(bool enable)
 {
+    qDebug() << __FUNCTION__<< enable;
     contrastEnabled = enable;//conflict with zoom and move
 }
 
 void MainWindow::invert_click()
 {
-    DTControl::IImageObject ImageObject((IDispatch*)axDisplay->ImageObject());
+    qDebug() << __FUNCTION__;
     int start = axDisplay->MapStart();
     int end = axDisplay->MapEnd();
+    qDebug() << "Start = " << start;
+    qDebug() << "end = " << end;
     axDisplay->SetMapStart(end);
     axDisplay->SetMapEnd(start);
+    axDisplay->repaint();
+    scene->update();
+    view->view()->viewport()->update();
+
 }
 
 void MainWindow::autoContrast_clicked()
@@ -329,26 +368,37 @@ void MainWindow::autoContrast_clicked()
 //   2 find maximu of frame
 //   3 set map range
     qDebug() << __FUNCTION__;
-    DTControl::IImageObject ImageObject((IDispatch*)axDisplay->ImageObject());
-    int width = ImageObject.Width();
-    int height = ImageObject.Height();
+    int width = axImageObject->Width();
+    int height = axImageObject->Height();
     int min = 0;
     int max = 0;
-    for(int j=0; j < height; j++)
+
+    for(int j=0; j < height; j++) {
+        quint16* line = (quint16*)axImageObject->ImageLineAddress(0);
         for(int i = 0; i < width; i++) {
-            int v = ImageObject.Pixel(i, j);
+            //int v = axImageObject->Pixel(i, j);
+            int v = *(line+i);
             if (max < v)
                 max = v;
             if (min > v)
                 min = v;
         }
+    }
+    qDebug() << "min = " << min;
+    qDebug () << "max = " << max;
     axDisplay->SetMapStart(min);
     axDisplay->SetMapEnd(max);
+    axDisplay->repaint();
+    scene->update();
+    view->view()->viewport()->update();
 }
 
 void MainWindow::zoomEnable(bool enable)
 {
     zoomEnabled = enable;
+    if(zoomEnabled) {
+        view->zoomIn();
+    }
 }
 
 void MainWindow::rotate_click()

@@ -45,6 +45,7 @@
 #include <QFrame>
 #include <QGraphicsView>
 #include <QToolButton>
+#include "digitalclock.h"
 
 class View;
 
@@ -52,15 +53,30 @@ class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    GraphicsView(View *v) : QGraphicsView(), view(v) { }
+    enum Mode {Move, Zoom, Contrast};
+    GraphicsView(View *v) : QGraphicsView(), view(v)
+    {
+        mode = Move;
+        setInteractive(true);
+    }
+    void setMouseOpMode(Mode m) { mode = m; }
+
+signals:
+    void zoomIn();
+    void zoomOut();
+    void contrastMapEndChange(int level);
+    void contrastMapStartChange(int level);
 
 protected:
-#ifndef QT_NO_WHEELEVENT
     void wheelEvent(QWheelEvent *);
-#endif
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent * event);
 
 private:
     View *view;
+    Mode mode;
+    bool mousePressed;
 };
 
 class View : public QFrame
@@ -76,9 +92,9 @@ public slots:
     void zoomOut();
     void rotateLeft();
     void rotateRight();
+    void resetView();
 
 private slots:
-    void resetView();
     void setupMatrix();
     void toggleOpenGL();
     void toggleAntialiasing();
@@ -147,6 +163,8 @@ private:
 
     PanelButton *invertButton;
     PanelButton *rotateButton;
+
+    DigitalClock* clock;
 
     void setMousePressGroupButton();
 

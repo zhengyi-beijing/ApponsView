@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
     QLogger::QLoggerManager *manager = QLogger::QLoggerManager::getInstance();
 
     QApplication app(argc, argv);
+    app.addLibraryPath("./plugins");
     app.setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 
     MainWindow window;
