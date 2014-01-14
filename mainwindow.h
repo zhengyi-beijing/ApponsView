@@ -52,6 +52,7 @@
 #include "filestoreserver.h"
 #include <QGraphicsProxyWidget>
 #include <QSettings>
+#include "apponssetting.h"
 
 class MainWindow : public QWidget
 {
@@ -60,6 +61,7 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    static ApponsSetting setting;
 public slots:
     void singleScanEnable(bool enable);
     void dualScanEnable(bool enable);
@@ -67,7 +69,7 @@ public slots:
     void open_clicked();
     void power_clicked();
     void contrastEnable(bool enable);
-    void autoSaveEnable(bool enable);
+    void saveButtonClick();
     void autoContrast_clicked();
     void zoomEnable(bool enable);
     void moveEnable(bool enable);
@@ -75,8 +77,8 @@ public slots:
     void invert_click();
     void widgetMoveto(QPoint pos);
 protected:
-
-    void showEvent ( QShowEvent * event );
+    void resizeEvent(QResizeEvent * event);
+    void showEvent (QShowEvent * event );
 private:
     void connectSignals();
     void setupMatrix();
@@ -102,6 +104,7 @@ private:
     bool autoContrastEnabled;
 
     int framecount ;
+    int lostLineCount;
     bool grabing;
 
     QGraphicsProxyWidget* proxy;
@@ -117,9 +120,11 @@ private:
 
 private slots:
     void ImageOpened();
-
+    void SubFrameReady (int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock);
     void FrameReady(int);
     void Datalost(int num);
+
+    void fitToScene();
 };
 
 #endif // MAINWINDOW_H

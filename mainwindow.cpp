@@ -48,14 +48,15 @@
 #include <QMessageBox>
 #include "pixelorderconverter.h"
 #include <QDir>
+#include <QFileDialog>
 
+ApponsSetting MainWindow::setting;
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
+    setting.LoadConfig();
     qDebug() << "Main thread id = " << QThread::currentThreadId();
-    QString path =  QCoreApplication::applicationDirPath ();
-    QSettings setting(path+"/config.ini", QSettings ::IniFormat);
-    ip = setting.value("Network/ip").toString();
+    ip = setting.ip();
     qDebug() << "ip is " << ip;
     populateScene();
     setMinimumSize(1024,768);
@@ -91,24 +92,16 @@ MainWindow::~MainWindow()
 void MainWindow::populateScene()
 {
     scene = new QGraphicsScene;
-//    scene->setSceneRect(-1.25, -1.25, 2.5, 2.5);
     createAxWidget();
     initAxWidget();
     axDisplay->setParent(NULL);
     proxy = scene->addWidget(axDisplay);
-//    scene->setSceneRect(proxy->rect());
     axDisplay->setVisible(true);
 
     view = new View("X-ray view");
     view->view()->setScene(scene);
     view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     view->setMinimumSize(512, 512);
-//    qDebug()<< proxy->rect();
-//    QRectF bounds = scene->itemsBoundingRect();
-//    bounds.setWidth(bounds.width()*0.9);         // to tighten-up margins
-//    bounds.setHeight(bounds.height()*0.9);       // same as above
-//    view->view()->fitInView(bounds,Qt::KeepAspectRatio);
-//    view->view()->centerOn(0, 0);
 }
 
 void MainWindow::widgetMoveto(QPoint dpos)
@@ -127,7 +120,31 @@ void MainWindow::ImageOpened()
 void MainWindow::Datalost(int num)
 {
     qDebug() << "DataLost Happen Lost************* " << num << "lines ";
-    QMessageBox::information(this, "", "Data Lost Happend", "确定", "取消");
+    //QMessageBox::information(this, "", "Data Lost Happend", "确定", "取消");
+    lostLineCount++;
+    panel->frameCountLabel->setDataLost(lostLineCount);
+}
+
+void MainWindow::resizeEvent(QResizeEvent * event)
+{
+    fitToScene();
+}
+
+void MainWindow::fitToScene()
+{
+    qDebug()<<"proxy "<< proxy->rect();
+    view->resetView();
+}
+
+void MainWindow::showEvent(QShowEvent* event)
+{
+    fitToScene();
+}
+
+void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock)
+{
+    //qDebug() << __FUNCTION__;
+    scene->update();
 }
 
 void MainWindow::FrameReady(int)
@@ -135,13 +152,14 @@ void MainWindow::FrameReady(int)
     framecount++;
     qDebug()<< "Frame count: "<< framecount;
     qDebug() << "Frame Ready thread id = " << QThread::currentThreadId();
-    if (autoSaveEnabled) {
+    if (setting.autoSave()) {
         int size = axImageObject->Width()*axImageObject->Height()*axImageObject->BytesPerPixel();
         ImageData* data = new ImageData((char*)axImageObject->ImageDataAddress(), size);
         fileServer.append(data);
     }
     scene->update();
     view->view()->viewport()->update();
+    panel->frameCountLabel->setFrameCount(framecount);
 }
 
 void MainWindow::createAxWidget()
@@ -180,6 +198,7 @@ void MainWindow::initAxWidget()
     axImage->SetImgWidth(1536);
     axImage->SetImagePort(4001);
     axImage->SetBytesPerPixel(2);
+    axImage->SetSubFrameHeight(32);
     axImage->setVisible(false);
 
     axDisplay->SetDisplayScale(0);
@@ -187,7 +206,7 @@ void MainWindow::initAxWidget()
     axDisplay->SetMapEnd(10000);
     axDisplay->setMinimumSize(512,512);
     axDisplay->dynamicCall("SetDisplayScale(int)", 0);
-    //axDisplay->setVisible(true);
+    axDisplay->SetRefreshMode(2);//Moving
 
     qDebug()<<"get ImageObject";
     IUnknown* imgsrcHandle =  axImage->ObjectHandle();
@@ -198,22 +217,26 @@ void MainWindow::initAxWidget()
     }
 
     //openDetector();
-//    QObject::connect(axImage, SIGNAL(OnImageOpen()), this, SLOT(ImageOpened()));
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
     QObject::connect(axImage, SIGNAL(Datalost(int)), this, SLOT(Datalost(int)));
+    QObject::connect(axImage, SIGNAL(SubFrameReady(int, int, int, int)), this, SLOT(SubFrameReady(int, int, int, int)));
 }
 
-void MainWindow::showEvent ( QShowEvent * event )
-{
-    view->resetView();
-}
 
 void MainWindow::initDetector()
 {
        // axCommander->SetDataPattern(1);
        // axCommander->SetIntegrationTime(1400);
-       // QString rt;
-       // axDetector->SendCommand(QString("[ED,M,0]"), rt);
+    QString rt;
+    axDetector->SendCommand(QString("[ED,M,1]"), rt);
+    if(setting.dataPattern())
+        axCommander->SetDataPattern(1);
+    float pixelSize = axCommander->PixelSize();
+    int time = pixelSize*1000000/(setting.scanSpeed()*10);
+    qDebug()<<"Inetegration Time is "<<time;
+    axCommander->SetIntegrationTime(time);
+    axCommander->SetSensitivityLevel(setting.sensitivityLevel());
+
 }
 
 void MainWindow::openDetector()
@@ -252,7 +275,7 @@ void MainWindow::connectSignals()
     QObject::connect(panel, &Panel::dualScanEnable, this, &MainWindow::dualScanEnable);
     QObject::connect(panel, &Panel::settingButton_click, this, &MainWindow::setting_clicked);
     QObject::connect(panel, &Panel::openButton_click, this, &MainWindow::open_clicked);
-    QObject::connect(panel, &Panel::autoSaveEnable, this, &MainWindow::autoSaveEnable);
+    QObject::connect(panel->saveButton, &QToolButton::click, this, &MainWindow::saveButtonClick);
     QObject::connect(panel, &Panel::powerButton_click, this, &MainWindow::power_clicked);
     QObject::connect(panel, &Panel::contrastEnable, this, &MainWindow::contrastEnable);
     QObject::connect(panel, &Panel::autoContrastButton_click, this, &MainWindow::autoContrast_clicked);
@@ -261,6 +284,7 @@ void MainWindow::connectSignals()
     QObject::connect(panel, &Panel::invertButton_click, this, &MainWindow::invert_click);
     QObject::connect(panel, &Panel::rotateButton_click, this, &MainWindow::rotate_click);
 
+    QObject::connect(axDisplay,SIGNAL(MouseMove(int, int, int)), panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
 }
 
 void MainWindow::stop()
@@ -285,6 +309,7 @@ void MainWindow::scan()
     }
 
     framecount = 0;
+    lostLineCount = 0;
     axImage->Grab(0);
     grabing = true;
 }
@@ -326,12 +351,28 @@ void MainWindow::setting_clicked()
 void MainWindow::open_clicked()
 {
 //open file dialog
+
 }
 
-void MainWindow::autoSaveEnable(bool enable)
+void MainWindow::saveButtonClick()
 {
-    qDebug() << "AutoSave is "<< enable;
-    autoSaveEnabled = enable;
+    if(!axImage->IsOpened())
+        return;
+    QString path = QFileDialog::getOpenFileName();
+    QFile* file =  new QFile(path);
+    if (!file) {
+        file->open(QIODevice::WriteOnly|QIODevice::Append);
+    }
+    if (file) {
+        int size = axImageObject->Width()*axImageObject->Height()*axImageObject->BytesPerPixel();
+        long writed = 0;
+        char* src = (char*)axImageObject->ImageDataAddress();
+        while (size > 0) {
+            writed = file->write((char*)src, size);
+            src += writed;
+            size -= writed;
+        }
+    }
 }
 
 void MainWindow::power_clicked()
@@ -409,4 +450,10 @@ void MainWindow::rotate_click()
 void MainWindow::moveEnable(bool enable)
 {
     zoomEnabled = enable;
+    QString rt;
+    if(enable){
+        axCommander->SetDataPattern(1);
+    }
+    else
+        axCommander->SetDataPattern(0);
 }

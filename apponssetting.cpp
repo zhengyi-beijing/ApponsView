@@ -7,7 +7,7 @@ SettingParam ApponsSetting::param;
 
 ApponsSetting::ApponsSetting()
 {
-    LoadConfig();
+   // LoadConfig();
 }
 
 void ApponsSetting::LoadConfig()
@@ -18,14 +18,6 @@ void ApponsSetting::LoadConfig()
     param.width = setting.value("Image/width", 1536).toInt();
     param.height = setting.value("Image/height", 1024).toInt();
 
-//    int scanSpeed;
-//    int sensitivityLevel;
-//    int scanMode;
-//    int dataPattern;
-//    int rayVoltage;
-//    int rayCurrent;
-//    int rayExposeTime;
-//    bool autoSave;
     param.scanSpeed = setting.value("Detector/scanSpeed", 200).toInt();
     param.sensitivityLevel = setting.value("Detector/sensitivity", 0).toInt();
     param.dataPattern = setting.value("Detector/dataPattern", 0).toInt();
@@ -35,6 +27,51 @@ void ApponsSetting::LoadConfig()
     param.rayExposeTime = setting.value("RaySource/rayExposeTime", 2).toInt();
     param.autoSave = setting.value("Image/autoSave", 0).toInt();
 
+}
+
+QString ApponsSetting::ip()
+{
+    return param.ip;
+}
+
+int ApponsSetting::scanSpeed()
+{
+    return param.scanSpeed;
+}
+
+int ApponsSetting::sensitivityLevel()
+{
+    return param.sensitivityLevel;
+}
+
+int ApponsSetting::scanMode()
+{
+    return param.scanMode;
+}
+
+int ApponsSetting::dataPattern()
+{
+    return param.dataPattern;
+}
+
+int ApponsSetting::rayVoltage()
+{
+    return param.rayVoltage;
+}
+
+int ApponsSetting::rayCurrent()
+{
+    return param.rayCurrent;
+}
+
+int ApponsSetting::rayExposeTime()
+{
+    return param.rayExposeTime;
+}
+
+bool ApponsSetting::autoSave()
+{
+    return param.autoSave;
 }
 
 void ApponsSetting::showSettingDialog()

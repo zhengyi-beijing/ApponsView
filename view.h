@@ -48,6 +48,7 @@
 #include "digitalclock.h"
 #include <QLabel>
 #include <QPushButton>
+#include <QResizeEvent>
 
 class View;
 
@@ -74,7 +75,8 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent * event);
-
+    void resizeEvent(QResizeEvent *event) {
+    }
 private:
     View *view;
     Mode mode;
@@ -134,11 +136,15 @@ signals:
     void settingButton_click();
     void invertButton_click();
     void rotateButton_click();
+public:
+
+    PixelInfoLabel* pixelInfoLabel;
+    FrameCountLabel* frameCountLabel;
+    PanelButton *saveButton;
 
 public slots:
     void aboutButton_handle();
     void openButton_handle();
-    void saveButton_handle();
     void settingButton_handle();
     void powerButton_handle();
     void contrastButton_handle();
@@ -156,7 +162,6 @@ private:
     PanelButton *aboutButton;
 //    QPushButton *aboutButton;
     PanelButton *openButton;
-    PanelButton *saveButton;
     PanelButton *settingButton;
     PanelButton *powerButton;
     PanelButton *contrastButton;

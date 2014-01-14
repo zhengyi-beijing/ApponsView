@@ -25,26 +25,28 @@ public:
     ApponsSetting();
     static void showSettingDialog();
 
+    QString ip();
+
     int scanSpeed();
-    void setScanSpeed(int s);
+    //void setScanSpeed(int s);
     int sensitivityLevel();
-    void setSensitivityLevel(int s);
+    //void setSensitivityLevel(int s);
     int scanMode();
-    void setScanMode(int m);
+    //void setScanMode(int m);
     int dataPattern();
-    void setDataPattern(int b);
+    //void setDataPattern(int b);
     int rayVoltage();
-    void setRayVoltage(int v);
+    //void setRayVoltage(int v);
     int rayCurrent();
-    void setRayCurrent(int c);
+    //void setRayCurrent(int c);
     int rayExposeTime();
-    void setRayExposeTime(int s);
+    //void setRayExposeTime(int s);
     bool autoSave();
-    int setAutoSave(int b);
+    //int setAutoSave(int b);
+    void LoadConfig();
 
 private:
     static SettingParam param;
-    void LoadConfig();
 };
 
 #endif // APPONSSETTING_H

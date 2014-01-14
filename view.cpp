@@ -40,11 +40,11 @@
 ****************************************************************************/
 
 #include "view.h"
-#ifndef QT_NO_OPENGL
+//#ifndef QT_NO_OPENGL
 #include <QtOpenGL>
-#else
+//#else
 #include <QtWidgets>
-#endif
+//#endif
 #include "ui_aboutDlg.h"
 #include "apponssetting.h"
 
@@ -109,7 +109,7 @@ View::View(const QString &name, QWidget *parent)
     topLayout->addWidget(graphicsView);
     topLayout->setMargin(1);
     setLayout(topLayout);
-
+    toggleOpenGL();
     scale = 1.0;
     rotate = 0;
     setupMatrix();
@@ -141,9 +141,9 @@ void View::setupMatrix()
 
 void View::toggleOpenGL()
 {
-#ifndef QT_NO_OPENGL
+//#ifndef QT_NO_OPENGL
     graphicsView->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
-#endif
+//#endif
 }
 
 void View::toggleAntialiasing()
@@ -192,7 +192,7 @@ PanelButton::PanelButton(const QString resPath, QWidget *parent, bool group, QSi
         setCheckable(true);
     } else {
         setAutoRaise(true);
-        setCheckable(true);
+        setCheckable(false);
     }
 
 }
@@ -209,7 +209,7 @@ Panel::Panel(const QString &name, QWidget *parent)
 
     openButton = new PanelButton(":/Appons/res/open.ico");
 
-    saveButton = new PanelButton(":/Appons/res/save.ico", 0, true);
+    saveButton = new PanelButton(":/Appons/res/save.ico", 0, false);
 
     settingButton = new PanelButton(":/Appons/res/setting.ico");
     powerButton = new PanelButton(":/Appons/res/exit.ico");
@@ -221,9 +221,11 @@ Panel::Panel(const QString &name, QWidget *parent)
     singleScanButton = new PanelButton(":/Appons/res/singleScan.ico", 0, true);
     dualScanButton = new PanelButton(":/Appons/res/dualScan.ico", 0, true);
     invertButton = new PanelButton(":/Appons/res/invert.ico", 0);
-    rotateButton = new PanelButton(":/Appons/res/rotate.ico", 0);
+    rotateButton = new PanelButton(":/Appons/res/rotate.ico", 0, false);
 
     clock = new DigitalClock(this);
+    frameCountLabel = new FrameCountLabel(this);
+    pixelInfoLabel = new PixelInfoLabel(this);
 
     QGridLayout *panelLayout = new QGridLayout;
     panelLayout->addWidget(openButton, 0,0);
@@ -243,12 +245,10 @@ Panel::Panel(const QString &name, QWidget *parent)
     vLayout->addWidget(aboutButton);
     vLayout->addLayout(panelLayout);
 
-    //QSpacerItem *spacer = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Expanding);
-
-    //vLayout->addSpacerItem(spacer);
     vLayout->addStretch();
+    vLayout->addWidget(pixelInfoLabel);
+    vLayout->addWidget(frameCountLabel);
     vLayout->addWidget(clock);
-    //vLayout->addSpacerItem(spacer1);
     setLayout(vLayout);
 
     setBackgroundImage();
@@ -292,12 +292,6 @@ void Panel::aboutButton_handle()
 void Panel::openButton_handle()
 {
     emit openButton_click();
-}
-
-void Panel::saveButton_handle()
-{
-    autoSaveEnabled = !autoSaveEnabled;
-    emit autoSaveEnable(autoSaveEnabled);
 }
 
 void Panel::settingButton_handle()
@@ -400,7 +394,6 @@ void Panel::signalInit()
 {
     connect(aboutButton, SIGNAL(clicked()),this,SLOT(aboutButton_handle()));
     connect(openButton, SIGNAL(clicked()),this,SLOT(openButton_handle()));
-    connect(saveButton, SIGNAL(clicked()),this,SLOT(saveButton_handle()));
     connect(settingButton, SIGNAL(clicked()),this,SLOT(settingButton_handle()));
     connect(powerButton, SIGNAL(clicked()),this,SLOT(powerButton_handle()));
     connect(contrastButton, SIGNAL(clicked()),this,SLOT(contrastButton_handle()));

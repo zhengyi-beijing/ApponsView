@@ -37,6 +37,7 @@ HEADERS  += \
     apponssetting.h
 
 OTHER_FILES +=
+RC_FILE = .\rc.rc.txt
 
 RESOURCES += \
     Appons.qrc
@@ -47,3 +48,4 @@ DEPENDPATH += $$PWD/
 FORMS += \
     aboutDlg.ui \
     settingdialog.ui
+

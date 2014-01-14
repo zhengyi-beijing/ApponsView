@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/Appons">
         <file>res/ApponsView Icon 32.ico</file>
-        <file>res/ApponsView Icon 64.ico</file>
+        <file>res/ApponsView64.ico</file>
         <file>res/contrast.ico</file>
         <file>res/autoContrast.ico</file>
         <file>res/DE.ico</file>
