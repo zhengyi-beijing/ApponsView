@@ -22,5 +22,9 @@
         <file>res/zoomIn.ico</file>
         <file>res/background.bmp</file>
         <file>res/background-3.bmp</file>
+        <file>res/IMG_BACK.bmp</file>
+        <file>res/about-logo.png</file>
+        <file>res/dm-web.png</file>
+        <file>res/about-logo-grey.png</file>
     </qresource>
 </RCC>

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include "QLogger.h"
+#include "apponssetting.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
 
     MainWindow window;
 
+    ApponsSetting setting;
     //window.showFullScreen();
     window.show();
 

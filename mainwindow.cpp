@@ -197,7 +197,7 @@ void MainWindow::initAxWidget()
         axDisplay->SetDataSource(imgsrcHandle);
     }
 
-    openDetector();
+    //openDetector();
 //    QObject::connect(axImage, SIGNAL(OnImageOpen()), this, SLOT(ImageOpened()));
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
     QObject::connect(axImage, SIGNAL(Datalost(int)), this, SLOT(Datalost(int)));

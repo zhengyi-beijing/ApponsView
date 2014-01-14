@@ -46,6 +46,8 @@
 #include <QGraphicsView>
 #include <QToolButton>
 #include "digitalclock.h"
+#include <QLabel>
+#include <QPushButton>
 
 class View;
 
@@ -110,7 +112,7 @@ class PanelButton: public QToolButton
 {
     Q_OBJECT
 public:
-    explicit PanelButton(const QString resPath, QWidget *parent = 0, bool group = false);
+    explicit PanelButton(const QString resPath, QWidget *parent = 0, bool group = false, QSize size = QSize(64,64));
 
 };
 
@@ -134,8 +136,10 @@ signals:
     void rotateButton_click();
 
 public slots:
+    void aboutButton_handle();
     void openButton_handle();
     void saveButton_handle();
+    void settingButton_handle();
     void powerButton_handle();
     void contrastButton_handle();
     void autoContrastButton_handle();
@@ -149,6 +153,8 @@ public slots:
 private:
     void setBackgroundImage();
     void signalInit();
+    PanelButton *aboutButton;
+//    QPushButton *aboutButton;
     PanelButton *openButton;
     PanelButton *saveButton;
     PanelButton *settingButton;

@@ -45,6 +45,8 @@
 #else
 #include <QtWidgets>
 #endif
+#include "ui_aboutDlg.h"
+#include "apponssetting.h"
 
 void GraphicsView::wheelEvent(QWheelEvent *e)
 {
@@ -62,8 +64,8 @@ void GraphicsView::wheelEvent(QWheelEvent *e)
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << __FUNCTION__<< event->pos();
-    qDebug() << __FUNCTION__<< event->button();
+    //qDebug() << __FUNCTION__<< event->pos();
+    //qDebug() << __FUNCTION__<< event->button();
     mousePressed = true;
 }
 
@@ -75,8 +77,8 @@ void GraphicsView::mouseReleaseEvent ( QMouseEvent * event )
 
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
-    qDebug() << __FUNCTION__<< event->pos();
-    qDebug() << __FUNCTION__<< event->button();
+    //qDebug() << __FUNCTION__<< event->pos();
+    //qDebug() << __FUNCTION__<< event->button();
     if(mousePressed) {
         if(mode == Move) {
 
@@ -175,11 +177,10 @@ void View::rotateRight()
 
 //void On
 
-PanelButton::PanelButton(const QString resPath, QWidget *parent, bool group)
+PanelButton::PanelButton(const QString resPath, QWidget *parent, bool group, QSize size)
     :QToolButton(parent)
 {
-    int size = 64;
-    QSize iconSize(size, size);
+    QSize iconSize = size;
     QIcon icon;
     QPixmap pixmap = QPixmap(resPath).scaled(iconSize);
     icon.addPixmap(pixmap);
@@ -201,6 +202,10 @@ Panel::Panel(const QString &name, QWidget *parent)
 {
     setFrameStyle(QFrame::NoFrame);
    // int size = style()->pixelMetric(QStyle::PM_ToolBarIconSize);
+    aboutButton = new PanelButton(":/Appons/res/about-logo-grey.png", 0, false, QSize(192, 64));
+    //aboutButton = new QPushButton("ApponsView");
+    //aboutButton->setFlat(true);
+    aboutButton->setCheckable(false);
 
     openButton = new PanelButton(":/Appons/res/open.ico");
 
@@ -235,6 +240,7 @@ Panel::Panel(const QString &name, QWidget *parent)
     panelLayout->addWidget(dualScanButton, 5,1);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
+    vLayout->addWidget(aboutButton);
     vLayout->addLayout(panelLayout);
 
     //QSpacerItem *spacer = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -274,6 +280,15 @@ void Panel::setBackgroundImage()
     */
 }
 
+void Panel::aboutButton_handle()
+{
+    qDebug()<<"About click";
+    QDialog aboutdlg;
+    Ui_Dialog about;
+    about.setupUi(&aboutdlg);
+    aboutdlg.exec();
+}
+
 void Panel::openButton_handle()
 {
     emit openButton_click();
@@ -283,6 +298,13 @@ void Panel::saveButton_handle()
 {
     autoSaveEnabled = !autoSaveEnabled;
     emit autoSaveEnable(autoSaveEnabled);
+}
+
+void Panel::settingButton_handle()
+{
+    //SettingDialog settingdlg;
+    //settingdlg.exec();
+    ApponsSetting::showSettingDialog();
 }
 
 void Panel::powerButton_handle()
@@ -376,8 +398,10 @@ void Panel::rotateButton_handle()
 
 void Panel::signalInit()
 {
+    connect(aboutButton, SIGNAL(clicked()),this,SLOT(aboutButton_handle()));
     connect(openButton, SIGNAL(clicked()),this,SLOT(openButton_handle()));
     connect(saveButton, SIGNAL(clicked()),this,SLOT(saveButton_handle()));
+    connect(settingButton, SIGNAL(clicked()),this,SLOT(settingButton_handle()));
     connect(powerButton, SIGNAL(clicked()),this,SLOT(powerButton_handle()));
     connect(contrastButton, SIGNAL(clicked()),this,SLOT(contrastButton_handle()));
     connect(autoContrastButton, SIGNAL(clicked()),this,SLOT(autoContrastButton_handle()));

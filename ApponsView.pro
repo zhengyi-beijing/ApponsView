@@ -21,7 +21,9 @@ SOURCES += main.cpp \
     filestoreserver.cpp \
     QLogger.cpp \
     pixelorderconverter.cpp \
-    digitalclock.cpp
+    digitalclock.cpp \
+    settingdialog.cpp \
+    apponssetting.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -30,7 +32,9 @@ HEADERS  += \
     QLogger.h \
     filestoreserver.h \
     pixelorderconverter.h \
-    digitalclock.h
+    digitalclock.h \
+    settingdialog.h \
+    apponssetting.h
 
 OTHER_FILES +=
 
@@ -39,3 +43,7 @@ RESOURCES += \
 
 INCLUDEPATH += $$PWD/
 DEPENDPATH += $$PWD/
+
+FORMS += \
+    aboutDlg.ui \
+    settingdialog.ui
