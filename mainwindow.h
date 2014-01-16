@@ -52,6 +52,7 @@
 #include "filestoreserver.h"
 #include <QGraphicsProxyWidget>
 #include <QSettings>
+#include <QTimer>
 #include "apponssetting.h"
 
 class MainWindow : public QWidget
@@ -85,11 +86,12 @@ private:
     void populateScene();
     void initAxWidget();
     void createAxWidget();
-    void openDetector();
+    int openDetector();
     void initDetector();
     void scan();
     void stop();
 
+    QTimer timer;
     QGraphicsScene *scene;
     Panel *panel;
     View *view;

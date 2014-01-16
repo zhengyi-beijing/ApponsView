@@ -72,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
     layout->setMargin(1);
     layout->setSpacing(1);
     layout->addWidget(view);
+    //layout->addWidget(axDisplay);
     layout->addWidget(panel);
     setLayout(layout);
 
@@ -95,8 +96,10 @@ void MainWindow::populateScene()
     createAxWidget();
     initAxWidget();
     axDisplay->setParent(NULL);
+    //axDisplay->setParent(this);
     proxy = scene->addWidget(axDisplay);
     axDisplay->setVisible(true);
+    axDisplay->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
     view = new View("X-ray view");
     view->view()->setScene(scene);
@@ -127,12 +130,12 @@ void MainWindow::Datalost(int num)
 
 void MainWindow::resizeEvent(QResizeEvent * event)
 {
-    fitToScene();
+ //   fitToScene();
 }
 
 void MainWindow::fitToScene()
 {
-    qDebug()<<"proxy "<< proxy->rect();
+    //qDebug()<<"proxy "<< proxy->rect();
     view->resetView();
 }
 
@@ -144,7 +147,7 @@ void MainWindow::showEvent(QShowEvent* event)
 void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock)
 {
     //qDebug() << __FUNCTION__;
-    scene->update();
+    //scene->update();
 }
 
 void MainWindow::FrameReady(int)
@@ -157,8 +160,8 @@ void MainWindow::FrameReady(int)
         ImageData* data = new ImageData((char*)axImageObject->ImageDataAddress(), size);
         fileServer.append(data);
     }
-    scene->update();
-    view->view()->viewport()->update();
+    //scene->update();
+    //view->view()->viewport()->update();
     panel->frameCountLabel->setFrameCount(framecount);
 }
 
@@ -195,10 +198,10 @@ void MainWindow::initAxWidget()
 
     axImage->SetChannelType(2);
     axImage->SetImgHeight(1024);
-    axImage->SetImgWidth(1536);
+    axImage->SetImgWidth(512);
     axImage->SetImagePort(4001);
     axImage->SetBytesPerPixel(2);
-    axImage->SetSubFrameHeight(32);
+    //axImage->SetSubFrameHeight(32);
     axImage->setVisible(false);
 
     axDisplay->SetDisplayScale(0);
@@ -206,7 +209,7 @@ void MainWindow::initAxWidget()
     axDisplay->SetMapEnd(10000);
     axDisplay->setMinimumSize(512,512);
     axDisplay->dynamicCall("SetDisplayScale(int)", 0);
-    axDisplay->SetRefreshMode(2);//Moving
+    //axDisplay->SetRefreshMode(2);//Moving
 
     qDebug()<<"get ImageObject";
     IUnknown* imgsrcHandle =  axImage->ObjectHandle();
@@ -216,10 +219,14 @@ void MainWindow::initAxWidget()
         axDisplay->SetDataSource(imgsrcHandle);
     }
 
-    //openDetector();
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
     QObject::connect(axImage, SIGNAL(Datalost(int)), this, SLOT(Datalost(int)));
     QObject::connect(axImage, SIGNAL(SubFrameReady(int, int, int, int)), this, SLOT(SubFrameReady(int, int, int, int)));
+    if(!openDetector()){
+        QMessageBox::information(this, "", "Open Detector Failed", "OK", "CANCEL");
+        //power_clicked();
+        QTimer::singleShot(0, qApp, SLOT(quit()));
+    }
 }
 
 
@@ -239,13 +246,13 @@ void MainWindow::initDetector()
 
 }
 
-void MainWindow::openDetector()
+int MainWindow::openDetector()
 {
 
     int opened = axDetector->Open();
-    initDetector();
 
     if (opened){
+        initDetector();
         qDebug()<< "Detector Opened";
         int rt = axImage->Open();
         axImageObject = new DTControl::IImageObject((IDispatch*)axImage->ImageObject());
@@ -264,9 +271,12 @@ void MainWindow::openDetector()
         }
         else
           qDebug()<<"Open Image failed" ;
+        return true;
     }
-    else
+    else {
         qDebug() << "OPen detector failed";
+    }
+    return false;
 }
 
 void MainWindow::connectSignals()
@@ -291,6 +301,7 @@ void MainWindow::stop()
 {
     axImage->Stop();
     grabing = false;
+    timer.stop();
 }
 
 void MainWindow::scan()
@@ -311,6 +322,9 @@ void MainWindow::scan()
     framecount = 0;
     lostLineCount = 0;
     axImage->Grab(0);
+    timer.setInterval(17);
+    QObject::connect(&timer,SIGNAL(timeout()), scene, SLOT(update()));
+    timer.start();
     grabing = true;
 }
 
@@ -438,7 +452,11 @@ void MainWindow::zoomEnable(bool enable)
 {
     zoomEnabled = enable;
     if(zoomEnabled) {
-        view->zoomIn();
+      //  view->zoomIn();
+        view->view()->setMouseOpMode(GraphicsView::Zoom);
+    } else {
+        view->view()->setMouseOpMode(GraphicsView::None);
+        view->resetView();
     }
 }
 

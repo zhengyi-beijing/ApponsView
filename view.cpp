@@ -64,30 +64,48 @@ void GraphicsView::wheelEvent(QWheelEvent *e)
 
 void GraphicsView::mousePressEvent(QMouseEvent *event)
 {
-    //qDebug() << __FUNCTION__<< event->pos();
-    //qDebug() << __FUNCTION__<< event->button();
-    mousePressed = true;
+    qDebug() << __FUNCTION__<< event->pos();
+    qDebug() << __FUNCTION__<< event->button();
+    if(event->buttons() && Qt::LeftButton) {
+        qDebug()<<"Pressed";
+        mousePressed = true;
+        start = event->globalPos();
+    }
 }
 
 void GraphicsView::mouseReleaseEvent ( QMouseEvent * event )
 {
 
-    mousePressed = false;
+    qDebug() << __FUNCTION__<< event->pos();
+        qDebug()<<"Released";
+        mousePressed = false;
 }
 
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
-    //qDebug() << __FUNCTION__<< event->pos();
+    qDebug() << __FUNCTION__<< event->pos();
     //qDebug() << __FUNCTION__<< event->button();
     if(mousePressed) {
+        qDebug()<<"pressed move";
+        int dy = event->globalY() - start.y();
+        int dx = event->globalX() - start.x();
         if(mode == Move) {
 
         } else if (mode == Zoom) {
-
+            if(dy>10) {
+                qDebug()<<"zoomIn";
+                   view->zoomIn();
+                   start = event->globalPos();
+            } else if ( dy < -10) {
+                qDebug()<<"zoomOut";
+                    view->zoomOut();
+                    start = event->globalPos();
+            }
         } else { //contrast
 
         }
     }
+    event->accept();
 }
 
 View::View(const QString &name, QWidget *parent)
@@ -115,9 +133,10 @@ View::View(const QString &name, QWidget *parent)
     setupMatrix();
 }
 
-QGraphicsView *View::view() const
+GraphicsView *View::view() const
 {
-    return static_cast<QGraphicsView *>(graphicsView);
+    //return static_cast<QGraphicsView *>(graphicsView);
+    return graphicsView;
 }
 
 void View::resetView()
@@ -134,7 +153,6 @@ void View::setupMatrix()
     QMatrix matrix;
     matrix.scale(scale, scale);
     matrix.rotate(rotate);
-
     graphicsView->setMatrix(matrix);
 }
 
@@ -142,7 +160,19 @@ void View::setupMatrix()
 void View::toggleOpenGL()
 {
 //#ifndef QT_NO_OPENGL
-    graphicsView->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
+    QGLFormat fmt(QGL::SampleBuffers);
+    fmt.setSwapInterval(1);
+    int inter = 0;
+    if(fmt.swapInterval() == -1) {
+        qDebug()<<"SwapBuffer at v_blank not supported";
+        inter =17;
+    }
+    glWidget = new QGLWidget(fmt);
+
+    graphicsView->setViewport(glWidget);
+//    QObject::connect(&timer,SIGNAL(timeout()), glWidget, SLOT(updateGL()));
+//    timer.setInterval(inter);
+//    timer.start();
 //#endif
 }
 

@@ -49,14 +49,16 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QResizeEvent>
-
+#include <QTimer>
+#include <QPoint>
 class View;
+class QGLWidget;
 
 class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    enum Mode {Move, Zoom, Contrast};
+    enum Mode {None, Move, Zoom, Contrast};
     GraphicsView(View *v) : QGraphicsView(), view(v)
     {
         mode = Move;
@@ -81,6 +83,7 @@ private:
     View *view;
     Mode mode;
     bool mousePressed;
+    QPoint start;
 };
 
 class View : public QFrame
@@ -89,7 +92,7 @@ class View : public QFrame
 public:
     explicit View(const QString &name, QWidget *parent = 0);
 
-    QGraphicsView *view() const;
+    GraphicsView *view() const;
 
 public slots:
     void zoomIn();
@@ -107,7 +110,8 @@ private:
     GraphicsView *graphicsView;
     qreal scale;
     qreal rotate;
-
+    QGLWidget* glWidget;
+    QTimer timer;
 };
 
 class PanelButton: public QToolButton
