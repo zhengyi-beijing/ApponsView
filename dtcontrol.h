@@ -920,6 +920,14 @@ public:
     inline void Refresh();
 
     /*
+    Method Repaint
+
+    method Repaint
+
+    */
+    inline void Repaint();
+
+    /*
     Method Save
 
     method Save
@@ -1102,6 +1110,11 @@ public:
 
     */
     inline int Open();
+
+    /*
+    Method OpenMemImage
+    */
+    inline void OpenMemImage(int Width, int Height, uint& data);
 
     /*
     Method PrintErrMsg
@@ -2055,6 +2068,14 @@ public:
     inline void Refresh();
 
     /*
+    Method Repaint
+
+    method Repaint
+
+    */
+    inline void Repaint();
+
+    /*
     Method Save
 
     method Save
@@ -2242,6 +2263,11 @@ public:
 
     */
     inline int Open();
+
+    /*
+    Method OpenMemImage
+    */
+    inline void OpenMemImage(int Width, int Height, uint& data);
 
     /*
     Method PrintErrMsg
@@ -3593,10 +3619,16 @@ inline void CDTDisplay::Refresh()
     qt_metacall(QMetaObject::InvokeMetaMethod, 39, _a);
 }
 
+inline void CDTDisplay::Repaint()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 40, _a);
+}
+
 inline void CDTDisplay::Save(const QString& FilePath)
 {
     void *_a[] = {0, (void*)&FilePath};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 40, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 41, _a);
 }
 
 
@@ -3746,10 +3778,16 @@ inline void IDTDisplay::Refresh()
     qt_metacall(QMetaObject::InvokeMetaMethod, 11, _a);
 }
 
+inline void IDTDisplay::Repaint()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 12, _a);
+}
+
 inline void IDTDisplay::Save(const QString& FilePath)
 {
     void *_a[] = {0, (void*)&FilePath};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 12, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 13, _a);
 }
 
 
@@ -3903,24 +3941,30 @@ inline int CDTImage::Open()
     return qax_result;
 }
 
+inline void CDTImage::OpenMemImage(int Width, int Height, uint& data)
+{
+    void *_a[] = {0, (void*)&Width, (void*)&Height, (void*)&data};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 42, _a);
+}
+
 inline void CDTImage::PrintErrMsg(int ErrID, QString& ErrMsg)
 {
     void *_a[] = {0, (void*)&ErrID, (void*)&ErrMsg};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 42, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 43, _a);
 }
 
 inline int CDTImage::Snap(int FrameNum)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&FrameNum};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 53, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 54, _a);
     return qax_result;
 }
 
 inline void CDTImage::Stop()
 {
     void *_a[] = {0};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 54, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 55, _a);
 }
 
 
@@ -4074,24 +4118,30 @@ inline int IDTImage::Open()
     return qax_result;
 }
 
+inline void IDTImage::OpenMemImage(int Width, int Height, uint& data)
+{
+    void *_a[] = {0, (void*)&Width, (void*)&Height, (void*)&data};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 11, _a);
+}
+
 inline void IDTImage::PrintErrMsg(int ErrID, QString& ErrMsg)
 {
     void *_a[] = {0, (void*)&ErrID, (void*)&ErrMsg};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 11, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 12, _a);
 }
 
 inline int IDTImage::Snap(int FrameNum)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&FrameNum};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 22, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 23, _a);
     return qax_result;
 }
 
 inline void IDTImage::Stop()
 {
     void *_a[] = {0};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 23, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 24, _a);
 }
 
 

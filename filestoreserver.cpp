@@ -35,7 +35,7 @@ QString FileStoreServer::fileNamePrefix()
 
 QFile* FileStoreServer::newFile()
 {
-    QString _fileName = prefix;
+    QString _fileName =  filePath + "/"+ prefix;
     _fileName += "-";
     _fileName += QString::number(id++);
     _fileName += ".raw";
@@ -46,8 +46,10 @@ QFile* FileStoreServer::newFile()
     return new QFile(_fileName);
 }
 
-void FileStoreServer::append(ImageData* block)
+void FileStoreServer::append(ImageData* block, QString path, int sizelimit)
 {
+    filePath = path;
+    singleFileSize = sizelimit;
     qDebug()<<"Append Image data";
     lock.lockForWrite();
         dataList.append(block);
@@ -104,8 +106,8 @@ void FileStoreServer::write(ImageData* block)
         }
         fileSize += block->size();
         qDebug()<<"fileSize is "<<fileSize;
-        qDebug()<<"MAX_SIZE is "<<MAX_SIZE;
-        if (fileSize > (MAX_SIZE-1024)) {
+        qDebug()<<"MAX_SIZE is "<<singleFileSize;
+        if (fileSize > (singleFileSize-1024)) {
             closeFile();
         }
     }

@@ -11,8 +11,8 @@
 using namespace DTControl;
 
 struct qt_meta_stringdata_all_t {
-    QByteArrayData data[228];
-    char stringdata0[2771];
+    QByteArrayData data[232];
+    char stringdata0[2803];
 };
 #define QT_MOC_LITERAL(idx, ofs, len, table) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -193,62 +193,66 @@ QT_MOC_LITERAL(168, 2061, 5, 0),
 QT_MOC_LITERAL(169, 2067, 4, 0),
 QT_MOC_LITERAL(170, 2072, 8, 0),
 QT_MOC_LITERAL(171, 2081, 7, 0),
-QT_MOC_LITERAL(172, 2089, 4, 0),
-QT_MOC_LITERAL(173, 2094, 13, 0),
-QT_MOC_LITERAL(174, 2108, 10, 0),
-QT_MOC_LITERAL(175, 2119, 17, 0),
-QT_MOC_LITERAL(176, 2137, 14, 0),
-QT_MOC_LITERAL(177, 2152, 15, 0),
-QT_MOC_LITERAL(178, 2168, 12, 0),
-QT_MOC_LITERAL(179, 2181, 8, 0),
-QT_MOC_LITERAL(180, 2190, 5, 0),
-QT_MOC_LITERAL(181, 2196, 12, 0),
-QT_MOC_LITERAL(182, 2209, 9, 0),
-QT_MOC_LITERAL(183, 2219, 11, 0),
-QT_MOC_LITERAL(184, 2231, 8, 0),
-QT_MOC_LITERAL(185, 2240, 9, 0),
-QT_MOC_LITERAL(186, 2250, 6, 0),
-QT_MOC_LITERAL(187, 2257, 11, 0),
-QT_MOC_LITERAL(188, 2269, 8, 0),
-QT_MOC_LITERAL(189, 2278, 13, 0),
-QT_MOC_LITERAL(190, 2292, 10, 0),
-QT_MOC_LITERAL(191, 2303, 13, 0),
-QT_MOC_LITERAL(192, 2317, 10, 0),
-QT_MOC_LITERAL(193, 2328, 14, 0),
-QT_MOC_LITERAL(194, 2343, 11, 0),
-QT_MOC_LITERAL(195, 2355, 14, 0),
-QT_MOC_LITERAL(196, 2370, 11, 0),
-QT_MOC_LITERAL(197, 2382, 11, 0),
-QT_MOC_LITERAL(198, 2394, 21, 0),
-QT_MOC_LITERAL(199, 2416, 19, 0),
-QT_MOC_LITERAL(200, 2436, 15, 0),
-QT_MOC_LITERAL(201, 2452, 8, 0),
-QT_MOC_LITERAL(202, 2461, 8, 0),
-QT_MOC_LITERAL(203, 2470, 11, 0),
-QT_MOC_LITERAL(204, 2482, 10, 0),
-QT_MOC_LITERAL(205, 2493, 8, 0),
-QT_MOC_LITERAL(206, 2502, 13, 0),
-QT_MOC_LITERAL(207, 2516, 14, 0),
-QT_MOC_LITERAL(208, 2531, 9, 0),
-QT_MOC_LITERAL(209, 2541, 10, 0),
-QT_MOC_LITERAL(210, 2552, 4, 0),
-QT_MOC_LITERAL(211, 2557, 8, 0),
-QT_MOC_LITERAL(212, 2566, 16, 0),
-QT_MOC_LITERAL(213, 2583, 15, 0),
-QT_MOC_LITERAL(214, 2599, 12, 0),
-QT_MOC_LITERAL(215, 2612, 17, 0),
-QT_MOC_LITERAL(216, 2630, 14, 0),
-QT_MOC_LITERAL(217, 2645, 12, 0),
-QT_MOC_LITERAL(218, 2658, 9, 0),
-QT_MOC_LITERAL(219, 2668, 17, 0),
-QT_MOC_LITERAL(220, 2686, 14, 0),
-QT_MOC_LITERAL(221, 2701, 10, 0),
-QT_MOC_LITERAL(222, 2712, 7, 0),
-QT_MOC_LITERAL(223, 2720, 4, 0),
-QT_MOC_LITERAL(224, 2725, 4, 0),
-QT_MOC_LITERAL(225, 2730, 9, 0),
-QT_MOC_LITERAL(226, 2740, 9, 0),
-QT_MOC_LITERAL(227, 2750, 19, 0)
+QT_MOC_LITERAL(172, 2089, 7, 0),
+QT_MOC_LITERAL(173, 2097, 4, 0),
+QT_MOC_LITERAL(174, 2102, 13, 0),
+QT_MOC_LITERAL(175, 2116, 10, 0),
+QT_MOC_LITERAL(176, 2127, 17, 0),
+QT_MOC_LITERAL(177, 2145, 14, 0),
+QT_MOC_LITERAL(178, 2160, 15, 0),
+QT_MOC_LITERAL(179, 2176, 12, 0),
+QT_MOC_LITERAL(180, 2189, 8, 0),
+QT_MOC_LITERAL(181, 2198, 5, 0),
+QT_MOC_LITERAL(182, 2204, 12, 0),
+QT_MOC_LITERAL(183, 2217, 9, 0),
+QT_MOC_LITERAL(184, 2227, 11, 0),
+QT_MOC_LITERAL(185, 2239, 8, 0),
+QT_MOC_LITERAL(186, 2248, 9, 0),
+QT_MOC_LITERAL(187, 2258, 6, 0),
+QT_MOC_LITERAL(188, 2265, 11, 0),
+QT_MOC_LITERAL(189, 2277, 8, 0),
+QT_MOC_LITERAL(190, 2286, 13, 0),
+QT_MOC_LITERAL(191, 2300, 10, 0),
+QT_MOC_LITERAL(192, 2311, 13, 0),
+QT_MOC_LITERAL(193, 2325, 10, 0),
+QT_MOC_LITERAL(194, 2336, 14, 0),
+QT_MOC_LITERAL(195, 2351, 11, 0),
+QT_MOC_LITERAL(196, 2363, 14, 0),
+QT_MOC_LITERAL(197, 2378, 11, 0),
+QT_MOC_LITERAL(198, 2390, 11, 0),
+QT_MOC_LITERAL(199, 2402, 21, 0),
+QT_MOC_LITERAL(200, 2424, 19, 0),
+QT_MOC_LITERAL(201, 2444, 15, 0),
+QT_MOC_LITERAL(202, 2460, 8, 0),
+QT_MOC_LITERAL(203, 2469, 8, 0),
+QT_MOC_LITERAL(204, 2478, 11, 0),
+QT_MOC_LITERAL(205, 2490, 10, 0),
+QT_MOC_LITERAL(206, 2501, 8, 0),
+QT_MOC_LITERAL(207, 2510, 13, 0),
+QT_MOC_LITERAL(208, 2524, 14, 0),
+QT_MOC_LITERAL(209, 2539, 9, 0),
+QT_MOC_LITERAL(210, 2549, 10, 0),
+QT_MOC_LITERAL(211, 2560, 4, 0),
+QT_MOC_LITERAL(212, 2565, 8, 0),
+QT_MOC_LITERAL(213, 2574, 12, 0),
+QT_MOC_LITERAL(214, 2587, 5, 0),
+QT_MOC_LITERAL(215, 2593, 4, 0),
+QT_MOC_LITERAL(216, 2598, 16, 0),
+QT_MOC_LITERAL(217, 2615, 15, 0),
+QT_MOC_LITERAL(218, 2631, 12, 0),
+QT_MOC_LITERAL(219, 2644, 17, 0),
+QT_MOC_LITERAL(220, 2662, 14, 0),
+QT_MOC_LITERAL(221, 2677, 12, 0),
+QT_MOC_LITERAL(222, 2690, 9, 0),
+QT_MOC_LITERAL(223, 2700, 17, 0),
+QT_MOC_LITERAL(224, 2718, 14, 0),
+QT_MOC_LITERAL(225, 2733, 10, 0),
+QT_MOC_LITERAL(226, 2744, 7, 0),
+QT_MOC_LITERAL(227, 2752, 4, 0),
+QT_MOC_LITERAL(228, 2757, 4, 0),
+QT_MOC_LITERAL(229, 2762, 9, 0),
+QT_MOC_LITERAL(230, 2772, 9, 0),
+QT_MOC_LITERAL(231, 2782, 19, 0)
     },
     "DTControl::CDTDisplayControl\0Event Interface 1\0_IDTDisplayControlEvents\0"
     "Interface 0\0IDTDisplayControl\0AutoSizeChanged\0\0AutoSize\0BorderVisibleChanged\0"
@@ -277,16 +281,16 @@ QT_MOC_LITERAL(227, 2750, 19, 0)
     "ImageLineAddress\0LineIndex\0Width\0Height\0BytesPerPixel\0Pixel\0X\0Y\0RowAverage\0"
     "RowMax\0RowMin\0RowNoise\0SetImageDataAddress\0ImageDataAddress\0SetPixel\0"
     "DTControl::IImageObject\0DTControl::CDTDisplay\0_IDTDisplayEvents\0IDTDisplay\0"
-    "MouseMove\0Value\0Load\0FilePath\0Refresh\0Save\0SetDataSource\0DataSource\0"
+    "MouseMove\0Value\0Load\0FilePath\0Refresh\0Repaint\0Save\0SetDataSource\0DataSource\0"
     "SetDisplayControl\0DisplayControl\0SetDisplayScale\0DisplayScale\0SetGamma\0Gamma\0"
     "SetImgHeight\0ImgHeight\0SetImgWidth\0ImgWidth\0SetMapEnd\0MapEnd\0SetMapStart\0"
     "MapStart\0SetOrgPoint_X\0OrgPoint_X\0SetOrgPoint_Y\0OrgPoint_Y\0SetRefreshMode\0"
     "RefreshMode\0SetRefreshRate\0RefreshRate\0ImageObject\0DTControl::IDTDisplay\0"
     "DTControl::CDTImage\0_IDTImageEvents\0IDTImage\0Datalost\0LostlineNum\0FrameReady\0"
     "NumLines\0SubFrameReady\0NumOfBlockLeft\0StartLine\0bLastBlock\0Grab\0FrameNum\0"
-    "SetBytesPerPixel\0SetDualScanMode\0DualScanMode\0SetExFrameTrigger\0ExFrameTrigger\0"
-    "SetImagePort\0ImagePort\0SetSubFrameHeight\0SubFrameHeight\0SetTimeOut\0TimeOut\0"
-    "Snap\0Stop\0BandWidth\0IsGrabing\0DTControl::IDTImage\0"
+    "OpenMemImage\0uint&\0data\0SetBytesPerPixel\0SetDualScanMode\0DualScanMode\0"
+    "SetExFrameTrigger\0ExFrameTrigger\0SetImagePort\0ImagePort\0SetSubFrameHeight\0"
+    "SubFrameHeight\0SetTimeOut\0TimeOut\0Snap\0Stop\0BandWidth\0IsGrabing\0DTControl::IDTImage\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -1023,8 +1027,8 @@ static const uint qt_meta_data_DTControl__CDTDisplay[] = {
     7, // revision
     164,  // classname
     2, 14, // classinfo
-    21, 18, // methods
-    14, 194, // properties
+    22, 18, // methods
+    14, 200, // properties
     0, 0, // enums/sets
     0, 0, // constructors
     0, // flags
@@ -1035,29 +1039,30 @@ static const uint qt_meta_data_DTControl__CDTDisplay[] = {
     3, 166, 
 
 // signal: name, argc, parameters, tag, flags
-    167, 3, 123, 6, 5,
-    10, 4, 130, 6, 5,
-    15, 1, 139, 6, 5,
-    17, 3, 142, 6, 5,
+    167, 3, 128, 6, 5,
+    10, 4, 135, 6, 5,
+    15, 1, 144, 6, 5,
+    17, 3, 147, 6, 5,
 
 // slot: name, argc, parameters, tag, flags
-    32, 0, 149, 6, 9,
-    169, 1, 150, 6, 9,
-    33, 0, 153, 6, 9,
-    171, 0, 154, 6, 9,
-    172, 1, 155, 6, 9,
-    173, 1, 158, 6, 9,
-    175, 1, 161, 6, 9,
-    177, 1, 164, 6, 9,
-    179, 1, 167, 6, 9,
-    181, 1, 170, 6, 9,
-    183, 1, 173, 6, 9,
-    185, 1, 176, 6, 9,
-    187, 1, 179, 6, 9,
-    189, 1, 182, 6, 9,
-    191, 1, 185, 6, 9,
-    193, 1, 188, 6, 9,
-    195, 1, 191, 6, 9,
+    32, 0, 154, 6, 9,
+    169, 1, 155, 6, 9,
+    33, 0, 158, 6, 9,
+    171, 0, 159, 6, 9,
+    172, 0, 160, 6, 9,
+    173, 1, 161, 6, 9,
+    174, 1, 164, 6, 9,
+    176, 1, 167, 6, 9,
+    178, 1, 170, 6, 9,
+    180, 1, 173, 6, 9,
+    182, 1, 176, 6, 9,
+    184, 1, 179, 6, 9,
+    186, 1, 182, 6, 9,
+    188, 1, 185, 6, 9,
+    190, 1, 188, 6, 9,
+    192, 1, 191, 6, 9,
+    194, 1, 194, 6, 9,
+    196, 1, 197, 6, 9,
 
 // signal: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, 154, 155, 168,
@@ -1070,35 +1075,36 @@ static const uint qt_meta_data_DTControl__CDTDisplay[] = {
     QMetaType::Void, QMetaType::QString, 170,
     QMetaType::Int,
     QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void, QMetaType::QString, 170,
-    QMetaType::Void, 0x80000000 | 23, 174,
-    QMetaType::Void, 0x80000000 | 23, 176,
-    QMetaType::Void, QMetaType::Int, 178,
-    QMetaType::Void, QMetaType::Double, 180,
-    QMetaType::Void, QMetaType::UInt, 182,
-    QMetaType::Void, QMetaType::UInt, 184,
-    QMetaType::Void, QMetaType::Int, 186,
-    QMetaType::Void, QMetaType::Int, 188,
-    QMetaType::Void, QMetaType::Int, 190,
-    QMetaType::Void, QMetaType::Int, 192,
-    QMetaType::Void, QMetaType::Int, 194,
-    QMetaType::Void, QMetaType::Int, 196,
+    QMetaType::Void, 0x80000000 | 23, 175,
+    QMetaType::Void, 0x80000000 | 23, 177,
+    QMetaType::Void, QMetaType::Int, 179,
+    QMetaType::Void, QMetaType::Double, 181,
+    QMetaType::Void, QMetaType::UInt, 183,
+    QMetaType::Void, QMetaType::UInt, 185,
+    QMetaType::Void, QMetaType::Int, 187,
+    QMetaType::Void, QMetaType::Int, 189,
+    QMetaType::Void, QMetaType::Int, 191,
+    QMetaType::Void, QMetaType::Int, 193,
+    QMetaType::Void, QMetaType::Int, 195,
+    QMetaType::Void, QMetaType::Int, 197,
 
  // properties: name, type, flags
-    174, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DataSource
-    176, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DisplayControl
-    178, QMetaType::Int, 0x02015003, 		 // int DisplayScale
-    180, QMetaType::Double, 0x06015003, 		 // double Gamma
-    197, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ImageObject
-    182, QMetaType::UInt, 0x03015003, 		 // uint ImgHeight
-    184, QMetaType::UInt, 0x03015003, 		 // uint ImgWidth
-    186, QMetaType::Int, 0x02015003, 		 // int MapEnd
-    188, QMetaType::Int, 0x02015003, 		 // int MapStart
+    175, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DataSource
+    177, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DisplayControl
+    179, QMetaType::Int, 0x02015003, 		 // int DisplayScale
+    181, QMetaType::Double, 0x06015003, 		 // double Gamma
+    198, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ImageObject
+    183, QMetaType::UInt, 0x03015003, 		 // uint ImgHeight
+    185, QMetaType::UInt, 0x03015003, 		 // uint ImgWidth
+    187, QMetaType::Int, 0x02015003, 		 // int MapEnd
+    189, QMetaType::Int, 0x02015003, 		 // int MapStart
     59, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ObjectHandle
-    190, QMetaType::Int, 0x02015003, 		 // int OrgPoint_X
-    192, QMetaType::Int, 0x02015003, 		 // int OrgPoint_Y
-    194, QMetaType::Int, 0x02015003, 		 // int RefreshMode
-    196, QMetaType::Int, 0x02015003, 		 // int RefreshRate
+    191, QMetaType::Int, 0x02015003, 		 // int OrgPoint_X
+    193, QMetaType::Int, 0x02015003, 		 // int OrgPoint_Y
+    195, QMetaType::Int, 0x02015003, 		 // int RefreshMode
+    197, QMetaType::Int, 0x02015003, 		 // int RefreshRate
 
     0 // eod
 };
@@ -1120,38 +1126,39 @@ static const uint qt_meta_data_DTControl__IDTDisplay[] = {
 
  // content:
     7, // revision
-    198,  // classname
+    199,  // classname
     0, 0, // classinfo
-    20, 14, // methods
-    15, 178, // properties
+    21, 14, // methods
+    15, 184, // properties
     0, 0, // enums/sets
     0, 0, // constructors
     0, // flags
     3, // signal count
 
 // signal: name, argc, parameters, tag, flags
-    10, 4, 114, 6, 5,
-    15, 1, 123, 6, 5,
-    17, 3, 126, 6, 5,
+    10, 4, 119, 6, 5,
+    15, 1, 128, 6, 5,
+    17, 3, 131, 6, 5,
 
 // slot: name, argc, parameters, tag, flags
-    32, 0, 133, 6, 9,
-    169, 1, 134, 6, 9,
-    33, 0, 137, 6, 9,
-    171, 0, 138, 6, 9,
-    172, 1, 139, 6, 9,
-    173, 1, 142, 6, 9,
-    175, 1, 145, 6, 9,
-    177, 1, 148, 6, 9,
-    179, 1, 151, 6, 9,
-    181, 1, 154, 6, 9,
-    183, 1, 157, 6, 9,
-    185, 1, 160, 6, 9,
-    187, 1, 163, 6, 9,
-    189, 1, 166, 6, 9,
-    191, 1, 169, 6, 9,
-    193, 1, 172, 6, 9,
-    195, 1, 175, 6, 9,
+    32, 0, 138, 6, 9,
+    169, 1, 139, 6, 9,
+    33, 0, 142, 6, 9,
+    171, 0, 143, 6, 9,
+    172, 0, 144, 6, 9,
+    173, 1, 145, 6, 9,
+    174, 1, 148, 6, 9,
+    176, 1, 151, 6, 9,
+    178, 1, 154, 6, 9,
+    180, 1, 157, 6, 9,
+    182, 1, 160, 6, 9,
+    184, 1, 163, 6, 9,
+    186, 1, 166, 6, 9,
+    188, 1, 169, 6, 9,
+    190, 1, 172, 6, 9,
+    192, 1, 175, 6, 9,
+    194, 1, 178, 6, 9,
+    196, 1, 181, 6, 9,
 
 // signal: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::QString, QMetaType::QString, 11, 12, 13, 14,
@@ -1163,35 +1170,36 @@ static const uint qt_meta_data_DTControl__IDTDisplay[] = {
     QMetaType::Void, QMetaType::QString, 170,
     QMetaType::Int,
     QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void, QMetaType::QString, 170,
-    QMetaType::Void, 0x80000000 | 23, 174,
-    QMetaType::Void, 0x80000000 | 23, 176,
-    QMetaType::Void, QMetaType::Int, 178,
-    QMetaType::Void, QMetaType::Double, 180,
-    QMetaType::Void, QMetaType::UInt, 182,
-    QMetaType::Void, QMetaType::UInt, 184,
-    QMetaType::Void, QMetaType::Int, 186,
-    QMetaType::Void, QMetaType::Int, 188,
-    QMetaType::Void, QMetaType::Int, 190,
-    QMetaType::Void, QMetaType::Int, 192,
-    QMetaType::Void, QMetaType::Int, 194,
-    QMetaType::Void, QMetaType::Int, 196,
+    QMetaType::Void, 0x80000000 | 23, 175,
+    QMetaType::Void, 0x80000000 | 23, 177,
+    QMetaType::Void, QMetaType::Int, 179,
+    QMetaType::Void, QMetaType::Double, 181,
+    QMetaType::Void, QMetaType::UInt, 183,
+    QMetaType::Void, QMetaType::UInt, 185,
+    QMetaType::Void, QMetaType::Int, 187,
+    QMetaType::Void, QMetaType::Int, 189,
+    QMetaType::Void, QMetaType::Int, 191,
+    QMetaType::Void, QMetaType::Int, 193,
+    QMetaType::Void, QMetaType::Int, 195,
+    QMetaType::Void, QMetaType::Int, 197,
 
  // properties: name, type, flags
-    174, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DataSource
-    176, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DisplayControl
-    178, QMetaType::Int, 0x02015003, 		 // int DisplayScale
-    180, QMetaType::Double, 0x06015003, 		 // double Gamma
-    197, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ImageObject
-    182, QMetaType::UInt, 0x03015003, 		 // uint ImgHeight
-    184, QMetaType::UInt, 0x03015003, 		 // uint ImgWidth
-    186, QMetaType::Int, 0x02015003, 		 // int MapEnd
-    188, QMetaType::Int, 0x02015003, 		 // int MapStart
+    175, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DataSource
+    177, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DisplayControl
+    179, QMetaType::Int, 0x02015003, 		 // int DisplayScale
+    181, QMetaType::Double, 0x06015003, 		 // double Gamma
+    198, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ImageObject
+    183, QMetaType::UInt, 0x03015003, 		 // uint ImgHeight
+    185, QMetaType::UInt, 0x03015003, 		 // uint ImgWidth
+    187, QMetaType::Int, 0x02015003, 		 // int MapEnd
+    189, QMetaType::Int, 0x02015003, 		 // int MapStart
     59, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ObjectHandle
-    190, QMetaType::Int, 0x02015003, 		 // int OrgPoint_X
-    192, QMetaType::Int, 0x02015003, 		 // int OrgPoint_Y
-    194, QMetaType::Int, 0x02015003, 		 // int RefreshMode
-    196, QMetaType::Int, 0x02015003, 		 // int RefreshRate
+    191, QMetaType::Int, 0x02015003, 		 // int OrgPoint_X
+    193, QMetaType::Int, 0x02015003, 		 // int OrgPoint_Y
+    195, QMetaType::Int, 0x02015003, 		 // int RefreshMode
+    197, QMetaType::Int, 0x02015003, 		 // int RefreshRate
     25, QMetaType::QString, 0x0a055003, 		 // QString control
 
     0 // eod
@@ -1214,90 +1222,92 @@ static const uint qt_meta_data_DTControl__CDTImage[] = {
 
  // content:
     7, // revision
-    199,  // classname
+    200,  // classname
     2, 14, // classinfo
-    23, 18, // methods
-    16, 216, // properties
+    24, 18, // methods
+    16, 228, // properties
     0, 0, // enums/sets
     0, 0, // constructors
     0, // flags
     7, // signal count
 
  // classinfo: key, value
-    1, 200, 
-    3, 201, 
+    1, 201, 
+    3, 202, 
 
 // signal: name, argc, parameters, tag, flags
-    29, 2, 133, 6, 5,
-    202, 1, 138, 6, 5,
-    204, 1, 141, 6, 5,
-    206, 4, 144, 6, 5,
-    10, 4, 153, 6, 5,
-    15, 1, 162, 6, 5,
-    17, 3, 165, 6, 5,
+    29, 2, 138, 6, 5,
+    203, 1, 143, 6, 5,
+    205, 1, 146, 6, 5,
+    207, 4, 149, 6, 5,
+    10, 4, 158, 6, 5,
+    15, 1, 167, 6, 5,
+    17, 3, 170, 6, 5,
 
 // slot: name, argc, parameters, tag, flags
-    32, 0, 172, 6, 9,
-    210, 1, 173, 6, 9,
-    33, 0, 176, 6, 9,
-    34, 2, 177, 6, 9,
-    212, 1, 182, 6, 9,
-    47, 1, 185, 6, 9,
-    98, 1, 188, 6, 9,
-    213, 1, 191, 6, 9,
-    215, 1, 194, 6, 9,
-    217, 1, 197, 6, 9,
-    181, 1, 200, 6, 9,
-    183, 1, 203, 6, 9,
+    32, 0, 177, 6, 9,
+    211, 1, 178, 6, 9,
+    33, 0, 181, 6, 9,
+    213, 3, 182, 6, 9,
+    34, 2, 189, 6, 9,
+    216, 1, 194, 6, 9,
+    47, 1, 197, 6, 9,
+    98, 1, 200, 6, 9,
+    217, 1, 203, 6, 9,
     219, 1, 206, 6, 9,
     221, 1, 209, 6, 9,
-    223, 1, 212, 6, 9,
-    224, 0, 215, 6, 9,
+    182, 1, 212, 6, 9,
+    184, 1, 215, 6, 9,
+    223, 1, 218, 6, 9,
+    225, 1, 221, 6, 9,
+    227, 1, 224, 6, 9,
+    228, 0, 227, 6, 9,
 
 // signal: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::QString, 30, 31,
-    QMetaType::Void, QMetaType::Int, 203,
-    QMetaType::Void, QMetaType::Int, 205,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, 207, 208, 205, 209,
+    QMetaType::Void, QMetaType::Int, 204,
+    QMetaType::Void, QMetaType::Int, 206,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, 208, 209, 206, 210,
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::QString, QMetaType::QString, 11, 12, 13, 14,
     QMetaType::Void, QMetaType::QString, 16,
     QMetaType::Void, QMetaType::QString, QMetaType::Int, QMetaType::VoidStar, 16, 18, 19,
 
 // slot: parameters
     QMetaType::Void,
-    QMetaType::Int, QMetaType::Int, 211,
+    QMetaType::Int, QMetaType::Int, 212,
     QMetaType::Int,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, 0x80000000 | 214, 150, 151, 215,
     QMetaType::Void, QMetaType::Int, 0x80000000 | 36, 35, 37,
     QMetaType::Void, QMetaType::Int, 152,
     QMetaType::Void, QMetaType::Int, 48,
     QMetaType::Void, 0x80000000 | 23, 99,
-    QMetaType::Void, QMetaType::Int, 214,
-    QMetaType::Void, QMetaType::Int, 216,
     QMetaType::Void, QMetaType::Int, 218,
-    QMetaType::Void, QMetaType::Int, 182,
-    QMetaType::Void, QMetaType::Int, 184,
     QMetaType::Void, QMetaType::Int, 220,
     QMetaType::Void, QMetaType::Int, 222,
-    QMetaType::Int, QMetaType::Int, 211,
+    QMetaType::Void, QMetaType::Int, 183,
+    QMetaType::Void, QMetaType::Int, 185,
+    QMetaType::Void, QMetaType::Int, 224,
+    QMetaType::Void, QMetaType::Int, 226,
+    QMetaType::Int, QMetaType::Int, 212,
     QMetaType::Void,
 
  // properties: name, type, flags
-    225, QMetaType::Int, 0x02005001, 		 // int BandWidth
+    229, QMetaType::Int, 0x02005001, 		 // int BandWidth
     152, QMetaType::Int, 0x02015003, 		 // int BytesPerPixel
     48, QMetaType::Int, 0x02015003, 		 // int ChannelType
     99, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DetectorObject
-    214, QMetaType::Int, 0x02015003, 		 // int DualScanMode
-    216, QMetaType::Int, 0x02015003, 		 // int ExFrameTrigger
-    197, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ImageObject
-    218, QMetaType::Int, 0x02015003, 		 // int ImagePort
-    182, QMetaType::Int, 0x02015003, 		 // int ImgHeight
-    184, QMetaType::Int, 0x02015003, 		 // int ImgWidth
-    226, QMetaType::Int, 0x02005001, 		 // int IsGrabing
+    218, QMetaType::Int, 0x02015003, 		 // int DualScanMode
+    220, QMetaType::Int, 0x02015003, 		 // int ExFrameTrigger
+    198, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ImageObject
+    222, QMetaType::Int, 0x02015003, 		 // int ImagePort
+    183, QMetaType::Int, 0x02015003, 		 // int ImgHeight
+    185, QMetaType::Int, 0x02015003, 		 // int ImgWidth
+    230, QMetaType::Int, 0x02005001, 		 // int IsGrabing
     57, QMetaType::Int, 0x02005001, 		 // int IsOpened
     58, QMetaType::Int, 0x02005001, 		 // int LastErrID
     59, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ObjectHandle
-    220, QMetaType::Int, 0x02015003, 		 // int SubFrameHeight
-    222, QMetaType::Int, 0x02015003, 		 // int TimeOut
+    224, QMetaType::Int, 0x02015003, 		 // int SubFrameHeight
+    226, QMetaType::Int, 0x02015003, 		 // int TimeOut
 
     0 // eod
 };
@@ -1319,37 +1329,38 @@ static const uint qt_meta_data_DTControl__IDTImage[] = {
 
  // content:
     7, // revision
-    227,  // classname
+    231,  // classname
     0, 0, // classinfo
-    19, 14, // methods
-    17, 172, // properties
+    20, 14, // methods
+    17, 184, // properties
     0, 0, // enums/sets
     0, 0, // constructors
     0, // flags
     3, // signal count
 
 // signal: name, argc, parameters, tag, flags
-    10, 4, 109, 6, 5,
-    15, 1, 118, 6, 5,
-    17, 3, 121, 6, 5,
+    10, 4, 114, 6, 5,
+    15, 1, 123, 6, 5,
+    17, 3, 126, 6, 5,
 
 // slot: name, argc, parameters, tag, flags
-    32, 0, 128, 6, 9,
-    210, 1, 129, 6, 9,
-    33, 0, 132, 6, 9,
-    34, 2, 133, 6, 9,
-    212, 1, 138, 6, 9,
-    47, 1, 141, 6, 9,
-    98, 1, 144, 6, 9,
-    213, 1, 147, 6, 9,
-    215, 1, 150, 6, 9,
-    217, 1, 153, 6, 9,
-    181, 1, 156, 6, 9,
-    183, 1, 159, 6, 9,
+    32, 0, 133, 6, 9,
+    211, 1, 134, 6, 9,
+    33, 0, 137, 6, 9,
+    213, 3, 138, 6, 9,
+    34, 2, 145, 6, 9,
+    216, 1, 150, 6, 9,
+    47, 1, 153, 6, 9,
+    98, 1, 156, 6, 9,
+    217, 1, 159, 6, 9,
     219, 1, 162, 6, 9,
     221, 1, 165, 6, 9,
-    223, 1, 168, 6, 9,
-    224, 0, 171, 6, 9,
+    182, 1, 168, 6, 9,
+    184, 1, 171, 6, 9,
+    223, 1, 174, 6, 9,
+    225, 1, 177, 6, 9,
+    227, 1, 180, 6, 9,
+    228, 0, 183, 6, 9,
 
 // signal: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::QString, QMetaType::QString, QMetaType::QString, 11, 12, 13, 14,
@@ -1358,39 +1369,40 @@ static const uint qt_meta_data_DTControl__IDTImage[] = {
 
 // slot: parameters
     QMetaType::Void,
-    QMetaType::Int, QMetaType::Int, 211,
+    QMetaType::Int, QMetaType::Int, 212,
     QMetaType::Int,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, 0x80000000 | 214, 150, 151, 215,
     QMetaType::Void, QMetaType::Int, 0x80000000 | 36, 35, 37,
     QMetaType::Void, QMetaType::Int, 152,
     QMetaType::Void, QMetaType::Int, 48,
     QMetaType::Void, 0x80000000 | 23, 99,
-    QMetaType::Void, QMetaType::Int, 214,
-    QMetaType::Void, QMetaType::Int, 216,
     QMetaType::Void, QMetaType::Int, 218,
-    QMetaType::Void, QMetaType::Int, 182,
-    QMetaType::Void, QMetaType::Int, 184,
     QMetaType::Void, QMetaType::Int, 220,
     QMetaType::Void, QMetaType::Int, 222,
-    QMetaType::Int, QMetaType::Int, 211,
+    QMetaType::Void, QMetaType::Int, 183,
+    QMetaType::Void, QMetaType::Int, 185,
+    QMetaType::Void, QMetaType::Int, 224,
+    QMetaType::Void, QMetaType::Int, 226,
+    QMetaType::Int, QMetaType::Int, 212,
     QMetaType::Void,
 
  // properties: name, type, flags
-    225, QMetaType::Int, 0x02005001, 		 // int BandWidth
+    229, QMetaType::Int, 0x02005001, 		 // int BandWidth
     152, QMetaType::Int, 0x02015003, 		 // int BytesPerPixel
     48, QMetaType::Int, 0x02015003, 		 // int ChannelType
     99, 0x80000000 | 23, 0x00015003, 		 // IUnknown* DetectorObject
-    214, QMetaType::Int, 0x02015003, 		 // int DualScanMode
-    216, QMetaType::Int, 0x02015003, 		 // int ExFrameTrigger
-    197, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ImageObject
-    218, QMetaType::Int, 0x02015003, 		 // int ImagePort
-    182, QMetaType::Int, 0x02015003, 		 // int ImgHeight
-    184, QMetaType::Int, 0x02015003, 		 // int ImgWidth
-    226, QMetaType::Int, 0x02005001, 		 // int IsGrabing
+    218, QMetaType::Int, 0x02015003, 		 // int DualScanMode
+    220, QMetaType::Int, 0x02015003, 		 // int ExFrameTrigger
+    198, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ImageObject
+    222, QMetaType::Int, 0x02015003, 		 // int ImagePort
+    183, QMetaType::Int, 0x02015003, 		 // int ImgHeight
+    185, QMetaType::Int, 0x02015003, 		 // int ImgWidth
+    230, QMetaType::Int, 0x02005001, 		 // int IsGrabing
     57, QMetaType::Int, 0x02005001, 		 // int IsOpened
     58, QMetaType::Int, 0x02005001, 		 // int LastErrID
     59, 0x80000000 | 23, 0x00005001, 		 // IUnknown* ObjectHandle
-    220, QMetaType::Int, 0x02015003, 		 // int SubFrameHeight
-    222, QMetaType::Int, 0x02015003, 		 // int TimeOut
+    224, QMetaType::Int, 0x02015003, 		 // int SubFrameHeight
+    226, QMetaType::Int, 0x02015003, 		 // int TimeOut
     25, QMetaType::QString, 0x0a055003, 		 // QString control
 
     0 // eod

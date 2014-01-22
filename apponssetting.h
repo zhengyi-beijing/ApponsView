@@ -16,6 +16,8 @@ public:
     int rayCurrent;
     int rayExposeTime;
     bool autoSave;
+    QString autoSavePath;
+    int autoSaveSize;
 };
 
 class ApponsSetting
@@ -26,6 +28,8 @@ public:
     static void showSettingDialog();
 
     QString ip();
+    long width();
+    long height();
 
     int scanSpeed();
     //void setScanSpeed(int s);
@@ -43,6 +47,9 @@ public:
     //void setRayExposeTime(int s);
     bool autoSave();
     //int setAutoSave(int b);
+
+    QString autoSavePath();
+    int autoSaveSize();
     void LoadConfig();
 
 private:

@@ -28,7 +28,7 @@ class FileStoreServer: public QThread
 public:
     FileStoreServer();
     ~FileStoreServer();
-    void append(ImageData* block);
+    void append(ImageData* block, QString path, int sizelimit);
 
 protected:
     void run();
@@ -45,6 +45,8 @@ private:
     QFile* newFile();
     void closeFile();
     QString fileNamePrefix();
+    QString filePath;
+    int singleFileSize;
 };
 
 #endif // FILESTORESERVER_H

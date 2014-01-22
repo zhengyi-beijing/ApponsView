@@ -25,13 +25,25 @@ void ApponsSetting::LoadConfig()
     param.rayVoltage = setting.value("RaySource/rayVoltage", 120).toInt();
     param.rayCurrent = setting.value("RaySource/rayCurrent", 2).toInt();
     param.rayExposeTime = setting.value("RaySource/rayExposeTime", 2).toInt();
-    param.autoSave = setting.value("Image/autoSave", 0).toInt();
+    param.autoSave = setting.value("Image/autoSave", false).toBool();
+    param.autoSavePath = setting.value("Image/autoSavePath", path).toString();
+    param.autoSaveSize = setting.value("Image/autoSaveSize", 10).toInt();
 
 }
 
 QString ApponsSetting::ip()
 {
     return param.ip;
+}
+
+long ApponsSetting::width()
+{
+    return param.width;
+}
+
+long ApponsSetting::height()
+{
+    return param.height;
 }
 
 int ApponsSetting::scanSpeed()
@@ -74,6 +86,16 @@ bool ApponsSetting::autoSave()
     return param.autoSave;
 }
 
+QString ApponsSetting::autoSavePath()
+{
+    return param.autoSavePath;
+}
+
+int ApponsSetting::autoSaveSize()
+{
+    return param.autoSaveSize;
+}
+
 void ApponsSetting::showSettingDialog()
 {
     SettingDialog dlg(&param);
@@ -86,17 +108,21 @@ void ApponsSetting::showSettingDialog()
         param.rayCurrent =dlg.rayCurrent();
         param.rayExposeTime = dlg.rayExposeTime();
         param.autoSave = dlg.autoSave();
+        param.autoSavePath =  dlg.autoSavePath();
+        param.autoSaveSize = dlg.autoSaveSize();
 
         QString path =  QCoreApplication::applicationDirPath ();
         QSettings setting(path+"/config.ini", QSettings ::IniFormat);
 
         setting.setValue("Detector/scanSpeed", param.scanSpeed);
-        setting.value("Detector/sensitivity", param.sensitivityLevel);
-        setting.value("Detector/dataPattern", param.dataPattern);
-        setting.value("Display/scanMode", param.scanMode);
-        setting.value("RaySource/rayVoltage", param.rayVoltage);
-        setting.value("RaySource/rayCurrent", param.rayCurrent);
-        setting.value("RaySource/rayExposeTime", param.rayExposeTime);
-        setting.value("Image/autoSave", param.autoSave);
+        setting.setValue("Detector/sensitivity", param.sensitivityLevel);
+        setting.setValue("Detector/dataPattern", param.dataPattern);
+        setting.setValue("Display/scanMode", param.scanMode);
+        setting.setValue("RaySource/rayVoltage", param.rayVoltage);
+        setting.setValue("RaySource/rayCurrent", param.rayCurrent);
+        setting.setValue("RaySource/rayExposeTime", param.rayExposeTime);
+        setting.setValue("Image/autoSave", param.autoSave);
+        setting.setValue("Image/autoSavePath", param.autoSavePath);
+        setting.setValue("Image/autoSaveSize", param.autoSaveSize);
     }
 }

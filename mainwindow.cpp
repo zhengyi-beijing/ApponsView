@@ -158,7 +158,7 @@ void MainWindow::FrameReady(int)
     if (setting.autoSave()) {
         int size = axImageObject->Width()*axImageObject->Height()*axImageObject->BytesPerPixel();
         ImageData* data = new ImageData((char*)axImageObject->ImageDataAddress(), size);
-        fileServer.append(data);
+        fileServer.append(data, setting.autoSavePath(), setting.autoSaveSize());
     }
     //scene->update();
     //view->view()->viewport()->update();
@@ -197,8 +197,8 @@ void MainWindow::initAxWidget()
     }
 
     axImage->SetChannelType(2);
-    axImage->SetImgHeight(1024);
-    axImage->SetImgWidth(512);
+    axImage->SetImgHeight(setting.height());
+    axImage->SetImgWidth(setting.width());
     axImage->SetImagePort(4001);
     axImage->SetBytesPerPixel(2);
     //axImage->SetSubFrameHeight(32);
@@ -224,25 +224,26 @@ void MainWindow::initAxWidget()
     QObject::connect(axImage, SIGNAL(SubFrameReady(int, int, int, int)), this, SLOT(SubFrameReady(int, int, int, int)));
     if(!openDetector()){
         QMessageBox::information(this, "", "Open Detector Failed", "OK", "CANCEL");
-        //power_clicked();
-        QTimer::singleShot(0, qApp, SLOT(quit()));
     }
 }
 
 
 void MainWindow::initDetector()
 {
-       // axCommander->SetDataPattern(1);
-       // axCommander->SetIntegrationTime(1400);
     QString rt;
-    axDetector->SendCommand(QString("[ED,M,1]"), rt);
+   // axDetector->SendCommand(QString("[ED,M,0]"), rt);
     if(setting.dataPattern())
         axCommander->SetDataPattern(1);
     float pixelSize = axCommander->PixelSize();
-    int time = pixelSize*1000000/(setting.scanSpeed()*10);
-    qDebug()<<"Inetegration Time is "<<time;
+    qDebug()<<"PixelSize is mm"<< pixelSize;
+    int time = pixelSize*1000000/(setting.scanSpeed());
+    qDebug()<<"Inetegration Time is us"<<time;
     axCommander->SetIntegrationTime(time);
     axCommander->SetSensitivityLevel(setting.sensitivityLevel());
+
+
+    QString speed = QString("[SDS,%1]").arg(setting.scanSpeed());
+    axDetector->SendCommand(speed, rt);
 
 }
 
@@ -260,8 +261,6 @@ int MainWindow::openDetector()
         if(rt) {
             qDebug()<<"open image ";
             rt = axDisplay->Open();
-            //rt = axDisplayWidget->Open();
-
             axDisplayObject = new DTControl::IImageObject((IDispatch*)axDisplay->ImageObject());
             if(rt) {
                 qDebug()<<"open Display sucesful";
@@ -285,7 +284,7 @@ void MainWindow::connectSignals()
     QObject::connect(panel, &Panel::dualScanEnable, this, &MainWindow::dualScanEnable);
     QObject::connect(panel, &Panel::settingButton_click, this, &MainWindow::setting_clicked);
     QObject::connect(panel, &Panel::openButton_click, this, &MainWindow::open_clicked);
-    QObject::connect(panel->saveButton, &QToolButton::click, this, &MainWindow::saveButtonClick);
+    QObject::connect(panel->saveButton, &QToolButton::clicked, this, &MainWindow::saveButtonClick);
     QObject::connect(panel, &Panel::powerButton_click, this, &MainWindow::power_clicked);
     QObject::connect(panel, &Panel::contrastEnable, this, &MainWindow::contrastEnable);
     QObject::connect(panel, &Panel::autoContrastButton_click, this, &MainWindow::autoContrast_clicked);
@@ -293,6 +292,11 @@ void MainWindow::connectSignals()
     QObject::connect(panel, &Panel::moveEnable, this, &MainWindow::moveEnable);
     QObject::connect(panel, &Panel::invertButton_click, this, &MainWindow::invert_click);
     QObject::connect(panel, &Panel::rotateButton_click, this, &MainWindow::rotate_click);
+
+    QObject::connect(view->view(), &GraphicsView::increaseContrastEnd, this, &MainWindow::increaseContrastEnd);
+    QObject::connect(view->view(), &GraphicsView::decreaseContrastEnd, this, &MainWindow::decreaseContrastEnd);
+    QObject::connect(view->view(), &GraphicsView::increaseContrastStart, this, &MainWindow::increaseContrastStart);
+    QObject::connect(view->view(), &GraphicsView::decreaseContrastStart, this, &MainWindow::decreaseContrastStart);
 
     QObject::connect(axDisplay,SIGNAL(MouseMove(int, int, int)), panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
 }
@@ -302,6 +306,8 @@ void MainWindow::stop()
     axImage->Stop();
     grabing = false;
     timer.stop();
+    QString rt;
+    axDetector->SendCommand(QString("[SDR,0]"), rt);
 }
 
 void MainWindow::scan()
@@ -326,6 +332,8 @@ void MainWindow::scan()
     QObject::connect(&timer,SIGNAL(timeout()), scene, SLOT(update()));
     timer.start();
     grabing = true;
+    QString rt;
+    axDetector->SendCommand(QString("[SDR,1]"), rt);
 }
 
 void MainWindow::singleScanEnable(bool enable)
@@ -365,19 +373,25 @@ void MainWindow::setting_clicked()
 void MainWindow::open_clicked()
 {
 //open file dialog
+    QString path = QFileDialog::getOpenFileName();
+    QFile* file =  new QFile(path);
+    if (!file->open(QIODevice::ReadOnly))
+        return;
+    QByteArray blob = file->readAll();
 
 }
 
 void MainWindow::saveButtonClick()
 {
-    if(!axImage->IsOpened())
+    qDebug()<<__FUNCTION__;
+    if(!axImage->IsOpened()){
+        QMessageBox::information(this, "", "No Image", "确定", "取消");
         return;
-    QString path = QFileDialog::getOpenFileName();
-    QFile* file =  new QFile(path);
-    if (!file) {
-        file->open(QIODevice::WriteOnly|QIODevice::Append);
     }
+    QString path = QFileDialog::getSaveFileName();
+    QFile* file =  new QFile(path);
     if (file) {
+        file->open(QIODevice::WriteOnly|QIODevice::Append);
         int size = axImageObject->Width()*axImageObject->Height()*axImageObject->BytesPerPixel();
         long writed = 0;
         char* src = (char*)axImageObject->ImageDataAddress();
@@ -386,6 +400,11 @@ void MainWindow::saveButtonClick()
             src += writed;
             size -= writed;
         }
+        file->close();
+    }
+    else {
+        QMessageBox::information(this, "", "File cannot open", "确定", "取消");
+        return;
     }
 }
 
@@ -396,11 +415,6 @@ void MainWindow::power_clicked()
 }
 
 
-void MainWindow::contrastEnable(bool enable)
-{
-    qDebug() << __FUNCTION__<< enable;
-    contrastEnabled = enable;//conflict with zoom and move
-}
 
 void MainWindow::invert_click()
 {
@@ -411,10 +425,8 @@ void MainWindow::invert_click()
     qDebug() << "end = " << end;
     axDisplay->SetMapStart(end);
     axDisplay->SetMapEnd(start);
-    axDisplay->repaint();
+    axDisplay->dynamicCall("Repaint()");
     scene->update();
-    view->view()->viewport()->update();
-
 }
 
 void MainWindow::autoContrast_clicked()
@@ -443,7 +455,8 @@ void MainWindow::autoContrast_clicked()
     qDebug () << "max = " << max;
     axDisplay->SetMapStart(min);
     axDisplay->SetMapEnd(max);
-    axDisplay->repaint();
+    //axDisplay->Repaint();
+    axDisplay->dynamicCall("Repaint");
     scene->update();
     view->view()->viewport()->update();
 }
@@ -467,11 +480,88 @@ void MainWindow::rotate_click()
 
 void MainWindow::moveEnable(bool enable)
 {
-    zoomEnabled = enable;
     QString rt;
     if(enable){
         axCommander->SetDataPattern(1);
     }
     else
         axCommander->SetDataPattern(0);
+}
+
+
+int MainWindow::contrastStep()
+{
+    int start = axDisplay->MapStart();
+    int end = axDisplay->MapEnd();
+    int range = abs(start-end);
+    if(range < 256)
+        range = 256;
+    if(range > 65535)
+        range = 65535;
+    qDebug()<< "range is " <<range;
+    return  range / 5;
+}
+
+void MainWindow::increaseContrastStart()
+{
+    qDebug()<<__FUNCTION__;
+    int step = contrastStep();
+    int start = axDisplay->MapStart();
+    step =100;
+    start += step;
+    axDisplay->SetMapStart(start);
+    axDisplay->dynamicCall("Repaint()");
+    scene->update();
+}
+
+void MainWindow::decreaseContrastStart()
+{
+    qDebug()<<__FUNCTION__;
+    int step = contrastStep();
+    step =100;
+    int start = axDisplay->MapStart();
+    start -= step;
+    axDisplay->SetMapStart(start);
+    axDisplay->dynamicCall("Repaint()");
+    scene->update();
+
+}
+
+void MainWindow::increaseContrastEnd()
+{
+    qDebug()<<__FUNCTION__;
+    int step = contrastStep();
+    int end = axDisplay->MapEnd();
+    //end += step;
+    end += 100;
+    axDisplay->SetMapEnd(end);
+    axDisplay->dynamicCall("Repaint()");
+    scene->update();
+
+}
+
+void MainWindow::decreaseContrastEnd()
+{
+    qDebug()<<__FUNCTION__;
+    int step = contrastStep();
+    int end = axDisplay->MapEnd();
+    //end -= step;
+    if ((end -= 100) < 0)
+        end = 0;
+
+    qDebug() << "set end " << end;
+    axDisplay->SetMapEnd(end);
+    axDisplay->dynamicCall("Repaint()");
+    scene->update();
+}
+
+void MainWindow::contrastEnable(bool enable)
+{
+    qDebug() << __FUNCTION__<< enable;
+    contrastEnabled = enable;//conflict with zoom and move
+    if(contrastEnabled) {
+        view->view()->setMouseOpMode(GraphicsView::Contrast);
+    } else {
+        view->view()->setMouseOpMode(GraphicsView::None);
+    }
 }

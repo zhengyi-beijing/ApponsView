@@ -34,9 +34,18 @@ public:
     int autoSave();
     void setAutoSave(int b);
 
+    QString autoSavePath();
+    void setAutoSavePath(QString path);
+
+    int autoSaveSize();
+    void setAutoSaveSize (int size);
+
+
 private:
     Ui::SettingDialog *ui;
     void SettingDialog::LoadConfig();
+private slots:
+    void browseBtn_click();
 };
 
 #endif // SETTINGDIALOG_H

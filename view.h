@@ -61,16 +61,20 @@ public:
     enum Mode {None, Move, Zoom, Contrast};
     GraphicsView(View *v) : QGraphicsView(), view(v)
     {
-        mode = Move;
+        mode = None;
         setInteractive(true);
+        moveThreshold = 10;
+        mousePressed = false;
     }
     void setMouseOpMode(Mode m) { mode = m; }
 
 signals:
     void zoomIn();
     void zoomOut();
-    void contrastMapEndChange(int level);
-    void contrastMapStartChange(int level);
+    void increaseContrastStart();
+    void decreaseContrastStart();
+    void increaseContrastEnd();
+    void decreaseContrastEnd();
 
 protected:
     void wheelEvent(QWheelEvent *);
@@ -84,6 +88,7 @@ private:
     Mode mode;
     bool mousePressed;
     QPoint start;
+    int moveThreshold;
 };
 
 class View : public QFrame

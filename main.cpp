@@ -2,6 +2,7 @@
 #include <QApplication>
 #include "QLogger.h"
 
+
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(Appons);
@@ -12,8 +13,8 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(":/Appons/res/ApponsView64.ico"));
     MainWindow window;
 
-    window.showFullScreen();
-    //window.show();
+    //window.showFullScreen();
+    window.show();
 
     QLogger::QLoggerManager *manager = QLogger::QLoggerManager::getInstance();
     manager->addDestination("Appons-test.log", "Appons", QLogger::TraceLevel);

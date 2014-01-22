@@ -77,6 +77,11 @@ public slots:
     void rotate_click();
     void invert_click();
     void widgetMoveto(QPoint pos);
+
+    void increaseContrastStart();
+    void decreaseContrastStart();
+    void increaseContrastEnd();
+    void decreaseContrastEnd();
 protected:
     void resizeEvent(QResizeEvent * event);
     void showEvent (QShowEvent * event );
@@ -90,6 +95,7 @@ private:
     void initDetector();
     void scan();
     void stop();
+    int contrastStep();
 
     QTimer timer;
     QGraphicsScene *scene;

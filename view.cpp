@@ -83,26 +83,48 @@ void GraphicsView::mouseReleaseEvent ( QMouseEvent * event )
 
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
-    qDebug() << __FUNCTION__<< event->pos();
+    //qDebug() << __FUNCTION__<< event->pos();
     //qDebug() << __FUNCTION__<< event->button();
     if(mousePressed) {
-        qDebug()<<"pressed move";
+      //  qDebug()<<"pressed move";
         int dy = event->globalY() - start.y();
         int dx = event->globalX() - start.x();
-        if(mode == Move) {
-
-        } else if (mode == Zoom) {
-            if(dy>10) {
+      //  qDebug()<<"Mode is "<<mode;
+        if(dy > moveThreshold ) {
+            if(mode == Zoom) {
                 qDebug()<<"zoomIn";
                    view->zoomIn();
-                   start = event->globalPos();
-            } else if ( dy < -10) {
-                qDebug()<<"zoomOut";
-                    view->zoomOut();
-                    start = event->globalPos();
             }
-        } else { //contrast
+            else if (mode == Contrast) {
+                qDebug()<<"emit increseContrastEnd Signal";
+                emit increaseContrastEnd();
+            } else {
 
+            }
+            start = event->globalPos();
+        } else if ( dy < moveThreshold*(-1)) {
+            if(mode == Zoom) {
+                qDebug()<<"zoomOut";
+                view->zoomOut();
+            }
+            else if (mode == Contrast) {
+                qDebug()<<"emit decreseContrastEnd Signal";
+                emit decreaseContrastEnd();
+            } else {
+            }
+            start = event->globalPos();
+        }
+
+        if(dx > moveThreshold) {
+            if (mode == Contrast) {
+                qDebug()<<"emit increseContrastStart Signal";
+                emit increaseContrastStart();
+            }
+        } else if  (dx < moveThreshold * (-1)) {
+            if (mode == Contrast) {
+                qDebug()<<"emit decreseContrastStart Signal";
+                emit decreaseContrastStart();
+            }
         }
     }
     event->accept();
@@ -338,6 +360,7 @@ void Panel::powerButton_handle()
 
 void Panel::contrastButton_handle()
 {
+    qDebug()<<__FUNCTION__;
     contrastEnabled = !contrastEnabled;
     if(contrastEnabled) {
         zoomEnabled = false;
@@ -345,6 +368,8 @@ void Panel::contrastButton_handle()
     }
     setMousePressGroupButton();
     emit contrastEnable(contrastEnabled);
+    if(contrastEnabled)
+        emit zoomEnable(false);
 }
 
 void Panel::autoContrastButton_handle()
@@ -373,6 +398,8 @@ void Panel::moveButton_handle()
     }
     setMousePressGroupButton();
     emit moveEnable(moveEnabled);
+    if(moveEnabled)
+        emit zoomEnable(false);
 }
 
 void Panel::setMousePressGroupButton()

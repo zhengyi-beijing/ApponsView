@@ -2,6 +2,9 @@
 #include "ui_settingdialog.h"
 #include <QSettings>
 #include "apponssetting.h"
+#include <QFileDialog>
+#include <QString>
+#include <QDebug>
 
 SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     QDialog(parent),
@@ -21,12 +24,46 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     setRayCurrent(param->rayCurrent);
     setRayExposeTime(param->rayExposeTime);
     setAutoSave(param->autoSave);
+    setAutoSavePath(param->autoSavePath);
+    setAutoSaveSize(param->autoSaveSize/1000000);
+    QObject::connect(ui->browseButton, SIGNAL(clicked()), this, SLOT(browseBtn_click()));
 }
 
 
 SettingDialog::~SettingDialog()
 {
     delete ui;
+}
+
+void SettingDialog::browseBtn_click()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                "/home",
+                                                QFileDialog::ShowDirsOnly
+                                                | QFileDialog::DontResolveSymlinks);
+    qDebug()<< "Path is " << dir;
+    ui->path->setText(dir);
+
+}
+
+QString SettingDialog::autoSavePath()
+{
+    return ui->path->text();
+}
+
+void SettingDialog::setAutoSavePath(QString path)
+{
+    ui->path->setText(path);
+}
+
+int SettingDialog::autoSaveSize()
+{
+    return ui->singleFileSize->text().toInt()*1000*1000;
+}
+
+void SettingDialog::setAutoSaveSize (int size)
+{
+    ui->singleFileSize->setText(QString::number(size));
 }
 
 int SettingDialog::scanSpeed()
