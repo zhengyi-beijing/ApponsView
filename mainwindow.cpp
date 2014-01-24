@@ -227,6 +227,16 @@ void MainWindow::initAxWidget()
     }
 }
 
+void MainWindow::setSpeed(int speed)
+{
+    float pixelSize = axCommander->PixelSize();
+    qDebug()<<"PixelSize is mm"<< pixelSize;
+    if(pixelSize < 0.1)
+        pixelSize = 0.4;
+    int time = pixelSize*1000000/(speed);
+    qDebug()<<"Inetegration Time is us"<<time;
+    axCommander->SetIntegrationTime(time);
+}
 
 void MainWindow::initDetector()
 {
@@ -234,13 +244,9 @@ void MainWindow::initDetector()
    // axDetector->SendCommand(QString("[ED,M,0]"), rt);
     if(setting.dataPattern())
         axCommander->SetDataPattern(1);
-    float pixelSize = axCommander->PixelSize();
-    qDebug()<<"PixelSize is mm"<< pixelSize;
-    int time = pixelSize*1000000/(setting.scanSpeed());
-    qDebug()<<"Inetegration Time is us"<<time;
-    axCommander->SetIntegrationTime(time);
     axCommander->SetSensitivityLevel(setting.sensitivityLevel());
 
+    setSpeed(setting.scanSpeed());
 
     QString speed = QString("[SDS,%1]").arg(setting.scanSpeed());
     axDetector->SendCommand(speed, rt);
@@ -368,6 +374,8 @@ void MainWindow::dualScanEnable(bool enable)
 void MainWindow::setting_clicked()
 {
     //OPen setting dialog
+    ApponsSetting::showSettingDialog();
+    setSpeed(setting.scanSpeed());
 }
 
 void MainWindow::open_clicked()
@@ -441,7 +449,7 @@ void MainWindow::autoContrast_clicked()
     int max = 0;
 
     for(int j=0; j < height; j++) {
-        quint16* line = (quint16*)axImageObject->ImageLineAddress(0);
+        quint16* line = (quint16*)axImageObject->ImageLineAddress(j);
         for(int i = 0; i < width; i++) {
             //int v = axImageObject->Pixel(i, j);
             int v = *(line+i);

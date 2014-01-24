@@ -97,6 +97,8 @@ private:
     void stop();
     int contrastStep();
 
+    void setSpeed(int speed);
+
     QTimer timer;
     QGraphicsScene *scene;
     Panel *panel;

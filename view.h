@@ -142,9 +142,10 @@ signals:
     void moveEnable(bool enable);
     void singleScanEnable(bool enable);
     void dualScanEnable(bool enable);
-    void settingButton_click();
     void invertButton_click();
     void rotateButton_click();
+    void settingButton_click();
+
 public:
 
     PixelInfoLabel* pixelInfoLabel;

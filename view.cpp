@@ -151,7 +151,7 @@ View::View(const QString &name, QWidget *parent)
     setLayout(topLayout);
     toggleOpenGL();
     scale = 1.0;
-    rotate = 0;
+    rotate = 180;
     setupMatrix();
 }
 
@@ -163,6 +163,8 @@ GraphicsView *View::view() const
 
 void View::resetView()
 {
+    scale = 1.0;
+    rotate = 180;
     setupMatrix();
     graphicsView->ensureVisible(QRectF(0, 0, 0, 0));
     graphicsView->fitInView(graphicsView->scene()->itemsBoundingRect(),Qt::KeepAspectRatio);
@@ -350,7 +352,7 @@ void Panel::settingButton_handle()
 {
     //SettingDialog settingdlg;
     //settingdlg.exec();
-    ApponsSetting::showSettingDialog();
+    emit settingButton_click();
 }
 
 void Panel::powerButton_handle()
