@@ -3,6 +3,7 @@
 #include <QLCDNumber>
 #include <QTimer>
 #include <QLabel>
+#include <QDebug>
 
 class PixelInfoLabel: public QLabel
 {
@@ -24,6 +25,7 @@ public:
 public slots:
     void setInfo(int a, int b, int v)
     {
+        qDebug()<<"get mouse move event";
         x = a;
         y = b;
         value = v;

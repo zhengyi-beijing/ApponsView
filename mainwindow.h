@@ -53,7 +53,72 @@
 #include <QGraphicsProxyWidget>
 #include <QSettings>
 #include <QTimer>
+#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
 #include "apponssetting.h"
+class Scene :public QGraphicsScene
+{
+    Q_OBJECT
+public :
+void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+{
+    qDebug()<<"scene mouse move vent sceene pos is "<< mouseEvent->scenePos();
+    QGraphicsScene::mouseMoveEvent(mouseEvent);
+}
+
+};
+
+class Display : public DTControl::CDTDisplay
+{
+    Q_OBJECT
+public:
+    Display(QWidget* parent = 0):CDTDisplay(parent)
+    {
+        setMouseTracking(true);
+       // installEventFilter(this);
+    }
+
+    void mouseMoveEvent ( QMouseEvent * event )
+    {
+        qDebug()<<"Display MouseMove Event " << event->pos();
+        QAxWidget::mouseMoveEvent(event);
+    }
+public slots:
+    bool eventFilter(QObject *object, QEvent *event){
+           qDebug()<<"Display event type  is " << event->type();
+           if(object==this && (event->type()==QEvent::Enter || event->type()==QEvent::Leave))
+               if(event->type()==QEvent::Enter)
+                   qDebug() << "Hovering";
+               else
+                   qDebug() << "Not Hovering";
+           return QWidget::eventFilter(object, event);
+       }
+
+};
+
+class Proxy: public QGraphicsProxyWidget
+{
+public:
+    Proxy(QGraphicsItem * parent=0):QGraphicsProxyWidget(parent)
+    {
+        setAcceptHoverEvents(true);
+    }
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+    {
+        qDebug()<<__FUNCTION__<<"scenePos "<<event->scenePos();
+        qDebug()<<"Proxy pos"<<event->pos();
+        qDebug()<<"Proxy Item pos "<<this->mapFromScene(event->scenePos());
+        qDebug()<<"Is in Peoxy:" << this->contains(this->mapFromScene(event->scenePos()));
+        QGraphicsProxyWidget::hoverMoveEvent(event);
+    }
+
+    void mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
+    {
+         qDebug()<<"Proxy mouse move pos "<< event->pos();
+         qDebug()<<"Proxy mouse move scence "<< event->scenePos();
+         QGraphicsProxyWidget::mouseMoveEvent(event);
+    }
+};
 
 class MainWindow : public QWidget
 {
@@ -96,11 +161,10 @@ private:
     void scan();
     void stop();
     int contrastStep();
-
     void setSpeed(int speed);
 
     QTimer timer;
-    QGraphicsScene *scene;
+    Scene *scene;
     Panel *panel;
     View *view;
     FileStoreServer fileServer;
@@ -117,8 +181,10 @@ private:
     int lostLineCount;
     bool grabing;
 
-    QGraphicsProxyWidget* proxy;
+    //QGraphicsProxyWidget* proxy;
+    Proxy* proxy;
     DTControl::CDTDisplay* axDisplay;
+    //Display* axDisplay;
     //DTControl::CDTDisplay* axDisplayWidget;
     DTControl::CDTImage* axImage;
     DTControl::CDTDetector* axDetector;
@@ -133,7 +199,7 @@ private slots:
     void SubFrameReady (int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock);
     void FrameReady(int);
     void Datalost(int num);
-
+    void pixelInfo(int x, int y, int v);
     void fitToScene();
 };
 

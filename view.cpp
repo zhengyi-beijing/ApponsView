@@ -126,8 +126,11 @@ void GraphicsView::mouseMoveEvent(QMouseEvent *event)
                 emit decreaseContrastStart();
             }
         }
+    //    event->accept();
     }
-    event->accept();
+
+    qDebug() << __FUNCTION__<< event->pos();
+    QGraphicsView::mouseMoveEvent(event);
 }
 
 View::View(const QString &name, QWidget *parent)
@@ -144,6 +147,7 @@ View::View(const QString &name, QWidget *parent)
     graphicsView->setDragMode(QGraphicsView::NoDrag);
     graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 
+    graphicsView->viewport()->setMouseTracking(true);
 
     QVBoxLayout *topLayout = new QVBoxLayout;
     topLayout->addWidget(graphicsView);

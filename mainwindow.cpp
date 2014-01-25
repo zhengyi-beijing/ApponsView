@@ -92,19 +92,31 @@ MainWindow::~MainWindow()
 
 void MainWindow::populateScene()
 {
-    scene = new QGraphicsScene;
+    //scene = new QGraphicsScene;
+    scene = new Scene;
     createAxWidget();
     initAxWidget();
     axDisplay->setParent(NULL);
-    //axDisplay->setParent(this);
-    proxy = scene->addWidget(axDisplay);
+    proxy = new Proxy();
+    proxy->setWidget(axDisplay);
+    scene->addItem(proxy);
+    //proxy = scene->addWidget(axDisplay);
+    //scene->setSceneRect(scene->itemsBoundingRect());
+    qDebug()<<"scene rect is "<<scene->sceneRect();
+    qDebug()<<"proxy rect is "<<proxy->rect();
+
+    //axDisplay->show();
     axDisplay->setVisible(true);
+    axDisplay->setFocus(Qt::ActiveWindowFocusReason);
+    axDisplay->setMouseTracking(true);
     axDisplay->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    qDebug()<<"Display size is "<<axDisplay->rect();
 
     view = new View("X-ray view");
     view->view()->setScene(scene);
     view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     view->setMinimumSize(512, 512);
+    view->resetView();
 }
 
 void MainWindow::widgetMoveto(QPoint dpos)
@@ -171,6 +183,7 @@ void MainWindow::createAxWidget()
     axDetector->setVisible(false);
 
     axDisplay = new DTControl::CDTDisplay(this);
+   // axDisplay = new Display(this);
     axDisplay->setVisible(false);
 
     axCommander = new DTControl::CDTCommanderF3(this);
@@ -219,12 +232,21 @@ void MainWindow::initAxWidget()
         axDisplay->SetDataSource(imgsrcHandle);
     }
 
+    //QObject::connect(axDisplay, SIGNAL(MouseMove(int, int, int)), this->panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
+    QObject::connect(axDisplay, SIGNAL(MouseMove(int, int, int)), this, SLOT(pixelInfo(int, int, int)));
+    //QObject::connect(axDisplay,&DTControl::CDTDisplay::MouseMove, this->panel->pixelInfoLabel, PixelInfoLabel::setInfo);
+    qDebug()<<"Connected mousemove";
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
     QObject::connect(axImage, SIGNAL(Datalost(int)), this, SLOT(Datalost(int)));
     QObject::connect(axImage, SIGNAL(SubFrameReady(int, int, int, int)), this, SLOT(SubFrameReady(int, int, int, int)));
     if(!openDetector()){
         QMessageBox::information(this, "", "Open Detector Failed", "OK", "CANCEL");
     }
+}
+
+void MainWindow::pixelInfo(int x, int y, int v)
+{
+    qDebug() << "x ="<<x<<"   y="<< y<<"   v="<<v;
 }
 
 void MainWindow::setSpeed(int speed)
