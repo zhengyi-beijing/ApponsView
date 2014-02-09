@@ -58,21 +58,22 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug() << "Main thread id = " << QThread::currentThreadId();
     ip = setting.ip();
     qDebug() << "ip is " << ip;
-    populateScene();
+    //populateScene();
     setMinimumSize(1024,768);
     resize(QSize(1280,1024));
     move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
+    createAxWidget();
+    initAxWidget();
 
     panel = new Panel("Command Pannel");
     panel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     panel->setMinimumSize(64, 64);
 
     QHBoxLayout *layout = new QHBoxLayout;
-    layout->setMargin(1);
-    layout->setSpacing(1);
-    layout->addWidget(view);
-    //layout->addWidget(axDisplay);
+    layout->setMargin(10);
+    layout->setSpacing(5);
+    layout->addWidget(axDisplay);
     layout->addWidget(panel);
     setLayout(layout);
 
@@ -90,39 +91,9 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::populateScene()
-{
-    //scene = new QGraphicsScene;
-    scene = new Scene;
-    createAxWidget();
-    initAxWidget();
-    axDisplay->setParent(NULL);
-    proxy = new Proxy();
-    proxy->setWidget(axDisplay);
-    scene->addItem(proxy);
-    //proxy = scene->addWidget(axDisplay);
-    //scene->setSceneRect(scene->itemsBoundingRect());
-    qDebug()<<"scene rect is "<<scene->sceneRect();
-    qDebug()<<"proxy rect is "<<proxy->rect();
-
-    //axDisplay->show();
-    axDisplay->setVisible(true);
-    axDisplay->setFocus(Qt::ActiveWindowFocusReason);
-    axDisplay->setMouseTracking(true);
-    axDisplay->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    qDebug()<<"Display size is "<<axDisplay->rect();
-
-    view = new View("X-ray view");
-    view->view()->setScene(scene);
-    view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    view->setMinimumSize(512, 512);
-    view->resetView();
-}
 
 void MainWindow::widgetMoveto(QPoint dpos)
 {
-    //proxy->move(proxy->pos()+dpos);
-    //scene->update();
 }
 
 void MainWindow::ImageOpened()
@@ -142,24 +113,16 @@ void MainWindow::Datalost(int num)
 
 void MainWindow::resizeEvent(QResizeEvent * event)
 {
- //   fitToScene();
 }
 
-void MainWindow::fitToScene()
-{
-    //qDebug()<<"proxy "<< proxy->rect();
-    view->resetView();
-}
 
 void MainWindow::showEvent(QShowEvent* event)
 {
-    fitToScene();
 }
 
 void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock)
 {
     //qDebug() << __FUNCTION__;
-    //scene->update();
 }
 
 void MainWindow::FrameReady(int)
@@ -172,8 +135,6 @@ void MainWindow::FrameReady(int)
         ImageData* data = new ImageData((char*)axImageObject->ImageDataAddress(), size);
         fileServer.append(data, setting.autoSavePath(), setting.autoSaveSize());
     }
-    //scene->update();
-    //view->view()->viewport()->update();
     panel->frameCountLabel->setFrameCount(framecount);
 }
 
@@ -196,7 +157,6 @@ void MainWindow::createAxWidget()
 void MainWindow::initAxWidget()
 {
     axDetector->SetChannelType(2);
-    //axDetector->SetIPAddress("192.168.1.25");
     axDetector->SetIPAddress(ip);
     axDetector->SetCmdPort(3000);
 
@@ -217,6 +177,12 @@ void MainWindow::initAxWidget()
     //axImage->SetSubFrameHeight(32);
     axImage->setVisible(false);
 
+    axDisplay->setVisible(true);
+    axDisplay->setFocus(Qt::ActiveWindowFocusReason);
+    //axDisplay->setMouseTracking(true);
+    //QString String = "border: 2px solid black;";
+    //axDisplay->setStyleSheet(String );
+    axDisplay->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     axDisplay->SetDisplayScale(0);
     axDisplay->SetMapStart(100);
     axDisplay->SetMapEnd(10000);
@@ -233,8 +199,8 @@ void MainWindow::initAxWidget()
     }
 
     //QObject::connect(axDisplay, SIGNAL(MouseMove(int, int, int)), this->panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
-    QObject::connect(axDisplay, SIGNAL(MouseMove(int, int, int)), this, SLOT(pixelInfo(int, int, int)));
-    //QObject::connect(axDisplay,&DTControl::CDTDisplay::MouseMove, this->panel->pixelInfoLabel, PixelInfoLabel::setInfo);
+    //QObject::connect(axDisplay, SIGNAL(MouseMove(int, int, int)), this, SLOT(pixelInfo(int, int, int)));
+    //QObject::connect(axDisplay,SIGNAL(MouseMove(int, int, int)), panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
     qDebug()<<"Connected mousemove";
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
     QObject::connect(axImage, SIGNAL(Datalost(int)), this, SLOT(Datalost(int)));
@@ -321,10 +287,10 @@ void MainWindow::connectSignals()
     QObject::connect(panel, &Panel::invertButton_click, this, &MainWindow::invert_click);
     QObject::connect(panel, &Panel::rotateButton_click, this, &MainWindow::rotate_click);
 
-    QObject::connect(view->view(), &GraphicsView::increaseContrastEnd, this, &MainWindow::increaseContrastEnd);
-    QObject::connect(view->view(), &GraphicsView::decreaseContrastEnd, this, &MainWindow::decreaseContrastEnd);
-    QObject::connect(view->view(), &GraphicsView::increaseContrastStart, this, &MainWindow::increaseContrastStart);
-    QObject::connect(view->view(), &GraphicsView::decreaseContrastStart, this, &MainWindow::decreaseContrastStart);
+//    QObject::connect(view->view(), &GraphicsView::increaseContrastEnd, this, &MainWindow::increaseContrastEnd);
+//    QObject::connect(view->view(), &GraphicsView::decreaseContrastEnd, this, &MainWindow::decreaseContrastEnd);
+//    QObject::connect(view->view(), &GraphicsView::increaseContrastStart, this, &MainWindow::increaseContrastStart);
+//    QObject::connect(view->view(), &GraphicsView::decreaseContrastStart, this, &MainWindow::decreaseContrastStart);
 
     QObject::connect(axDisplay,SIGNAL(MouseMove(int, int, int)), panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
 }
@@ -357,7 +323,7 @@ void MainWindow::scan()
     lostLineCount = 0;
     axImage->Grab(0);
     timer.setInterval(17);
-    QObject::connect(&timer,SIGNAL(timeout()), scene, SLOT(update()));
+    //QObject::connect(&timer,SIGNAL(timeout()), scene, SLOT(update()));
     timer.start();
     grabing = true;
     QString rt;
@@ -456,7 +422,6 @@ void MainWindow::invert_click()
     axDisplay->SetMapStart(end);
     axDisplay->SetMapEnd(start);
     axDisplay->dynamicCall("Repaint()");
-    scene->update();
 }
 
 void MainWindow::autoContrast_clicked()
@@ -487,25 +452,18 @@ void MainWindow::autoContrast_clicked()
     axDisplay->SetMapEnd(max);
     //axDisplay->Repaint();
     axDisplay->dynamicCall("Repaint");
-    scene->update();
-    view->view()->viewport()->update();
 }
 
 void MainWindow::zoomEnable(bool enable)
 {
     zoomEnabled = enable;
     if(zoomEnabled) {
-      //  view->zoomIn();
-        view->view()->setMouseOpMode(GraphicsView::Zoom);
     } else {
-        view->view()->setMouseOpMode(GraphicsView::None);
-        view->resetView();
     }
 }
 
 void MainWindow::rotate_click()
 {
-    view->rotateRight();
 }
 
 void MainWindow::moveEnable(bool enable)
@@ -541,7 +499,6 @@ void MainWindow::increaseContrastStart()
     start += step;
     axDisplay->SetMapStart(start);
     axDisplay->dynamicCall("Repaint()");
-    scene->update();
 }
 
 void MainWindow::decreaseContrastStart()
@@ -553,7 +510,6 @@ void MainWindow::decreaseContrastStart()
     start -= step;
     axDisplay->SetMapStart(start);
     axDisplay->dynamicCall("Repaint()");
-    scene->update();
 
 }
 
@@ -566,7 +522,6 @@ void MainWindow::increaseContrastEnd()
     end += 100;
     axDisplay->SetMapEnd(end);
     axDisplay->dynamicCall("Repaint()");
-    scene->update();
 
 }
 
@@ -582,7 +537,6 @@ void MainWindow::decreaseContrastEnd()
     qDebug() << "set end " << end;
     axDisplay->SetMapEnd(end);
     axDisplay->dynamicCall("Repaint()");
-    scene->update();
 }
 
 void MainWindow::contrastEnable(bool enable)
@@ -590,8 +544,8 @@ void MainWindow::contrastEnable(bool enable)
     qDebug() << __FUNCTION__<< enable;
     contrastEnabled = enable;//conflict with zoom and move
     if(contrastEnabled) {
-        view->view()->setMouseOpMode(GraphicsView::Contrast);
+        //view->view()->setMouseOpMode(GraphicsView::Contrast);
     } else {
-        view->view()->setMouseOpMode(GraphicsView::None);
+        //view->view()->setMouseOpMode(GraphicsView::None);
     }
 }

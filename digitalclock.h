@@ -17,7 +17,7 @@ public:
         x=0;
         y=0;
         value=0;
-        setText(QString("x = %1, y = %2, v = %3").arg(QString::number(x),
+        setText(QString("(%1,%2)=%3").arg(QString::number(x),
                                                       QString::number(y),
                                                       QString::number(value)));
 
@@ -29,7 +29,7 @@ public slots:
         x = a;
         y = b;
         value = v;
-        setText(QString("(x=%1, y=%2) = %3").arg(QString::number(x),
+        setText(QString("(%1,%2)=%3").arg(QString::number(x),
                                                       QString::number(y),
                                                       QString::number(value)));
     }

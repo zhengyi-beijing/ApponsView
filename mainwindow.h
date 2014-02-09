@@ -164,9 +164,9 @@ private:
     void setSpeed(int speed);
 
     QTimer timer;
-    Scene *scene;
+    //Scene *scene;
     Panel *panel;
-    View *view;
+    //View *view;
     FileStoreServer fileServer;
 
     bool dualScanEnabled ;
@@ -200,7 +200,6 @@ private slots:
     void FrameReady(int);
     void Datalost(int num);
     void pixelInfo(int x, int y, int v);
-    void fitToScene();
 };
 
 #endif // MAINWINDOW_H
