@@ -104,6 +104,8 @@ public:
         //setAcceptHoverEvents(true);
         setFlags(QGraphicsItem::ItemIsMovable |QGraphicsItem::ItemIsSelectable);
     }
+
+
     void hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     {
 //        qDebug()<<__FUNCTION__<<"scenePos "<<event->scenePos();
@@ -111,6 +113,11 @@ public:
 //        qDebug()<<"Proxy Item pos "<<this->mapFromScene(event->scenePos());
 //        qDebug()<<"Is in Peoxy:" << this->contains(this->mapFromScene(event->scenePos()));
         QGraphicsProxyWidget::hoverMoveEvent(event);
+    }
+
+    void mousePressEvent (QGraphicsSceneMouseEvent* event)
+    {
+        event->ignore();
     }
 
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
