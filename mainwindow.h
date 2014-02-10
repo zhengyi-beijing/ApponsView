@@ -62,7 +62,7 @@ class Scene :public QGraphicsScene
 public :
 void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    qDebug()<<"scene mouse move vent sceene pos is "<< mouseEvent->scenePos();
+    qDebug()<<"scene mouse move pos is "<< mouseEvent->scenePos();
     QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
@@ -101,14 +101,15 @@ class Proxy: public QGraphicsProxyWidget
 public:
     Proxy(QGraphicsItem * parent=0):QGraphicsProxyWidget(parent)
     {
-        setAcceptHoverEvents(true);
+        //setAcceptHoverEvents(true);
+        setFlags(QGraphicsItem::ItemIsMovable |QGraphicsItem::ItemIsSelectable);
     }
     void hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     {
-        qDebug()<<__FUNCTION__<<"scenePos "<<event->scenePos();
-        qDebug()<<"Proxy pos"<<event->pos();
-        qDebug()<<"Proxy Item pos "<<this->mapFromScene(event->scenePos());
-        qDebug()<<"Is in Peoxy:" << this->contains(this->mapFromScene(event->scenePos()));
+//        qDebug()<<__FUNCTION__<<"scenePos "<<event->scenePos();
+//        qDebug()<<"Proxy pos"<<event->pos();
+//        qDebug()<<"Proxy Item pos "<<this->mapFromScene(event->scenePos());
+//        qDebug()<<"Is in Peoxy:" << this->contains(this->mapFromScene(event->scenePos()));
         QGraphicsProxyWidget::hoverMoveEvent(event);
     }
 
