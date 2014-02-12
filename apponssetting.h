@@ -1,6 +1,7 @@
 #ifndef APPONSSETTING_H
 #define APPONSSETTING_H
 #include <QString>
+#include <QObject>
 
 class SettingParam{
 public:
@@ -22,12 +23,13 @@ public:
     int autoSaveSize;
 };
 
-class ApponsSetting
+class ApponsSetting: public QObject
 {
+    Q_OBJECT
 public:
 
     ApponsSetting();
-    static void showSettingDialog();
+    void showSettingDialog();
 
     QString ip();
     long width();
@@ -56,7 +58,10 @@ public:
     QString autoSavePath();
     int autoSaveSize();
     void LoadConfig();
-
+signals:
+    void normalize();
+private slots:
+    void normalize_slot();
 private:
     static SettingParam param;
 };

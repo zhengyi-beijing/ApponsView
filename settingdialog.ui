@@ -16,7 +16,7 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>340</x>
      <y>460</y>
      <width>341</width>
      <height>32</height>
@@ -33,13 +33,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
+     <y>20</y>
      <width>711</width>
      <height>441</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="DetectorTab">
     <attribute name="title">
@@ -48,8 +48,8 @@
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>50</y>
+       <x>30</x>
+       <y>30</y>
        <width>131</width>
        <height>31</height>
       </rect>
@@ -61,8 +61,8 @@
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>130</y>
+       <x>30</x>
+       <y>100</y>
        <width>141</width>
        <height>31</height>
       </rect>
@@ -74,8 +74,8 @@
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>210</y>
+       <x>30</x>
+       <y>160</y>
        <width>108</width>
        <height>24</height>
       </rect>
@@ -87,8 +87,8 @@
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>280</y>
+       <x>30</x>
+       <y>220</y>
        <width>108</width>
        <height>24</height>
       </rect>
@@ -100,10 +100,10 @@
     <widget class="QLabel" name="label_6">
      <property name="geometry">
       <rect>
-       <x>490</x>
-       <y>60</y>
-       <width>108</width>
-       <height>24</height>
+       <x>320</x>
+       <y>30</y>
+       <width>41</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -113,20 +113,20 @@
     <widget class="QLineEdit" name="scanSpeed">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>50</y>
-       <width>241</width>
-       <height>41</height>
+       <x>120</x>
+       <y>30</y>
+       <width>191</width>
+       <height>31</height>
       </rect>
      </property>
     </widget>
     <widget class="QComboBox" name="sensitivty">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>130</y>
-       <width>241</width>
-       <height>41</height>
+       <x>120</x>
+       <y>100</y>
+       <width>191</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="editable">
@@ -139,10 +139,10 @@
     <widget class="QComboBox" name="scanMode">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>210</y>
-       <width>241</width>
-       <height>41</height>
+       <x>120</x>
+       <y>160</y>
+       <width>191</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="editable">
@@ -155,8 +155,8 @@
     <widget class="QCheckBox" name="dataPattern">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>280</y>
+       <x>120</x>
+       <y>220</y>
        <width>131</width>
        <height>28</height>
       </rect>
@@ -168,8 +168,8 @@
     <widget class="QLabel" name="label_19">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>330</y>
+       <x>240</x>
+       <y>230</y>
        <width>54</width>
        <height>12</height>
       </rect>
@@ -181,8 +181,8 @@
     <widget class="QCheckBox" name="offset">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>320</y>
+       <x>280</x>
+       <y>220</y>
        <width>131</width>
        <height>28</height>
       </rect>
@@ -194,8 +194,8 @@
     <widget class="QLabel" name="label_20">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>370</y>
+       <x>400</x>
+       <y>230</y>
        <width>54</width>
        <height>12</height>
       </rect>
@@ -207,14 +207,27 @@
     <widget class="QCheckBox" name="gain">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>360</y>
+       <x>440</x>
+       <y>220</y>
        <width>131</width>
        <height>28</height>
       </rect>
      </property>
      <property name="text">
       <string>Enable</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="normalize">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>280</y>
+       <width>191</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Normalize</string>
      </property>
     </widget>
    </widget>

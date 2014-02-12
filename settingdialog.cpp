@@ -27,6 +27,7 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     setAutoSavePath(param->autoSavePath);
     setAutoSaveSize(param->autoSaveSize/1000000);
     QObject::connect(ui->browseButton, SIGNAL(clicked()), this, SLOT(browseBtn_click()));
+    QObject::connect(ui->normalize, SIGNAL(clicked()), this, SLOT(normalize_click()));
 }
 
 
@@ -166,4 +167,10 @@ int SettingDialog::autoSave()
 void SettingDialog::setAutoSave(int b)
 {
     return ui->autoSave->setChecked(b);
+}
+
+void SettingDialog::normalize_click()
+{
+    emit normalize();
+    this->accept();
 }

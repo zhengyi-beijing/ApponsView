@@ -46,12 +46,14 @@ public:
     int autoSaveSize();
     void setAutoSaveSize (int size);
 
-
+signals:
+    void normalize();
 private:
     Ui::SettingDialog *ui;
     void SettingDialog::LoadConfig();
 private slots:
     void browseBtn_click();
+    void normalize_click();
 };
 
 #endif // SETTINGDIALOG_H

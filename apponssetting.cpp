@@ -109,9 +109,15 @@ int ApponsSetting::isOffsetEnable()
     return param.offsetEnable;
 }
 
+void ApponsSetting::normalize_slot()
+{
+    emit normalize();
+}
+
 void ApponsSetting::showSettingDialog()
 {
     SettingDialog dlg(&param);
+    QObject::connect(&dlg, &SettingDialog::normalize, this, &ApponsSetting::normalize_slot, Qt::QueuedConnection);
     if(dlg.exec() == QDialog::Accepted){
         param.scanSpeed = dlg.scanSpeed();
         param.sensitivityLevel = dlg.sensitivityLevel();

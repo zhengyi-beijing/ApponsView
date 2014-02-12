@@ -390,6 +390,8 @@ void MainWindow::connectSignals()
     QObject::connect(view->view(), &GraphicsView::decreaseContrastStart, this, &MainWindow::decreaseContrastStart);
 
     QObject::connect(axDisplay,SIGNAL(MouseMove(int, int, int)), panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
+
+    QObject::connect(&setting, &ApponsSetting::normalize, this, &MainWindow::calibration_click);
 }
 
 void MainWindow::stop()
@@ -459,7 +461,7 @@ void MainWindow::dualScanEnable(bool enable)
 void MainWindow::setting_clicked()
 {
     //OPen setting dialog
-    ApponsSetting::showSettingDialog();
+    setting.showSettingDialog();
     setSpeed(setting.scanSpeed());
     if(setting.dataPattern())
         axCommander->SetDataPattern(1);
@@ -652,8 +654,6 @@ void MainWindow::calibrationProc (int id)
         //do offset calibraion
         //qApp->thread()->msleep(3000);
         axCommander->OnBoardOffsetCalibration();
-        //change the text to press next
-        //QWizardPage* page = calibrationWiz->page(id);
 
     } else if (2 == id) {
         axCommander->SaveOffset();
@@ -662,7 +662,7 @@ void MainWindow::calibrationProc (int id)
 
     } else if (3 == id) {
         //do gain operation
-        axCommander->OnBoardGainCalibration(0);
+        axCommander->OnBoardGainCalibration(1);
        //change next
     } else if (4 == id) {
         //save to pos 1
@@ -696,12 +696,11 @@ void MainWindow::initCalibrationWiz ()
 void MainWindow::moveEnable(bool enable)
 {
     QString rt;
-//    if(enable){
-//        axCommander->SetDataPattern(1);
-//    }
-//    else
-//        axCommander->SetDataPattern(0);
-    switchDisplay();
+    if(enable){
+        axCommander->SetDataPattern(1);
+    }
+    else
+        axCommander->SetDataPattern(0);
 }
 
 
