@@ -73,9 +73,9 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(1);
     layout->setSpacing(1);
-    layout->addWidget(view);
+   // layout->addWidget(view);
     layout->addWidget(plot);
-    //layout->addWidget(axDisplay);
+    layout->addWidget(axDisplay);
     layout->addWidget(panel);
     setLayout(layout);
 
@@ -96,10 +96,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::populateScene()
 {
-    //scene = new QGraphicsScene;
-    scene = new Scene;
     createAxWidget();
     initAxWidget();
+    plot->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    plot->setMinimumSize(512,512);
+
+    /*
+    scene = new Scene;
     axDisplay->setParent(NULL);
     proxy = new Proxy();
     proxy->setWidget(axDisplay);
@@ -124,11 +127,7 @@ void MainWindow::populateScene()
     view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     view->setMinimumSize(512, 512);
     view->resetView();
-
-    plot->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    plot->setMinimumSize(512,512);
-    plot->xAxis->setLabel("pixel");
-    plot->yAxis->setLabel("value");
+    */
 }
 
 void MainWindow::widgetMoveto(QPoint dpos)
@@ -165,17 +164,19 @@ void MainWindow::fitToScene()
 
 void MainWindow::showEvent(QShowEvent* event)
 {
-    fitToScene();
+    //fitToScene();
 }
 
 void MainWindow::switchDisplay()
 {
     if(!plot->isVisible()) {
         plot->setVisible(true);
-        view->setVisible(false);
+        //view->setVisible(false);
+        axDisplay->setVisible(false);
     } else {
         plot->setVisible(false);
-        view->setVisible(true);
+        //view->setVisible(true);
+        axDisplay->setVisible(true);
     }
 
 
@@ -183,19 +184,16 @@ void MainWindow::switchDisplay()
 
 void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock)
 {
-    qDebug() << __FUNCTION__;
+   // qDebug() << __FUNCTION__;
     if(!plot->isVisible())
         return;
-    //scene->update();
     int width = axImageObject->Width();
     QVector<double> x(width), y(width);
     int i = 0;
     int j = 0;
     int max = 0;
-    int min = 0;
+   // int min = 0;
     int EndLine = StartLine + NumLines;
-    qDebug() << "StartLine "<< StartLine;
-    qDebug() << "NumLines"<< NumLines;
     //get average col value store into y[]
     for (j = StartLine; j < EndLine; j++) {
         quint16* pbase = NULL;
@@ -212,10 +210,7 @@ void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, 
             max = y[i];
     }
 
-    plot->xAxis->setRange(0, width);
-    plot->yAxis->setRange(0, max+100);
-    plot->graph(0)->setData(x, y);
-    plot->replot();
+    plot->setData(&x, &y);
 }
 
 void MainWindow::FrameReady(int)
@@ -240,7 +235,7 @@ void MainWindow::createAxWidget()
 
     axDisplay = new DTControl::CDTDisplay(this);
    // axDisplay = new Display(this);
-    axDisplay->setVisible(false);
+    axDisplay->setVisible(true);
 
     axCommander = new DTControl::CDTCommanderF3(this);
     axCommander->setVisible(false);
@@ -248,9 +243,9 @@ void MainWindow::createAxWidget()
     axImage = new DTControl::CDTImage(this);
     axImage->setVisible(false);
 
-    plot = new QCustomPlot(this);
+    //plot = new QCustomPlot(this);
+    plot = new PlotWidget(this);
     plot->setVisible(false);
-    plot->addGraph();
 }
 
 void MainWindow::initAxWidget()
@@ -384,10 +379,10 @@ void MainWindow::connectSignals()
     QObject::connect(panel, &Panel::calibrationButton_click, this, &MainWindow::calibration_click);
     QObject::connect(panel, &Panel::plotButton_click, this, &MainWindow::switchDisplay);
 
-    QObject::connect(view->view(), &GraphicsView::increaseContrastEnd, this, &MainWindow::increaseContrastEnd);
-    QObject::connect(view->view(), &GraphicsView::decreaseContrastEnd, this, &MainWindow::decreaseContrastEnd);
-    QObject::connect(view->view(), &GraphicsView::increaseContrastStart, this, &MainWindow::increaseContrastStart);
-    QObject::connect(view->view(), &GraphicsView::decreaseContrastStart, this, &MainWindow::decreaseContrastStart);
+//    QObject::connect(view->view(), &GraphicsView::increaseContrastEnd, this, &MainWindow::increaseContrastEnd);
+//    QObject::connect(view->view(), &GraphicsView::decreaseContrastEnd, this, &MainWindow::decreaseContrastEnd);
+//    QObject::connect(view->view(), &GraphicsView::increaseContrastStart, this, &MainWindow::increaseContrastStart);
+//    QObject::connect(view->view(), &GraphicsView::decreaseContrastStart, this, &MainWindow::decreaseContrastStart);
 
     QObject::connect(axDisplay,SIGNAL(MouseMove(int, int, int)), panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
 

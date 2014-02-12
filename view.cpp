@@ -268,7 +268,10 @@ Panel::Panel(const QString &name, QWidget *parent)
 
     saveButton = new PanelButton(":/Appons/res/save.ico", 0, false);
 
-    settingButton = new PanelButton(":/Appons/res/setting.ico");
+    //settingButton = new PanelButton(":/Appons/res/setting.ico");
+    settingButton = new QPushButton("Setup");
+    settingButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    settingButton->setStyleSheet("font-size: 18pt;");
     powerButton = new PanelButton(":/Appons/res/exit.ico");
     contrastButton = new PanelButton(":/Appons/res/contrast.ico", 0, true);
     autoContrastButton = new PanelButton(":/Appons/res/autoContrast.ico");
@@ -276,32 +279,42 @@ Panel::Panel(const QString &name, QWidget *parent)
     zoomButton = new PanelButton(":/Appons/res/zoomIn.ico", 0, true);
     moveButton = new PanelButton(":/Appons/res/move.ico", 0, true);
     singleScanButton = new PanelButton(":/Appons/res/singleScan.ico", 0, true);
-    dualScanButton = new PanelButton(":/Appons/res/dualScan.ico", 0, true);
+    //dualScanButton = new PanelButton(":/Appons/res/dualScan.ico", 0, true);
+    dualScanButton = new QPushButton("Scan/Stop");
+    dualScanButton->setStyleSheet("font-size: 18pt;");
+    dualScanButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     invertButton = new PanelButton(":/Appons/res/invert.ico", 0);
     rotateButton = new PanelButton(":/Appons/res/rotate.ico", 0, false);
 
     calButton = new PanelButton(":/Appons/res/calibraition.jpg");
-    plotButton = new PanelButton(":/Appons/res/plot.jpg");
+    //plotButton = new PanelButton(":/Appons/res/plot.jpg");
+    plotButton = new QPushButton("Plot/Image");
+    plotButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    plotButton->setStyleSheet("font-size: 18pt;");
 
     clock = new DigitalClock(this);
     frameCountLabel = new FrameCountLabel(this);
     pixelInfoLabel = new PixelInfoLabel(this);
 
-    QGridLayout *panelLayout = new QGridLayout;
-    panelLayout->addWidget(openButton, 0,0);
-    panelLayout->addWidget(saveButton, 0,1);
-    panelLayout->addWidget(settingButton, 1,0);
-    panelLayout->addWidget(powerButton, 1,1);
-    panelLayout->addWidget(contrastButton, 2,0);
-    panelLayout->addWidget(autoContrastButton, 2,1);
-    panelLayout->addWidget(zoomButton, 3,0);
-    panelLayout->addWidget(moveButton, 3,1);
-    panelLayout->addWidget(invertButton, 4,0);
-    panelLayout->addWidget(rotateButton, 4,1);
-    panelLayout->addWidget(singleScanButton, 5,0);
-    panelLayout->addWidget(dualScanButton, 5,1);
-    panelLayout->addWidget(calButton, 6,0);
-    panelLayout->addWidget(plotButton, 6,1);
+    QVBoxLayout* panelLayout = new QVBoxLayout;
+    panelLayout->addWidget(dualScanButton);
+    panelLayout->addWidget(settingButton);
+    panelLayout->addWidget(plotButton);
+//    QGridLayout *panelLayout = new QGridLayout;
+//    panelLayout->addWidget(openButton, 0,0);
+//    panelLayout->addWidget(saveButton, 0,1);
+//    panelLayout->addWidget(settingButton, 1,0);
+//    panelLayout->addWidget(powerButton, 1,1);
+//    panelLayout->addWidget(contrastButton, 2,0);
+//    panelLayout->addWidget(autoContrastButton, 2,1);
+//    panelLayout->addWidget(zoomButton, 3,0);
+//    panelLayout->addWidget(moveButton, 3,1);
+//    panelLayout->addWidget(invertButton, 4,0);
+//    panelLayout->addWidget(rotateButton, 4,1);
+//    panelLayout->addWidget(singleScanButton, 5,0);
+//    panelLayout->addWidget(dualScanButton, 5,1);
+//    panelLayout->addWidget(calButton, 6,0);
+//    panelLayout->addWidget(plotButton, 6,1);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(aboutButton);

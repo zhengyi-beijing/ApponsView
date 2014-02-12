@@ -56,8 +56,8 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include "apponssetting.h"
-
-#include "qcustomplot.h"
+#include <QWizard>
+#include "plotwidget.h"
 
 class Scene :public QGraphicsScene
 {
@@ -207,7 +207,8 @@ private:
     DTControl::IImageObject* axDisplayObject;
     DTControl::IImageObject* axImageObject;
 
-    QCustomPlot* plot;
+    //QCustomPlot* plot;
+    PlotWidget* plot;
 
     QWizard* calibrationWiz;
 

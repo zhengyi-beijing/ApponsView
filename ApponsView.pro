@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     digitalclock.cpp \
     settingdialog.cpp \
     apponssetting.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    plotwidget.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -36,7 +37,8 @@ HEADERS  += \
     digitalclock.h \
     settingdialog.h \
     apponssetting.h \
-    qcustomplot.h
+    qcustomplot.h \
+    plotwidget.h
 
 OTHER_FILES +=
 RC_FILE = .\rc.rc.txt
@@ -49,5 +51,6 @@ DEPENDPATH += $$PWD/
 
 FORMS += \
     aboutDlg.ui \
-    settingdialog.ui
+    settingdialog.ui \
+    plotwidget.ui
 

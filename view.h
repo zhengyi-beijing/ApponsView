@@ -176,7 +176,8 @@ private:
     PanelButton *aboutButton;
 //    QPushButton *aboutButton;
     PanelButton *openButton;
-    PanelButton *settingButton;
+    //PanelButton *settingButton;
+    QPushButton *settingButton;
     PanelButton *powerButton;
     PanelButton *contrastButton;
     PanelButton *autoContrastButton;
@@ -184,11 +185,13 @@ private:
     PanelButton *zoomButton;
     PanelButton *moveButton;
     PanelButton *singleScanButton;
-    PanelButton *dualScanButton;
+    //PanelButton *dualScanButton;
+    QPushButton *dualScanButton;
 
     PanelButton *invertButton;
     PanelButton *rotateButton;
-    PanelButton *plotButton;
+    //PanelButton *plotButton;
+    QPushButton *plotButton;
     PanelButton *calButton;
 
 
