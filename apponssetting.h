@@ -12,6 +12,8 @@ public:
     int sensitivityLevel;
     int scanMode;
     int dataPattern;
+    int gainEnable;
+    int offsetEnable;
     int rayVoltage;
     int rayCurrent;
     int rayExposeTime;
@@ -47,6 +49,9 @@ public:
     //void setRayExposeTime(int s);
     bool autoSave();
     //int setAutoSave(int b);
+
+    int isGainEnable();
+    int isOffsetEnable();
 
     QString autoSavePath();
     int autoSaveSize();

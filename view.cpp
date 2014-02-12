@@ -47,7 +47,6 @@
 //#endif
 #include "ui_aboutDlg.h"
 #include "apponssetting.h"
-
 void GraphicsView::wheelEvent(QWheelEvent *e)
 {
     qDebug() << __FUNCTION__;
@@ -281,6 +280,9 @@ Panel::Panel(const QString &name, QWidget *parent)
     invertButton = new PanelButton(":/Appons/res/invert.ico", 0);
     rotateButton = new PanelButton(":/Appons/res/rotate.ico", 0, false);
 
+    calButton = new PanelButton(":/Appons/res/calibraition.jpg");
+    plotButton = new PanelButton(":/Appons/res/plot.jpg");
+
     clock = new DigitalClock(this);
     frameCountLabel = new FrameCountLabel(this);
     pixelInfoLabel = new PixelInfoLabel(this);
@@ -298,6 +300,8 @@ Panel::Panel(const QString &name, QWidget *parent)
     panelLayout->addWidget(rotateButton, 4,1);
     panelLayout->addWidget(singleScanButton, 5,0);
     panelLayout->addWidget(dualScanButton, 5,1);
+    panelLayout->addWidget(calButton, 6,0);
+    panelLayout->addWidget(plotButton, 6,1);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(aboutButton);
@@ -345,6 +349,16 @@ void Panel::aboutButton_handle()
     Ui_Dialog about;
     about.setupUi(&aboutdlg);
     aboutdlg.exec();
+}
+
+void Panel::calibrationButton_handle()
+{
+    emit calibrationButton_click();
+}
+
+void Panel::plotButton_handle()
+{
+    emit plotButton_click();
 }
 
 void Panel::openButton_handle()
@@ -467,4 +481,6 @@ void Panel::signalInit()
     connect(singleScanButton, SIGNAL(clicked()), this, SLOT(singleScanButton_handle()));
     connect(invertButton, SIGNAL(clicked()),this,SLOT(invertButton_handle()));
     connect(rotateButton, SIGNAL(clicked()), this, SLOT(rotateButton_handle()));
+    connect(calButton, SIGNAL(clicked()), this, SLOT(calibrationButton_handle()));
+    connect(plotButton, SIGNAL(clicked()), this, SLOT(plotButton_handle()));
 }

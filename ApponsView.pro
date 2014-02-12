@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui axcontainer
+QT       += core gui axcontainer printsupport
 
 qtHaveModule(opengl): QT += opengl
 
@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     pixelorderconverter.cpp \
     digitalclock.cpp \
     settingdialog.cpp \
-    apponssetting.cpp
+    apponssetting.cpp \
+    qcustomplot.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -34,7 +35,8 @@ HEADERS  += \
     pixelorderconverter.h \
     digitalclock.h \
     settingdialog.h \
-    apponssetting.h
+    apponssetting.h \
+    qcustomplot.h
 
 OTHER_FILES +=
 RC_FILE = .\rc.rc.txt

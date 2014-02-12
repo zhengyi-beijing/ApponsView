@@ -34,6 +34,12 @@ public:
     int autoSave();
     void setAutoSave(int b);
 
+    void setOffsetEnable(int e);
+    int offsetEnable();
+
+    void setGainEnable(int e);
+    int gainEnable();
+
     QString autoSavePath();
     void setAutoSavePath(QString path);
 

@@ -18,6 +18,9 @@ void ApponsSetting::LoadConfig()
     param.width = setting.value("Image/width", 1536).toInt();
     param.height = setting.value("Image/height", 1024).toInt();
 
+    param.gainEnable = setting.value("Detector/gainEnable", 0).toInt();
+    param.offsetEnable = setting.value("Detector/offsetEnable", 0).toInt();
+
     param.scanSpeed = setting.value("Detector/scanSpeed", 200).toInt();
     param.sensitivityLevel = setting.value("Detector/sensitivity", 0).toInt();
     param.dataPattern = setting.value("Detector/dataPattern", 0).toInt();
@@ -96,6 +99,16 @@ int ApponsSetting::autoSaveSize()
     return param.autoSaveSize;
 }
 
+int ApponsSetting::isGainEnable()
+{
+    return param.gainEnable   ;
+}
+
+int ApponsSetting::isOffsetEnable()
+{
+    return param.offsetEnable;
+}
+
 void ApponsSetting::showSettingDialog()
 {
     SettingDialog dlg(&param);
@@ -111,12 +124,17 @@ void ApponsSetting::showSettingDialog()
         param.autoSavePath =  dlg.autoSavePath();
         param.autoSaveSize = dlg.autoSaveSize();
 
+        param.gainEnable = dlg.gainEnable();
+        param.offsetEnable = dlg.offsetEnable();
+
         QString path =  QCoreApplication::applicationDirPath ();
         QSettings setting(path+"/config.ini", QSettings ::IniFormat);
 
         setting.setValue("Detector/scanSpeed", param.scanSpeed);
         setting.setValue("Detector/sensitivity", param.sensitivityLevel);
         setting.setValue("Detector/dataPattern", param.dataPattern);
+        setting.setValue("Detector/gain", param.gainEnable);
+        setting.setValue("Detector/offset", param.offsetEnable);
         setting.setValue("Display/scanMode", param.scanMode);
         setting.setValue("RaySource/rayVoltage", param.rayVoltage);
         setting.setValue("RaySource/rayCurrent", param.rayCurrent);

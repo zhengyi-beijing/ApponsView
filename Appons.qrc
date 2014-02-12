@@ -26,5 +26,7 @@
         <file>res/about-logo.png</file>
         <file>res/dm-web.png</file>
         <file>res/about-logo-grey.png</file>
+        <file>res/calibraition.jpg</file>
+        <file>res/plot.jpg</file>
     </qresource>
 </RCC>

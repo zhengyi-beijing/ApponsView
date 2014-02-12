@@ -46,6 +46,27 @@ void SettingDialog::browseBtn_click()
 
 }
 
+void SettingDialog::setOffsetEnable(int e)
+{
+    ui->offset->setChecked(e);
+}
+
+int SettingDialog::offsetEnable()
+{
+
+    return ui->offset->isChecked();
+}
+
+void SettingDialog::setGainEnable(int e)
+{
+    ui->gain->setChecked(e);
+}
+
+int SettingDialog::gainEnable()
+{
+    return ui->gain->isChecked();
+}
+
 QString SettingDialog::autoSavePath()
 {
     return ui->path->text();

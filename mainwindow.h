@@ -56,15 +56,18 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include "apponssetting.h"
+
+#include "qcustomplot.h"
+
 class Scene :public QGraphicsScene
 {
     Q_OBJECT
 public :
-void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
-{
-    qDebug()<<"scene mouse move vent sceene pos is "<< mouseEvent->scenePos();
-    QGraphicsScene::mouseMoveEvent(mouseEvent);
-}
+//void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+//{
+//    qDebug()<<"scene mouse move vent sceene pos is "<< mouseEvent->scenePos();
+//    QGraphicsScene::mouseMoveEvent(mouseEvent);
+//}
 
 };
 
@@ -80,19 +83,19 @@ public:
 
     void mouseMoveEvent ( QMouseEvent * event )
     {
-        qDebug()<<"Display MouseMove Event " << event->pos();
+        qDebug()<<"------Display MouseMove Event " << event->pos();
         QAxWidget::mouseMoveEvent(event);
     }
 public slots:
-    bool eventFilter(QObject *object, QEvent *event){
-           qDebug()<<"Display event type  is " << event->type();
-           if(object==this && (event->type()==QEvent::Enter || event->type()==QEvent::Leave))
-               if(event->type()==QEvent::Enter)
-                   qDebug() << "Hovering";
-               else
-                   qDebug() << "Not Hovering";
-           return QWidget::eventFilter(object, event);
-       }
+//    bool eventFilter(QObject *object, QEvent *event){
+//           qDebug()<<"Display event type  is " << event->type();
+//           if(object==this && (event->type()==QEvent::Enter || event->type()==QEvent::Leave))
+//               if(event->type()==QEvent::Enter)
+//                   qDebug() << "Hovering";
+//               else
+//                   qDebug() << "Not Hovering";
+//           return QWidget::eventFilter(object, event);
+//       }
 
 };
 
@@ -101,21 +104,29 @@ class Proxy: public QGraphicsProxyWidget
 public:
     Proxy(QGraphicsItem * parent=0):QGraphicsProxyWidget(parent)
     {
-        setAcceptHoverEvents(true);
+        setAcceptHoverEvents(false);
+        setFlag(ItemIsFocusable);
+        setFlag(ItemIsSelectable);
     }
     void hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     {
-        qDebug()<<__FUNCTION__<<"scenePos "<<event->scenePos();
-        qDebug()<<"Proxy pos"<<event->pos();
-        qDebug()<<"Proxy Item pos "<<this->mapFromScene(event->scenePos());
-        qDebug()<<"Is in Peoxy:" << this->contains(this->mapFromScene(event->scenePos()));
+        qDebug()<<__FUNCTION__<<"pos "<<event->pos();
+        qDebug()<< "rect is " << rect();
+        qDebug() << "widget is " << widget();
         QGraphicsProxyWidget::hoverMoveEvent(event);
+    }
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *event)
+    {
+        //event->ignore();
+        //event->accept();
+        qDebug()<<__FUNCTION__;
+        QGraphicsProxyWidget::mousePressEvent(event);
     }
 
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
     {
-         qDebug()<<"Proxy mouse move pos "<< event->pos();
-         qDebug()<<"Proxy mouse move scence "<< event->scenePos();
+         qDebug()<<"-------Proxy mouse move scence "<< event->scenePos();
          QGraphicsProxyWidget::mouseMoveEvent(event);
     }
 };
@@ -141,12 +152,15 @@ public slots:
     void moveEnable(bool enable);
     void rotate_click();
     void invert_click();
+    void calibration_click();
     void widgetMoveto(QPoint pos);
 
     void increaseContrastStart();
     void decreaseContrastStart();
     void increaseContrastEnd();
     void decreaseContrastEnd();
+    void switchDisplay();
+
 protected:
     void resizeEvent(QResizeEvent * event);
     void showEvent (QShowEvent * event );
@@ -155,6 +169,7 @@ private:
     void setupMatrix();
     void populateScene();
     void initAxWidget();
+    void initCalibrationWiz ();
     void createAxWidget();
     int openDetector();
     void initDetector();
@@ -192,6 +207,10 @@ private:
     DTControl::IImageObject* axDisplayObject;
     DTControl::IImageObject* axImageObject;
 
+    QCustomPlot* plot;
+
+    QWizard* calibrationWiz;
+
     QString ip;
 
 private slots:
@@ -201,6 +220,7 @@ private slots:
     void Datalost(int num);
     void pixelInfo(int x, int y, int v);
     void fitToScene();
+    void calibrationProc (int id);
 };
 
 #endif // MAINWINDOW_H

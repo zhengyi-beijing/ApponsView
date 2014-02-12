@@ -49,6 +49,8 @@
 #include "pixelorderconverter.h"
 #include <QDir>
 #include <QFileDialog>
+#include <QWizard>
+#include <QWizardPage>
 
 ApponsSetting MainWindow::setting;
 MainWindow::MainWindow(QWidget *parent)
@@ -60,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug() << "ip is " << ip;
     populateScene();
     setMinimumSize(1024,768);
-    resize(QSize(1280,1024));
+    resize(QSize(1024,768));
     move(QApplication::desktop()->screen()->rect().center() - this->rect().center());
 
 
@@ -72,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
     layout->setMargin(1);
     layout->setSpacing(1);
     layout->addWidget(view);
+    layout->addWidget(plot);
     //layout->addWidget(axDisplay);
     layout->addWidget(panel);
     setLayout(layout);
@@ -82,6 +85,7 @@ MainWindow::MainWindow(QWidget *parent)
     dualScanEnabled = false;
     autoSaveEnabled = false;
     grabing = false;
+    calibrationWiz = NULL;
 
     fileServer.start();
 }
@@ -99,6 +103,8 @@ void MainWindow::populateScene()
     axDisplay->setParent(NULL);
     proxy = new Proxy();
     proxy->setWidget(axDisplay);
+    //proxy->setWidget(new QPushButton(NULL));
+    proxy->setFlags(QGraphicsItem::ItemIsMovable|QGraphicsItem::ItemIsSelectable);
     scene->addItem(proxy);
     //proxy = scene->addWidget(axDisplay);
     //scene->setSceneRect(scene->itemsBoundingRect());
@@ -112,11 +118,17 @@ void MainWindow::populateScene()
     axDisplay->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     qDebug()<<"Display size is "<<axDisplay->rect();
 
+
     view = new View("X-ray view");
     view->view()->setScene(scene);
     view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     view->setMinimumSize(512, 512);
     view->resetView();
+
+    plot->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    plot->setMinimumSize(512,512);
+    plot->xAxis->setLabel("pixel");
+    plot->yAxis->setLabel("value");
 }
 
 void MainWindow::widgetMoveto(QPoint dpos)
@@ -156,10 +168,54 @@ void MainWindow::showEvent(QShowEvent* event)
     fitToScene();
 }
 
+void MainWindow::switchDisplay()
+{
+    if(!plot->isVisible()) {
+        plot->setVisible(true);
+        view->setVisible(false);
+    } else {
+        plot->setVisible(false);
+        view->setVisible(true);
+    }
+
+
+}
+
 void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock)
 {
-    //qDebug() << __FUNCTION__;
+    qDebug() << __FUNCTION__;
+    if(!plot->isVisible())
+        return;
     //scene->update();
+    int width = axImageObject->Width();
+    QVector<double> x(width), y(width);
+    int i = 0;
+    int j = 0;
+    int max = 0;
+    int min = 0;
+    int EndLine = StartLine + NumLines;
+    qDebug() << "StartLine "<< StartLine;
+    qDebug() << "NumLines"<< NumLines;
+    //get average col value store into y[]
+    for (j = StartLine; j < EndLine; j++) {
+        quint16* pbase = NULL;
+        pbase = (quint16*)axImageObject->ImageLineAddress(j);
+        for (i=0; i < width; i++) {
+            y[i] += *(pbase+i);
+        }
+    }
+
+    for(i =0; i < width; i++) {
+        x[i] = i;
+        y[i] /= NumLines;
+        if(y[i] > max)
+            max = y[i];
+    }
+
+    plot->xAxis->setRange(0, width);
+    plot->yAxis->setRange(0, max+100);
+    plot->graph(0)->setData(x, y);
+    plot->replot();
 }
 
 void MainWindow::FrameReady(int)
@@ -191,6 +247,10 @@ void MainWindow::createAxWidget()
 
     axImage = new DTControl::CDTImage(this);
     axImage->setVisible(false);
+
+    plot = new QCustomPlot(this);
+    plot->setVisible(false);
+    plot->addGraph();
 }
 
 void MainWindow::initAxWidget()
@@ -214,7 +274,7 @@ void MainWindow::initAxWidget()
     axImage->SetImgWidth(setting.width());
     axImage->SetImagePort(4001);
     axImage->SetBytesPerPixel(2);
-    //axImage->SetSubFrameHeight(32);
+    axImage->SetSubFrameHeight(32);
     axImage->setVisible(false);
 
     axDisplay->SetDisplayScale(0);
@@ -321,6 +381,9 @@ void MainWindow::connectSignals()
     QObject::connect(panel, &Panel::invertButton_click, this, &MainWindow::invert_click);
     QObject::connect(panel, &Panel::rotateButton_click, this, &MainWindow::rotate_click);
 
+    QObject::connect(panel, &Panel::calibrationButton_click, this, &MainWindow::calibration_click);
+    QObject::connect(panel, &Panel::plotButton_click, this, &MainWindow::switchDisplay);
+
     QObject::connect(view->view(), &GraphicsView::increaseContrastEnd, this, &MainWindow::increaseContrastEnd);
     QObject::connect(view->view(), &GraphicsView::decreaseContrastEnd, this, &MainWindow::decreaseContrastEnd);
     QObject::connect(view->view(), &GraphicsView::increaseContrastStart, this, &MainWindow::increaseContrastStart);
@@ -398,6 +461,20 @@ void MainWindow::setting_clicked()
     //OPen setting dialog
     ApponsSetting::showSettingDialog();
     setSpeed(setting.scanSpeed());
+    if(setting.dataPattern())
+        axCommander->SetDataPattern(1);
+    else
+        axCommander->SetDataPattern(0);
+
+    if(setting.isGainEnable())
+        axCommander->SetCorrectionGain(1);
+    else
+        axCommander->SetCorrectionGain(0);
+
+    if(setting.isOffsetEnable())
+        axCommander->SetCorrectionOffset(1);
+    else
+        axCommander->SetCorrectionOffset(0);
 }
 
 void MainWindow::open_clicked()
@@ -508,14 +585,123 @@ void MainWindow::rotate_click()
     view->rotateRight();
 }
 
+
+QWizardPage* getShutDownXPage()
+{
+    QWizardPage *page = new QWizardPage;
+         page->setTitle("Calibration");
+    QLabel *label = new QLabel("Please shutdown the x-ray source");
+    label->setWordWrap(true);
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(label);
+    page->setLayout(layout);
+    return page;
+}
+
+QWizardPage* getOffsetWaitingPage()
+{
+    QWizardPage *page = new QWizardPage;
+         page->setTitle("Calibration");
+    QLabel *label = new QLabel("Offset calibration done");
+    label->setWordWrap(true);
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(label);
+    page->setLayout(layout);
+
+    return page;
+}
+
+QWizardPage* getOpenXPage()
+{
+    QWizardPage *page = new QWizardPage;
+         page->setTitle("Calibration");
+    QLabel *label = new QLabel("Open X-ray source, click next when x-ray ready");
+    label->setWordWrap(true);
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(label);
+    page->setLayout(layout);
+
+    return page;
+}
+
+QWizardPage* getGainWaitingPage()
+{
+    QWizardPage *page = new QWizardPage;
+         page->setTitle("Calibration");
+    QLabel *label = new QLabel("Gain calibration done");
+    label->setWordWrap(true);
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(label);
+    page->setLayout(layout);
+
+    return page;
+}
+
+void MainWindow::calibration_click()
+{
+    initCalibrationWiz();
+    calibrationWiz->show();
+}
+
+void MainWindow::calibrationProc (int id)
+{
+    qDebug() << "id is " << id;
+    if(0 == id) {
+        //off x-ray
+    } else if (1 == id) {
+        //do offset calibraion
+        //qApp->thread()->msleep(3000);
+        axCommander->OnBoardOffsetCalibration();
+        //change the text to press next
+        //QWizardPage* page = calibrationWiz->page(id);
+
+    } else if (2 == id) {
+        axCommander->SaveOffset();
+        axCommander->SetCorrectionOffset(1);
+        //open x-ray
+
+    } else if (3 == id) {
+        //do gain operation
+        axCommander->OnBoardGainCalibration(0);
+       //change next
+    } else if (4 == id) {
+        //save to pos 1
+        axCommander->SaveGain(1);
+        axCommander->SetCorrectionGain(1);
+       //finish
+    }
+}
+
+void MainWindow::initCalibrationWiz ()
+{
+    if(calibrationWiz){
+        calibrationWiz->restart();
+        return;
+    }
+    QWizardPage* shutDownXPage = getShutDownXPage();
+    QWizardPage* offsetWaitingPage = getOffsetWaitingPage();
+    QWizardPage* openXPage = getOpenXPage();
+    QWizardPage* donePage = getGainWaitingPage();
+
+    calibrationWiz = new QWizard(this);
+    calibrationWiz->setVisible(false);
+    calibrationWiz->addPage(shutDownXPage);
+    calibrationWiz->addPage(offsetWaitingPage);
+    calibrationWiz->addPage(openXPage);
+    calibrationWiz->addPage(donePage);
+
+    QObject::connect(calibrationWiz, &QWizard::currentIdChanged, this, &MainWindow::calibrationProc);
+}
+
 void MainWindow::moveEnable(bool enable)
 {
     QString rt;
-    if(enable){
-        axCommander->SetDataPattern(1);
-    }
-    else
-        axCommander->SetDataPattern(0);
+//    if(enable){
+//        axCommander->SetDataPattern(1);
+//    }
+//    else
+//        axCommander->SetDataPattern(0);
+    switchDisplay();
 }
 
 

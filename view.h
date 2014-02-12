@@ -146,6 +146,8 @@ signals:
     void rotateButton_click();
     void settingButton_click();
 
+    void calibrationButton_click();
+    void plotButton_click();
 public:
 
     PixelInfoLabel* pixelInfoLabel;
@@ -165,6 +167,8 @@ public slots:
     void dualScanButton_handle();
     void invertButton_handle();
     void rotateButton_handle();
+    void calibrationButton_handle();
+    void plotButton_handle();
 
 private:
     void setBackgroundImage();
@@ -184,6 +188,9 @@ private:
 
     PanelButton *invertButton;
     PanelButton *rotateButton;
+    PanelButton *plotButton;
+    PanelButton *calButton;
+
 
     DigitalClock* clock;
 
