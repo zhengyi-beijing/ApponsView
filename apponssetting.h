@@ -21,6 +21,7 @@ public:
     bool autoSave;
     QString autoSavePath;
     int autoSaveSize;
+    int autoSaveFrames;
 };
 
 class ApponsSetting: public QObject
@@ -57,6 +58,7 @@ public:
 
     QString autoSavePath();
     int autoSaveSize();
+    int autoSaveFrames();
     void LoadConfig();
 signals:
     void normalize();

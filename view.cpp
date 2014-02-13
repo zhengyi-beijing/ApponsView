@@ -283,6 +283,7 @@ Panel::Panel(const QString &name, QWidget *parent)
     dualScanButton = new QPushButton("Scan/Stop");
     dualScanButton->setStyleSheet("font-size: 18pt;");
     dualScanButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    dualScanButton->setCheckable(true);
     invertButton = new PanelButton(":/Appons/res/invert.ico", 0);
     rotateButton = new PanelButton(":/Appons/res/rotate.ico", 0, false);
 

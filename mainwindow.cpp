@@ -184,7 +184,7 @@ void MainWindow::switchDisplay()
 
 void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock)
 {
-   // qDebug() << __FUNCTION__;
+    qDebug() << __FUNCTION__;
     if(!plot->isVisible())
         return;
     int width = axImageObject->Width();
@@ -215,12 +215,18 @@ void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, 
 
 void MainWindow::FrameReady(int)
 {
+    int framePerFile = setting.autoSaveFrames();
     framecount++;
     qDebug()<< "Frame count: "<< framecount;
-    qDebug() << "Frame Ready thread id = " << QThread::currentThreadId();
+    qDebug()<< "FramesPerFile : "<< framePerFile;
     if (setting.autoSave()) {
         int size = axImageObject->Width()*axImageObject->Height()*axImageObject->BytesPerPixel();
-        ImageData* data = new ImageData((char*)axImageObject->ImageDataAddress(), size);
+        ImageData* data = NULL;
+        if(framecount%framePerFile)
+            data = new ImageData((char*)axImageObject->ImageDataAddress(),size, false);
+        else
+            data = new ImageData((char*)axImageObject->ImageDataAddress(),size, true);
+
         fileServer.append(data, setting.autoSavePath(), setting.autoSaveSize());
     }
     //scene->update();
@@ -266,10 +272,11 @@ void MainWindow::initAxWidget()
 
     axImage->SetChannelType(2);
     axImage->SetImgHeight(setting.height());
+  //  axImage->SetImgHeight(320);
     axImage->SetImgWidth(setting.width());
     axImage->SetImagePort(4001);
     axImage->SetBytesPerPixel(2);
-    axImage->SetSubFrameHeight(32);
+ //   axImage->SetSubFrameHeight(32);
     axImage->setVisible(false);
 
     axDisplay->SetDisplayScale(0);
@@ -313,6 +320,8 @@ void MainWindow::setSpeed(int speed)
     int time = pixelSize*1000000/(speed);
     qDebug()<<"Inetegration Time is us"<<time;
     axCommander->SetIntegrationTime(time);
+    QString speed = QString("[SDS,%1]").arg(setting.scanSpeed());
+    axDetector->SendCommand(speed, rt);
 }
 
 void MainWindow::initDetector()
@@ -325,8 +334,6 @@ void MainWindow::initDetector()
 
     setSpeed(setting.scanSpeed());
 
-    QString speed = QString("[SDS,%1]").arg(setting.scanSpeed());
-    axDetector->SendCommand(speed, rt);
 
 }
 
@@ -416,9 +423,9 @@ void MainWindow::scan()
     framecount = 0;
     lostLineCount = 0;
     axImage->Grab(0);
-    timer.setInterval(17);
-    QObject::connect(&timer,SIGNAL(timeout()), scene, SLOT(update()));
-    timer.start();
+    //timer.setInterval(17);
+    //QObject::connect(&timer,SIGNAL(timeout()), scene, SLOT(update()));
+    //timer.start();
     grabing = true;
     QString rt;
     axDetector->SendCommand(QString("[SDR,1]"), rt);

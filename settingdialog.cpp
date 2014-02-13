@@ -16,6 +16,11 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     ui->scanMode->addItem("Frame");
     ui->scanMode->addItem("Continues");
 
+   // ui->RaySourceTab->setVisible(false);
+   // ui->DisplayTab->setVisible(false);
+    ui->tabWidget->removeTab(1);
+    ui->tabWidget->removeTab(1);
+
     setScanMode(param->scanMode);
     setScanSpeed(param->scanSpeed);
     setSensitivityLevel(param->sensitivityLevel);

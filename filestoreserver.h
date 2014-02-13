@@ -9,16 +9,19 @@ class ImageData
 {
     char* imgdata;
     long  imgsize;
+    bool  islastone;
 public:
-    ImageData(void* src, size_t l)
+    ImageData(void* src, size_t l, bool last)
     {
         imgdata = (char*)malloc(l);
         memcpy(imgdata, src, l);
         imgsize = l;
+        islastone = last;
     }
 
     char* data() { return imgdata; }
     const long size() { return imgsize;}
+    bool islast() { return islastone;}
 };
 
 class FileStoreServer: public QThread

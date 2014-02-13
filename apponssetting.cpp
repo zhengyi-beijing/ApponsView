@@ -31,6 +31,7 @@ void ApponsSetting::LoadConfig()
     param.autoSave = setting.value("Image/autoSave", false).toBool();
     param.autoSavePath = setting.value("Image/autoSavePath", path).toString();
     param.autoSaveSize = setting.value("Image/autoSaveSize", 10).toInt();
+    param.autoSaveFrames = setting.value("Image/autoSaveFrames", 10).toInt();
 
 }
 
@@ -99,6 +100,10 @@ int ApponsSetting::autoSaveSize()
     return param.autoSaveSize;
 }
 
+int ApponsSetting::autoSaveFrames()
+{
+    return param.autoSaveFrames;
+}
 int ApponsSetting::isGainEnable()
 {
     return param.gainEnable   ;
@@ -148,5 +153,6 @@ void ApponsSetting::showSettingDialog()
         setting.setValue("Image/autoSave", param.autoSave);
         setting.setValue("Image/autoSavePath", param.autoSavePath);
         setting.setValue("Image/autoSaveSize", param.autoSaveSize);
+        setting.setValue("Image/autoSaveFrames", param.autoSaveFrames);
     }
 }

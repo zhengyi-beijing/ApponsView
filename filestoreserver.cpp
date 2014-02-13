@@ -105,11 +105,13 @@ void FileStoreServer::write(ImageData* block)
             size -= writed;
         }
         fileSize += block->size();
-        qDebug()<<"fileSize is "<<fileSize;
-        qDebug()<<"MAX_SIZE is "<<singleFileSize;
-        if (fileSize > (singleFileSize-1024)) {
+//        qDebug()<<"fileSize is "<<fileSize;
+//        qDebug()<<"MAX_SIZE is "<<singleFileSize;
+//        if (fileSize > (singleFileSize-1024)) {
+//            closeFile();
+//        }
+        if (block->islast())
             closeFile();
-        }
     }
 
 }
