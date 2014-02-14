@@ -31,6 +31,8 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     setAutoSave(param->autoSave);
     setAutoSavePath(param->autoSavePath);
     setAutoSaveSize(param->autoSaveSize/1000000);
+    setGainEnable(param->gainEnable);
+    setOffsetEnable(param->offsetEnable);
     QObject::connect(ui->browseButton, SIGNAL(clicked()), this, SLOT(browseBtn_click()));
     QObject::connect(ui->normalize, SIGNAL(clicked()), this, SLOT(normalize_click()));
 }

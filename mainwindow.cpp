@@ -476,6 +476,7 @@ void MainWindow::setting_clicked()
     //OPen setting dialog
     setting.showSettingDialog();
     setSpeed(setting.scanSpeed());
+
     if(setting.dataPattern())
         axCommander->SetDataPattern(1);
     else
@@ -666,6 +667,8 @@ void MainWindow::calibrationProc (int id)
     } else if (1 == id) {
         //do offset calibraion
         //qApp->thread()->msleep(3000);
+        axCommander->SetCorrectionOffset(0);
+        axCommander->SetCorrectionGain(0);
         axCommander->OnBoardOffsetCalibration();
 
     } else if (2 == id) {

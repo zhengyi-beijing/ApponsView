@@ -1153,7 +1153,7 @@ public:
     CDTDisplayControl(QWidget *parent = 0, Qt::WindowFlags f = 0)
     : QAxWidget(parent, f)
     {
-        setControl("{dce3040a-003a-4325-9fae-c5a9da79203c}");
+        setControl("{14b6c482-806f-4171-aea4-fb424e07a758}");
     }
 
     CDTDisplayControl(IDTDisplayControl *iface)
@@ -1203,7 +1203,7 @@ public:
     CDTDetector(QWidget *parent = 0, Qt::WindowFlags f = 0)
     : QAxWidget(parent, f)
     {
-        setControl("{d3120961-c570-471d-b62e-5b2636502d85}");
+        setControl("{81b889f3-33fc-40cd-a98b-4487723f5a3b}");
     }
 
     CDTDetector(IDTDetector *iface)
@@ -1343,7 +1343,7 @@ public:
     CDTCommanderF3(QWidget *parent = 0, Qt::WindowFlags f = 0)
     : QAxWidget(parent, f)
     {
-        setControl("{7d934547-7258-4c06-9ad3-a3143e9056ca}");
+        setControl("{b08859a2-d75e-4b6d-8c13-a80dad7ba087}");
     }
 
     CDTCommanderF3(IDTCommanderF3 *iface)
@@ -1753,7 +1753,7 @@ public:
     CImageObject(QObject *parent = 0)
     : QAxObject(parent)
     {
-        setControl("{c3bdf6c3-7738-41fe-97f9-618b28f4f82b}");
+        setControl("{25874cde-5c8a-486d-855d-c8de1ffbee8a}");
     }
 
     CImageObject(IImageObject *iface)
@@ -2095,7 +2095,7 @@ public:
     CDTImage(QWidget *parent = 0, Qt::WindowFlags f = 0)
     : QAxWidget(parent, f)
     {
-        setControl("{addec18d-6a72-4873-9be7-b708463b8adc}");
+        setControl("{137e0c10-17bc-4f16-bffe-5c1e7725c8ea}");
     }
 
     CDTImage(IDTImage *iface)
