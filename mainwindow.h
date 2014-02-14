@@ -222,6 +222,7 @@ private slots:
     void pixelInfo(int x, int y, int v);
     void fitToScene();
     void calibrationProc (int id);
+    void updatePlot();
 };
 
 #endif // MAINWINDOW_H

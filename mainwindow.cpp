@@ -184,7 +184,11 @@ void MainWindow::switchDisplay()
 
 void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock)
 {
-    qDebug() << __FUNCTION__;
+}
+
+void MainWindow::updatePlot()
+{
+  //  qDebug() << __FUNCTION__;
     if(!plot->isVisible())
         return;
     int width = axImageObject->Width();
@@ -193,8 +197,11 @@ void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, 
     int j = 0;
     int max = 0;
    // int min = 0;
-    int EndLine = StartLine + NumLines;
+    int StartLine = 0;
+    int EndLine = axImageObject->Height();
+    int NumLines = axImageObject->Height();
     //get average col value store into y[]
+#pragma omp parallel for private(i,j)
     for (j = StartLine; j < EndLine; j++) {
         quint16* pbase = NULL;
         pbase = (quint16*)axImageObject->ImageLineAddress(j);
@@ -211,14 +218,16 @@ void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, 
     }
 
     plot->setData(&x, &y);
+
 }
 
 void MainWindow::FrameReady(int)
 {
     int framePerFile = setting.autoSaveFrames();
     framecount++;
-    qDebug()<< "Frame count: "<< framecount;
-    qDebug()<< "FramesPerFile : "<< framePerFile;
+    //qDebug()<< "Frame count: "<< framecount;
+    //qDebug()<< "FramesPerFile : "<< framePerFile;
+    updatePlot();
     if (setting.autoSave()) {
         int size = axImageObject->Width()*axImageObject->Height()*axImageObject->BytesPerPixel();
         ImageData* data = NULL;
@@ -320,8 +329,10 @@ void MainWindow::setSpeed(int speed)
     int time = pixelSize*1000000/(speed);
     qDebug()<<"Inetegration Time is us"<<time;
     axCommander->SetIntegrationTime(time);
-    QString speed = QString("[SDS,%1]").arg(setting.scanSpeed());
-    axDetector->SendCommand(speed, rt);
+
+    QString rt;
+    QString speedinfo = QString("[SDS,%1]").arg(setting.scanSpeed());
+    axDetector->SendCommand(speedinfo, rt);
 }
 
 void MainWindow::initDetector()
