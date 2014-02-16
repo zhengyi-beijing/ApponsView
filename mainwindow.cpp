@@ -92,6 +92,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    fileServer.stop();
+    fileServer.wait();
 }
 
 void MainWindow::populateScene()
@@ -184,6 +186,7 @@ void MainWindow::switchDisplay()
 
 void MainWindow::SubFrameReady(int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock)
 {
+    //The axImageObject is not available in the subfarame event.
 }
 
 void MainWindow::updatePlot()
@@ -326,12 +329,14 @@ void MainWindow::setSpeed(int speed)
     qDebug()<<"PixelSize is mm"<< pixelSize;
     if(pixelSize < 0.1)
         pixelSize = 0.4;
-    int time = pixelSize*1000000/(speed);
-    qDebug()<<"Inetegration Time is us"<<time;
+//    int time = pixelSize*1000000/(speed);
+//    qDebug()<<"Inetegration Time is us"<<time;
+    int time = speed;
     axCommander->SetIntegrationTime(time);
 
+    int scanspeed = pixelSize*1000000/time;
     QString rt;
-    QString speedinfo = QString("[SDS,%1]").arg(setting.scanSpeed());
+    QString speedinfo = QString("[SDS,%1]").arg(scanspeed);
     axDetector->SendCommand(speedinfo, rt);
 }
 

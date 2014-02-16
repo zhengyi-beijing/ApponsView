@@ -33,10 +33,12 @@ public:
     ~FileStoreServer();
     void append(ImageData* block, QString path, int sizelimit);
 
+    void stop();
 protected:
     void run();
     void write(ImageData* block);
 private:
+    bool running;
     int id;
     QList<ImageData*> dataList;
     QReadWriteLock lock;

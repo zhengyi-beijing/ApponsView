@@ -107,7 +107,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>mm/s</string>
+      <string>us</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="scanSpeed">
