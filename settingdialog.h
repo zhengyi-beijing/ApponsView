@@ -46,6 +46,11 @@ public:
     int autoSaveSize();
     void setAutoSaveSize (int size);
 
+    void  setStartPixel(int start);
+    int  startPixel();
+
+    void  setEndPixel(int start);
+    int  endPixel();
 signals:
     void normalize();
 private:

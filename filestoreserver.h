@@ -11,12 +11,18 @@ class ImageData
     long  imgsize;
     bool  islastone;
 public:
-    ImageData(void* src, size_t l, bool last)
+    ImageData(void* src, size_t size, bool last)
     {
-        imgdata = (char*)malloc(l);
-        memcpy(imgdata, src, l);
-        imgsize = l;
+        imgdata = (char*)malloc(size);
+        memcpy(imgdata, src, size);
+        imgsize = size;
         islastone = last;
+    }
+    ~ImageData()
+    {
+        if(imgdata)
+            delete imgdata;
+        imgdata = NULL;
     }
 
     char* data() { return imgdata; }

@@ -103,7 +103,7 @@ void FileStoreServer::write(ImageData* block)
     qDebug()<< "Write Image Data";
     if (!file) {
         file = newFile();
-        if(!file->open(QIODevice::WriteOnly|QIODevice::Append)) {
+        if(!file->open(QIODevice::WriteOnly)) {
             qDebug()<<"Open writing file failed\n";
             return;
         };

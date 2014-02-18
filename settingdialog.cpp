@@ -16,6 +16,8 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     ui->scanMode->addItem("Frame");
     ui->scanMode->addItem("Continues");
 
+    ui->startPixel->setValidator(new QIntValidator(0, 1536));
+    ui->endPixel->setValidator(new QIntValidator(0, 1536));
    // ui->RaySourceTab->setVisible(false);
    // ui->DisplayTab->setVisible(false);
     ui->tabWidget->removeTab(1);
@@ -33,6 +35,10 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     setAutoSaveSize(param->autoSaveSize/1000000);
     setGainEnable(param->gainEnable);
     setOffsetEnable(param->offsetEnable);
+    setStartPixel(param->startPixel);
+    setEndPixel(param->endPixel);
+
+
     QObject::connect(ui->browseButton, SIGNAL(clicked()), this, SLOT(browseBtn_click()));
     QObject::connect(ui->normalize, SIGNAL(clicked()), this, SLOT(normalize_click()));
 }
@@ -52,6 +58,26 @@ void SettingDialog::browseBtn_click()
     qDebug()<< "Path is " << dir;
     ui->path->setText(dir);
 
+}
+
+int  SettingDialog::startPixel()
+{
+    return ui->startPixel->text().toInt();
+}
+
+void  SettingDialog::setStartPixel(int start)
+{
+    ui->startPixel->setText(QString::number(start));
+}
+
+int SettingDialog::endPixel()
+{
+    return ui->endPixel->text().toInt();
+}
+
+void SettingDialog::setEndPixel(int end)
+{
+    ui->endPixel->setText(QString::number(end));
 }
 
 void SettingDialog::setOffsetEnable(int e)

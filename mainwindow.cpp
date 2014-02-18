@@ -93,7 +93,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     fileServer.stop();
-    fileServer.wait();
+    fileServer.wait(2000);
 }
 
 void MainWindow::populateScene()
@@ -194,7 +194,15 @@ void MainWindow::updatePlot()
   //  qDebug() << __FUNCTION__;
     if(!plot->isVisible())
         return;
-    int width = axImageObject->Width();
+    //int width = axImageObject->Width();
+    int startPixel = setting.startPixel();
+    int endPixel = setting.endPixel();
+
+    if((endPixel > axImageObject->Width()) || (endPixel <= 0))
+        endPixel = axImageObject->Width();
+    if(startPixel >= endPixel)
+        startPixel = 0;
+    int width = endPixel-startPixel+1;
     QVector<double> x(width), y(width);
     int i = 0;
     int j = 0;
@@ -208,16 +216,16 @@ void MainWindow::updatePlot()
     for (j = StartLine; j < EndLine; j++) {
         quint16* pbase = NULL;
         pbase = (quint16*)axImageObject->ImageLineAddress(j);
-        for (i=0; i < width; i++) {
-            y[i] += *(pbase+i);
+        for (i=startPixel; i <= endPixel; i++) {
+            y[i-startPixel] += *(pbase+i);
         }
     }
 
-    for(i =0; i < width; i++) {
-        x[i] = i;
-        y[i] /= NumLines;
-        if(y[i] > max)
-            max = y[i];
+    for(i =startPixel; i <= endPixel; i++) {
+        x[i-startPixel] = i-startPixel;
+        y[i-startPixel] /= NumLines;
+        if(y[i-startPixel] > max)
+            max = y[i-startPixel];
     }
 
     plot->setData(&x, &y);
@@ -232,17 +240,25 @@ void MainWindow::FrameReady(int)
     //qDebug()<< "FramesPerFile : "<< framePerFile;
     updatePlot();
     if (setting.autoSave()) {
-        int size = axImageObject->Width()*axImageObject->Height()*axImageObject->BytesPerPixel();
+
+    int startPixel = setting.startPixel();
+    int endPixel = setting.endPixel();
+
+    if((endPixel > axImageObject->Width()) || (endPixel <= 0))
+        endPixel = axImageObject->Width();
+    if(startPixel >= endPixel)
+        startPixel = 0;
+    int width = endPixel-startPixel+1;
+    int bytesPerPixel = axImageObject->BytesPerPixel();
+    int size = width*axImageObject->Height()*bytesPerPixel;
         ImageData* data = NULL;
         if(framecount%framePerFile)
-            data = new ImageData((char*)axImageObject->ImageDataAddress(),size, false);
+            data = new ImageData((char*)(axImageObject->ImageDataAddress()+startPixel*bytesPerPixel),size, false);
         else
-            data = new ImageData((char*)axImageObject->ImageDataAddress(),size, true);
+            data = new ImageData((char*)(axImageObject->ImageDataAddress()+startPixel*bytesPerPixel),size, true);
 
         fileServer.append(data, setting.autoSavePath(), setting.autoSaveSize());
     }
-    //scene->update();
-    //view->view()->viewport()->update();
     panel->frameCountLabel->setFrameCount(framecount);
 }
 
@@ -671,6 +687,8 @@ void MainWindow::calibrationProc (int id)
         //off x-ray
     } else if (1 == id) {
         //do offset calibraion
+        axCommander->SetStartPixel(setting.startPixel());
+        axCommander->SetEndPixel(setting.endPixel());
         axCommander->SetBaseline(0);
         axCommander->SetCorrectionOffset(0);
         axCommander->SetCorrectionGain(0);

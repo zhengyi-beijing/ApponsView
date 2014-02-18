@@ -17,7 +17,6 @@ PlotWidget::PlotWidget(QWidget *parent) :
     ui->ymax->setValidator(new QIntValidator(0, MAX));
     ui->ymin->setValidator(new QIntValidator(0, MAX));
     QObject::connect(ui->rangeApply, &QPushButton::clicked, this, &PlotWidget::rangeApply);
-    //QObject::connect(ui->rangeApply, SIGNAL(clicked()), this, SLOT(rangeApply()));
     rangeApply();
 }
 

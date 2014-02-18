@@ -16,6 +16,8 @@ public:
     int gainEnable;
     int offsetEnable;
     int targetValue;
+    int startPixel;
+    int endPixel;
 
     int rayVoltage;
     int rayCurrent;
@@ -58,6 +60,9 @@ public:
 
     int isGainEnable();
     int isOffsetEnable();
+
+    int startPixel();
+    int endPixel();
 
     QString autoSavePath();
     int autoSaveSize();
