@@ -26,6 +26,9 @@ void ApponsSetting::LoadConfig()
     param.scanSpeed = setting.value("Detector/scanSpeed", 2000).toInt();
     param.sensitivityLevel = setting.value("Detector/sensitivity", 0).toInt();
     param.dataPattern = setting.value("Detector/dataPattern", 0).toInt();
+    param.targetValue = setting.value("Detector/targetValue", 10000).toInt();
+
+
     param.scanMode = setting.value("Display/scanMode", 0).toInt();
     param.rayVoltage = setting.value("RaySource/rayVoltage", 120).toInt();
     param.rayCurrent = setting.value("RaySource/rayCurrent", 2).toInt();
@@ -119,6 +122,11 @@ int ApponsSetting::isOffsetEnable()
 void ApponsSetting::normalize_slot()
 {
     emit normalize();
+}
+
+int ApponsSetting::targetValue()
+{
+    return param.targetValue;
 }
 
 void ApponsSetting::showSettingDialog()

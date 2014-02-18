@@ -15,6 +15,8 @@ public:
     int dataPattern;
     int gainEnable;
     int offsetEnable;
+    int targetValue;
+
     int rayVoltage;
     int rayCurrent;
     int rayExposeTime;
@@ -36,6 +38,7 @@ public:
     long width();
     long height();
 
+    int targetValue();
     int scanSpeed();
     //void setScanSpeed(int s);
     int sensitivityLevel();
