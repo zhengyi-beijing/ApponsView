@@ -666,7 +666,7 @@ void MainWindow::calibrationProc (int id)
         //off x-ray
     } else if (1 == id) {
         //do offset calibraion
-        //qApp->thread()->msleep(3000);
+        axCommander->SetBaseline(0);
         axCommander->SetCorrectionOffset(0);
         axCommander->SetCorrectionGain(0);
         axCommander->OnBoardOffsetCalibration();
@@ -678,7 +678,7 @@ void MainWindow::calibrationProc (int id)
 
     } else if (3 == id) {
         //do gain operation
-        axCommander->OnBoardGainCalibration(1);
+        axCommander->OnBoardGainCalibration(setting.targetValue());
        //change next
     } else if (4 == id) {
         //save to pos 1
