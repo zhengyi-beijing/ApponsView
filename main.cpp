@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     //window.showFullScreen();
     window.show();
-
+    window.setWindowState(Qt::WindowMaximized);
     QLogger::QLoggerManager *manager = QLogger::QLoggerManager::getInstance();
     manager->addDestination("Appons-test.log", "Appons", QLogger::TraceLevel);
     QLogger::QLog_Trace("Appons", "App start");

@@ -21,7 +21,9 @@ void ApponsSetting::LoadConfig()
     param.gainEnable = setting.value("Detector/gainEnable", 0).toInt();
     param.offsetEnable = setting.value("Detector/offsetEnable", 0).toInt();
 
-    param.scanSpeed = setting.value("Detector/scanSpeed", 200).toInt();
+    //param.scanSpeed = setting.value("Detector/scanSpeed", 200).toInt();
+    //change speed to integration time unit is us
+    param.scanSpeed = setting.value("Detector/scanSpeed", 2000).toInt();
     param.sensitivityLevel = setting.value("Detector/sensitivity", 0).toInt();
     param.dataPattern = setting.value("Detector/dataPattern", 0).toInt();
     param.targetValue = setting.value("Detector/targetValue", 10000).toInt();

@@ -3,6 +3,7 @@
 #include <QDateTime>
 #include "QLogger.h"
 #include <QDebug>
+#include <QMessageBox>
 int MAX_SIZE = 2*1024 * 1024;
 FileStoreServer::FileStoreServer()
 {
@@ -58,8 +59,15 @@ void FileStoreServer::append(ImageData* block, QString path, int sizelimit)
     listEmpty.wakeAll();
 }
 
+void FileStoreServer::stop()
+{
+    listEmpty.wakeAll();
+    running = false;
+}
+
 void FileStoreServer::run(){
-    while (1) {
+    running = true;
+    while (running) {
         if (dataList.size() == 0) {
             qDebug()<<"List Emty wait........";
             mutex.lock();
@@ -67,6 +75,8 @@ void FileStoreServer::run(){
             mutex.unlock();
             qDebug()<<"Image data waked **********======";
         }
+        if(dataList.isEmpty())
+            break;
         lock.lockForWrite();
             ImageData* block = dataList.first();
             dataList.removeFirst();
@@ -93,7 +103,11 @@ void FileStoreServer::write(ImageData* block)
     qDebug()<< "Write Image Data";
     if (!file) {
         file = newFile();
-        file->open(QIODevice::WriteOnly|QIODevice::Append);
+        if(!file->open(QIODevice::WriteOnly|QIODevice::Append)) {
+            qDebug()<<"Open writing file failed\n";
+            return;
+        };
+
     }
     if (file) {
         long size = block->size();
