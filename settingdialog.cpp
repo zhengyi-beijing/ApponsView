@@ -22,6 +22,7 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
    // ui->DisplayTab->setVisible(false);
     ui->tabWidget->removeTab(1);
     ui->tabWidget->removeTab(1);
+    ui->scanMode->setEnabled(false);
 
     setScanMode(param->scanMode);
     setScanSpeed(param->scanSpeed);

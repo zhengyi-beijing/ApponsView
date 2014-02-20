@@ -25,6 +25,13 @@ PlotWidget::~PlotWidget()
     delete ui;
 }
 
+void PlotWidget::setRange(int min, int max)
+{
+    ui->xmax->setText(QString::number(max));
+    ui->xmin->setText(QString::number(min));
+    rangeApply();
+
+}
 void PlotWidget::rangeApply()
 {
     int xmax, xmin, ymax, ymin;
@@ -34,8 +41,8 @@ void PlotWidget::rangeApply()
     ymax = ui->ymax->text().toInt();
     ymin = ui->ymin->text().toInt();
 
-    ui->plot->xAxis->setRange(xmin, xmax);
     ui->plot->yAxis->setRange(ymin, ymax);
+    ui->plot->xAxis->setRange(xmin, xmax);
     ui->plot->replot();
 }
 

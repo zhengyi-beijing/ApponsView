@@ -269,7 +269,7 @@ void MainWindow::createAxWidget()
 
     axDisplay = new DTControl::CDTDisplay(this);
    // axDisplay = new Display(this);
-    axDisplay->setVisible(true);
+    axDisplay->setVisible(false);
 
     axCommander = new DTControl::CDTCommanderF3(this);
     axCommander->setVisible(false);
@@ -279,7 +279,8 @@ void MainWindow::createAxWidget()
 
     //plot = new QCustomPlot(this);
     plot = new PlotWidget(this);
-    plot->setVisible(false);
+    plot->setRange(0, setting.endPixel()-setting.startPixel());
+    plot->setVisible(true);
 }
 
 void MainWindow::initAxWidget()
@@ -432,9 +433,18 @@ void MainWindow::stop()
 {
     axImage->Stop();
     grabing = false;
-    timer.stop();
+    //timer.stop();
+    QTimer::singleShot(1000, this, SLOT(grabStatus()));
+}
+
+void MainWindow::grabStatus()
+{
     QString rt;
-    axDetector->SendCommand(QString("[SDR,0]"), rt);
+    if(grabing) {
+        axDetector->SendCommand(QString("[SDR,1]"), rt);
+    } else {
+        axDetector->SendCommand(QString("[SDR,0]"), rt);
+    }
 }
 
 void MainWindow::scan()
@@ -459,8 +469,7 @@ void MainWindow::scan()
     //QObject::connect(&timer,SIGNAL(timeout()), scene, SLOT(update()));
     //timer.start();
     grabing = true;
-    QString rt;
-    axDetector->SendCommand(QString("[SDR,1]"), rt);
+    QTimer::singleShot(1000, this, SLOT(grabStatus()));
 }
 
 void MainWindow::singleScanEnable(bool enable)
@@ -512,6 +521,7 @@ void MainWindow::setting_clicked()
         axCommander->SetCorrectionOffset(1);
     else
         axCommander->SetCorrectionOffset(0);
+    axCommander->SetSensitivityLevel(setting.sensitivityLevel());
 }
 
 void MainWindow::open_clicked()

@@ -215,6 +215,7 @@ private:
     QString ip;
 
 private slots:
+    void grabStatus();
     void ImageOpened();
     void SubFrameReady (int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock);
     void FrameReady(int);

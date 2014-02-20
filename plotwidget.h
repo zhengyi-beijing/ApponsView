@@ -16,6 +16,7 @@ public:
     ~PlotWidget();
 
     void setData(QVector<double>* x, QVector<double>* y);
+    void setRange(int min, int max);
 private slots:
     void rangeApply();
 private:
