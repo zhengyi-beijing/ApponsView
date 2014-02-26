@@ -24,7 +24,7 @@ void ApponsSetting::LoadConfig()
     //param.scanSpeed = setting.value("Detector/scanSpeed", 200).toInt();
     //change speed to integration time unit is us
     param.scanSpeed = setting.value("Detector/scanSpeed", 2000).toInt();
-    param.sensitivityLevel = setting.value("Detector/sensitivity", 0).toInt();
+    param.sensitivityLevel = setting.value("Detector/sensitivity", 1).toInt();
     param.dataPattern = setting.value("Detector/dataPattern", 0).toInt();
     param.targetValue = setting.value("Detector/targetValue", 10000).toInt();
     param.startPixel = setting.value("Detector/startPixel", 0).toInt();

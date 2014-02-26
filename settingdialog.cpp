@@ -11,10 +11,8 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     ui(new Ui::SettingDialog)
 {
     ui->setupUi(this);
-    ui->sensitivty->addItem("Low");
-    ui->sensitivty->addItem("High");
-    ui->scanMode->addItem("Frame");
-    ui->scanMode->addItem("Continues");
+    //ui->scanMode->addItem("Frame");
+    //ui->scanMode->addItem("Continues");
 
     ui->startPixel->setValidator(new QIntValidator(0, 1536));
     ui->endPixel->setValidator(new QIntValidator(0, 1536));
@@ -134,12 +132,12 @@ void SettingDialog::setScanSpeed(int s)
 
 int SettingDialog::sensitivityLevel()
 {
-    return ui->sensitivty->currentIndex();
+    return ui->sensitivty->currentIndex()+1;
 }
 
 void SettingDialog::setSensitivityLevel(int s)
 {
-    ui->sensitivty->setCurrentIndex(s);
+    ui->sensitivty->setCurrentIndex(s-1);
 }
 
 int SettingDialog::scanMode()

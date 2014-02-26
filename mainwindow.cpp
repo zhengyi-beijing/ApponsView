@@ -522,6 +522,7 @@ void MainWindow::setting_clicked()
     else
         axCommander->SetCorrectionOffset(0);
     axCommander->SetSensitivityLevel(setting.sensitivityLevel());
+    plot->setRange(0, setting.endPixel()-setting.startPixel());
 }
 
 void MainWindow::open_clicked()
