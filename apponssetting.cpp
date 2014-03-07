@@ -28,7 +28,7 @@ void ApponsSetting::LoadConfig()
     param.dataPattern = setting.value("Detector/dataPattern", 0).toInt();
     param.targetValue = setting.value("Detector/targetValue", 10000).toInt();
     param.startPixel = setting.value("Detector/startPixel", 0).toInt();
-    param.endPixel = setting.value("Detector/endPixel", param.width).toInt();
+    param.endPixel = setting.value("Detector/endPixel", param.width-1).toInt();
 
 
     param.scanMode = setting.value("Display/scanMode", 0).toInt();

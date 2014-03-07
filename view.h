@@ -51,6 +51,7 @@
 #include <QResizeEvent>
 #include <QTimer>
 #include <QPoint>
+#include <QSlider>
 class View;
 class QGLWidget;
 
@@ -153,6 +154,9 @@ public:
     PixelInfoLabel* pixelInfoLabel;
     FrameCountLabel* frameCountLabel;
     PanelButton *saveButton;
+    QPushButton *xrayOnButton;
+    QPushButton *objectButton;
+    QSlider*   xrayStrength;
 
 public slots:
     void aboutButton_handle();

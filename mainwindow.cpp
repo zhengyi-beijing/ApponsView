@@ -301,19 +301,16 @@ void MainWindow::initAxWidget()
 
     axImage->SetChannelType(2);
     axImage->SetImgHeight(setting.height());
-  //  axImage->SetImgHeight(320);
     axImage->SetImgWidth(setting.width());
     axImage->SetImagePort(4001);
     axImage->SetBytesPerPixel(2);
- //   axImage->SetSubFrameHeight(32);
     axImage->setVisible(false);
 
     axDisplay->SetDisplayScale(0);
     axDisplay->SetMapStart(100);
-    axDisplay->SetMapEnd(10000);
+    axDisplay->SetMapEnd(20000);
     axDisplay->setMinimumSize(512,512);
     axDisplay->dynamicCall("SetDisplayScale(int)", 0);
-    //axDisplay->SetRefreshMode(2);//Moving
 
     qDebug()<<"get ImageObject";
     IUnknown* imgsrcHandle =  axImage->ObjectHandle();
@@ -346,8 +343,6 @@ void MainWindow::setSpeed(int speed)
     qDebug()<<"PixelSize is mm"<< pixelSize;
     if(pixelSize < 0.1)
         pixelSize = 0.4;
-//    int time = pixelSize*1000000/(speed);
-//    qDebug()<<"Inetegration Time is us"<<time;
     int time = speed;
     axCommander->SetIntegrationTime(time);
 
@@ -360,7 +355,6 @@ void MainWindow::setSpeed(int speed)
 void MainWindow::initDetector()
 {
     QString rt;
-   // axDetector->SendCommand(QString("[ED,M,0]"), rt);
     if(setting.dataPattern())
         axCommander->SetDataPattern(1);
     axCommander->SetSensitivityLevel(setting.sensitivityLevel());
@@ -404,7 +398,8 @@ int MainWindow::openDetector()
 void MainWindow::connectSignals()
 {
     QObject::connect(panel, &Panel::singleScanEnable, this, &MainWindow::singleScanEnable);
-    QObject::connect(panel, &Panel::dualScanEnable, this, &MainWindow::dualScanEnable);
+    QObject::connect(panel, &Panel::dualScanEnable, this, &MainWindow::singleScanEnable);
+    //QObject::connect(panel, &Panel::dualScanEnable, this, &MainWindow::dualScanEnable);
     QObject::connect(panel, &Panel::settingButton_click, this, &MainWindow::setting_clicked);
     QObject::connect(panel, &Panel::openButton_click, this, &MainWindow::open_clicked);
     QObject::connect(panel->saveButton, &QToolButton::clicked, this, &MainWindow::saveButtonClick);
@@ -418,6 +413,9 @@ void MainWindow::connectSignals()
 
     QObject::connect(panel, &Panel::calibrationButton_click, this, &MainWindow::calibration_click);
     QObject::connect(panel, &Panel::plotButton_click, this, &MainWindow::switchDisplay);
+    QObject::connect(panel->xrayOnButton, &QPushButton::clicked, this, &MainWindow::xrayOn);
+    QObject::connect(panel->objectButton, &QPushButton::clicked, this, &MainWindow::objectOn);
+    QObject::connect(panel->xrayStrength, &QSlider::valueChanged, this, &MainWindow::xrayStrengthChange);
 
 //    QObject::connect(view->view(), &GraphicsView::increaseContrastEnd, this, &MainWindow::increaseContrastEnd);
 //    QObject::connect(view->view(), &GraphicsView::decreaseContrastEnd, this, &MainWindow::decreaseContrastEnd);
@@ -427,6 +425,49 @@ void MainWindow::connectSignals()
     QObject::connect(axDisplay,SIGNAL(MouseMove(int, int, int)), panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
 
     QObject::connect(&setting, &ApponsSetting::normalize, this, &MainWindow::calibration_click);
+}
+void MainWindow::xrayStrengthChange(int value)
+{
+    QString rt;
+    QString cmd;
+    if (panel->xrayOnButton->isChecked()){
+        cmd.sprintf("[XO,W,%d]", value);
+        if(axDetector->IsOpened()) {
+            axDetector->SendCommand(cmd, rt);
+        }
+    }
+
+}
+
+void MainWindow::objectOn()
+{
+    QString rt;
+    QString cmd;
+    int value = panel->xrayStrength->value();
+    if (panel->objectButton->isChecked()) {
+        cmd.sprintf("[OS,W,%d]", value);
+    } else {
+        cmd.sprintf("[XO,W,%d]", value);
+    }
+    if(axDetector->IsOpened()) {
+            axDetector->SendCommand(cmd, rt);
+    }
+
+}
+
+void MainWindow::xrayOn()
+{
+    QString rt;
+    QString cmd;
+    int value = panel->xrayStrength->value();
+    if (panel->xrayOnButton->isChecked()) {
+        cmd.sprintf("[XO,W,%d]", value);
+    } else {
+        cmd.sprintf("[XF]");
+    }
+    if(axDetector->IsOpened()) {
+            axDetector->SendCommand(cmd, rt);
+    }
 }
 
 void MainWindow::stop()
@@ -698,8 +739,8 @@ void MainWindow::calibrationProc (int id)
         //off x-ray
     } else if (1 == id) {
         //do offset calibraion
-        axCommander->SetStartPixel(setting.startPixel());
-        axCommander->SetEndPixel(setting.endPixel());
+//        axCommander->SetStartPixel(setting.startPixel());
+//        axCommander->SetEndPixel(setting.endPixel());
         axCommander->SetBaseline(0);
         axCommander->SetCorrectionOffset(0);
         axCommander->SetCorrectionGain(0);

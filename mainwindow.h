@@ -160,7 +160,9 @@ public slots:
     void increaseContrastEnd();
     void decreaseContrastEnd();
     void switchDisplay();
-
+    void xrayOn();
+    void xrayStrengthChange(int value);
+    void objectOn();
 protected:
     void resizeEvent(QResizeEvent * event);
     void showEvent (QShowEvent * event );

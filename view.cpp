@@ -293,14 +293,33 @@ Panel::Panel(const QString &name, QWidget *parent)
     plotButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     plotButton->setStyleSheet("font-size: 18pt;");
 
+    xrayOnButton = new QPushButton("X-ray On/OFF");
+    xrayOnButton ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    xrayOnButton ->setStyleSheet("font-size: 18pt;");
+    xrayOnButton->setCheckable(true);
+
+    objectButton = new QPushButton("ObjectScan");
+    objectButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    objectButton->setStyleSheet("font-size: 18pt;");
+    objectButton->setCheckable(true);
+
     clock = new DigitalClock(this);
     frameCountLabel = new FrameCountLabel(this);
     pixelInfoLabel = new PixelInfoLabel(this);
+
+    xrayStrength =  new QSlider(this);
+    xrayStrength->setOrientation(Qt::Horizontal);
+    xrayStrength->setRange(0,7);
+    xrayStrength->setSingleStep(1);
+    xrayStrength->setPageStep(1);
 
     QVBoxLayout* panelLayout = new QVBoxLayout;
     panelLayout->addWidget(dualScanButton);
     panelLayout->addWidget(settingButton);
     panelLayout->addWidget(plotButton);
+    panelLayout->addWidget(xrayOnButton);
+    panelLayout->addWidget(xrayStrength);
+    panelLayout->addWidget(objectButton);
 //    QGridLayout *panelLayout = new QGridLayout;
 //    panelLayout->addWidget(openButton, 0,0);
 //    panelLayout->addWidget(saveButton, 0,1);
