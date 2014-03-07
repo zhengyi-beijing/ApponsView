@@ -698,8 +698,8 @@ void MainWindow::calibrationProc (int id)
         //off x-ray
     } else if (1 == id) {
         //do offset calibraion
-        axCommander->SetStartPixel(setting.startPixel());
-        axCommander->SetEndPixel(setting.endPixel());
+//        axCommander->SetStartPixel(setting.startPixel());
+//        axCommander->SetEndPixel(setting.endPixel());
         axCommander->SetBaseline(0);
         axCommander->SetCorrectionOffset(0);
         axCommander->SetCorrectionGain(0);
