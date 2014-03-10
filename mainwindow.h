@@ -179,6 +179,7 @@ private:
     void stop();
     int contrastStep();
     void setSpeed(int speed);
+    void setXray(int value);
 
     QTimer timer;
     Scene *scene;
@@ -226,6 +227,7 @@ private slots:
     void fitToScene();
     void calibrationProc (int id);
     void updatePlot();
+    void arrayCalibraion();
 };
 
 #endif // MAINWINDOW_H

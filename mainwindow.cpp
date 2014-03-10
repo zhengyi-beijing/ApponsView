@@ -307,7 +307,7 @@ void MainWindow::initAxWidget()
     axImage->setVisible(false);
 
     axDisplay->SetDisplayScale(0);
-    axDisplay->SetMapStart(100);
+    axDisplay->SetMapStart(500);
     axDisplay->SetMapEnd(20000);
     axDisplay->setMinimumSize(512,512);
     axDisplay->dynamicCall("SetDisplayScale(int)", 0);
@@ -411,7 +411,7 @@ void MainWindow::connectSignals()
     QObject::connect(panel, &Panel::invertButton_click, this, &MainWindow::invert_click);
     QObject::connect(panel, &Panel::rotateButton_click, this, &MainWindow::rotate_click);
 
-    QObject::connect(panel, &Panel::calibrationButton_click, this, &MainWindow::calibration_click);
+    QObject::connect(panel, &Panel::calibrationButton_click, this, &MainWindow::arrayCalibraion);
     QObject::connect(panel, &Panel::plotButton_click, this, &MainWindow::switchDisplay);
     QObject::connect(panel->xrayOnButton, &QPushButton::clicked, this, &MainWindow::xrayOn);
     QObject::connect(panel->objectButton, &QPushButton::clicked, this, &MainWindow::objectOn);
@@ -463,7 +463,7 @@ void MainWindow::xrayOn()
     if (panel->xrayOnButton->isChecked()) {
         cmd.sprintf("[XO,W,%d]", value);
     } else {
-        cmd.sprintf("[XF]");
+        cmd.sprintf("[XO,W,%d]", 0);
     }
     if(axDetector->IsOpened()) {
             axDetector->SendCommand(cmd, rt);
@@ -732,34 +732,46 @@ void MainWindow::calibration_click()
     calibrationWiz->show();
 }
 
+void MainWindow::arrayCalibraion()
+{
+    int i= 0;
+    axImage->SetOffsetEnable(false);
+    axImage->SetGainEnable(false);
+    axImage->setArrayCorrectionEnable(false);
+    for(i = 0; i<9; i++)
+    {
+        setXray(i);
+        axImage->GainCalSnap();
+    }
+    axImage->setArrayCorrectionEnable(true);
+
+}
+
 void MainWindow::calibrationProc (int id)
 {
     qDebug() << "id is " << id;
     if(0 == id) {
         //off x-ray
+        setXray(0);
     } else if (1 == id) {
-        //do offset calibraion
-//        axCommander->SetStartPixel(setting.startPixel());
-//        axCommander->SetEndPixel(setting.endPixel());
-        axCommander->SetBaseline(0);
-        axCommander->SetCorrectionOffset(0);
-        axCommander->SetCorrectionGain(0);
-        axCommander->OnBoardOffsetCalibration();
-
+        axImage->SetOffsetEnable(false);
+        axImage->SetGainEnable(false);
+        axImage->setArrayCorrectionEnable(false);
+        axImage->OffsetCalibration();
     } else if (2 == id) {
-        axCommander->SaveOffset();
-        axCommander->SetCorrectionOffset(1);
         //open x-ray
+        setXray(8);
 
     } else if (3 == id) {
         //do gain operation
-        axCommander->OnBoardGainCalibration(setting.targetValue());
-       //change next
+        axImage->SetOffsetEnable(true);
+        axImage->GainCalibration(10000);
+        axImage->SetGainEnable(true);
     } else if (4 == id) {
         //save to pos 1
-        axCommander->SaveGain(1);
-        axCommander->SetCorrectionGain(1);
-       //finish
+       //TODO save the gain and offset to file
+        //finish
+
     }
 }
 
@@ -869,5 +881,15 @@ void MainWindow::contrastEnable(bool enable)
         view->view()->setMouseOpMode(GraphicsView::Contrast);
     } else {
         view->view()->setMouseOpMode(GraphicsView::None);
+    }
+}
+
+void MainWindow::setXray(int value)
+{
+    QString rt;
+    QString cmd;
+    cmd.sprintf("[XO,W,%d]", value);
+    if(axDetector->IsOpened()) {
+            axDetector->SendCommand(cmd, rt);
     }
 }

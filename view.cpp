@@ -287,7 +287,7 @@ Panel::Panel(const QString &name, QWidget *parent)
     invertButton = new PanelButton(":/Appons/res/invert.ico", 0);
     rotateButton = new PanelButton(":/Appons/res/rotate.ico", 0, false);
 
-    calButton = new PanelButton(":/Appons/res/calibraition.jpg");
+    //calButton = new PanelButton(":/Appons/res/calibraition.jpg");
     //plotButton = new PanelButton(":/Appons/res/plot.jpg");
     plotButton = new QPushButton("Plot/Image");
     plotButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -302,6 +302,10 @@ Panel::Panel(const QString &name, QWidget *parent)
     objectButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     objectButton->setStyleSheet("font-size: 18pt;");
     objectButton->setCheckable(true);
+
+    calButton = new QPushButton("Calibraton");
+    calButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    calButton->setStyleSheet("font-size: 18pt;");
 
     clock = new DigitalClock(this);
     frameCountLabel = new FrameCountLabel(this);
@@ -320,6 +324,7 @@ Panel::Panel(const QString &name, QWidget *parent)
     panelLayout->addWidget(xrayOnButton);
     panelLayout->addWidget(xrayStrength);
     panelLayout->addWidget(objectButton);
+    panelLayout->addWidget(calButton);
 //    QGridLayout *panelLayout = new QGridLayout;
 //    panelLayout->addWidget(openButton, 0,0);
 //    panelLayout->addWidget(saveButton, 0,1);

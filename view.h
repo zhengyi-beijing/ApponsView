@@ -196,7 +196,8 @@ private:
     PanelButton *rotateButton;
     //PanelButton *plotButton;
     QPushButton *plotButton;
-    PanelButton *calButton;
+//    PanelButton *calButton;
+    QPushButton *calButton;
 
 
     DigitalClock* clock;
