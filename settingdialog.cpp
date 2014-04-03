@@ -81,23 +81,25 @@ void SettingDialog::setEndPixel(int end)
 
 void SettingDialog::setOffsetEnable(int e)
 {
-    ui->offset->setChecked(e);
+ //   ui->offset->setChecked(e);
 }
 
 int SettingDialog::offsetEnable()
 {
 
-    return ui->offset->isChecked();
+ //   return ui->offset->isChecked();
+    return 0;
 }
 
 void SettingDialog::setGainEnable(int e)
 {
-    ui->gain->setChecked(e);
+//    ui->gain->setChecked(e);
 }
 
 int SettingDialog::gainEnable()
 {
-    return ui->gain->isChecked();
+ //   return ui->gain->isChecked();
+    return 0;
 }
 
 QString SettingDialog::autoSavePath()
@@ -193,12 +195,13 @@ void SettingDialog::setRayExposeTime(int s)
 
 int SettingDialog::autoSave()
 {
-    return ui->autoSave->isChecked();
+    //return ui->autoSave->isChecked();
+    return 0;
 }
 
 void SettingDialog::setAutoSave(int b)
 {
-    return ui->autoSave->setChecked(b);
+    //return ui->autoSave->setChecked(b);
 }
 
 void SettingDialog::normalize_click()
