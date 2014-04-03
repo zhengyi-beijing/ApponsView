@@ -12,14 +12,14 @@ ApponsSetting::ApponsSetting()
 
 void ApponsSetting::LoadConfig()
 {
-    QString path =  QCoreApplication::applicationDirPath ();
+    path =  QCoreApplication::applicationDirPath ();
     QSettings setting(path+"/config.ini", QSettings ::IniFormat);
     param.ip = setting.value("Network/ip", "192.168.1.25").toString();
-    param.width = setting.value("Image/width", 1536).toInt();
+    param.width = setting.value("Image/width", 1535).toInt();
     param.height = setting.value("Image/height", 1024).toInt();
 
-    param.gainEnable = setting.value("Detector/gainEnable", 0).toInt();
-    param.offsetEnable = setting.value("Detector/offsetEnable", 0).toInt();
+    param.gainEnable = setting.value("Detector/gain", 0).toInt();
+    param.offsetEnable = setting.value("Detector/offset", 0).toInt();
 
     //param.scanSpeed = setting.value("Detector/scanSpeed", 200).toInt();
     //change speed to integration time unit is us
@@ -92,6 +92,11 @@ int ApponsSetting::rayExposeTime()
     return param.rayExposeTime;
 }
 
+void ApponsSetting::setAutoSave(bool enable)
+{
+    param.autoSave = enable;
+}
+
 bool ApponsSetting::autoSave()
 {
     return param.autoSave;
@@ -111,6 +116,17 @@ int ApponsSetting::autoSaveFrames()
 {
     return param.autoSaveFrames;
 }
+
+void ApponsSetting::setOffsetEnable(bool bEnabel)
+{
+    param.offsetEnable = bEnabel;
+}
+
+void ApponsSetting::setGainEnable(bool bEnabel)
+{
+    param.gainEnable = bEnabel;
+}
+
 int ApponsSetting::isGainEnable()
 {
     return param.gainEnable   ;
@@ -141,31 +157,11 @@ int ApponsSetting::endPixel()
     return param.endPixel;
 }
 
-void ApponsSetting::showSettingDialog()
+void ApponsSetting::save()
 {
-    SettingDialog dlg(&param);
-    QObject::connect(&dlg, &SettingDialog::normalize, this, &ApponsSetting::normalize_slot, Qt::QueuedConnection);
-    if(dlg.exec() == QDialog::Accepted){
-        param.scanSpeed = dlg.scanSpeed();
-        param.sensitivityLevel = dlg.sensitivityLevel();
-        param.dataPattern = dlg.dataPattern();
-        param.scanMode = dlg.scanMode();
-        param.rayVoltage = dlg.rayVoltage();
-        param.rayCurrent =dlg.rayCurrent();
-        param.rayExposeTime = dlg.rayExposeTime();
-        param.autoSave = dlg.autoSave();
-        param.autoSavePath =  dlg.autoSavePath();
-        param.autoSaveSize = dlg.autoSaveSize();
-
-        param.gainEnable = dlg.gainEnable();
-        param.offsetEnable = dlg.offsetEnable();
-
-        param.startPixel = dlg.startPixel();
-        param.endPixel = dlg.endPixel();
-
-        QString path =  QCoreApplication::applicationDirPath ();
         QSettings setting(path+"/config.ini", QSettings ::IniFormat);
 
+        setting.setValue("Network/ip", param.ip );
         setting.setValue("Detector/scanSpeed", param.scanSpeed);
         setting.setValue("Detector/sensitivity", param.sensitivityLevel);
         setting.setValue("Detector/dataPattern", param.dataPattern);
@@ -183,5 +179,28 @@ void ApponsSetting::showSettingDialog()
         setting.setValue("Image/autoSavePath", param.autoSavePath);
         setting.setValue("Image/autoSaveSize", param.autoSaveSize);
         setting.setValue("Image/autoSaveFrames", param.autoSaveFrames);
+
+}
+
+void ApponsSetting::showSettingDialog()
+{
+    SettingDialog dlg(&param);
+    QObject::connect(&dlg, &SettingDialog::normalize, this, &ApponsSetting::normalize_slot, Qt::QueuedConnection);
+    if(dlg.exec() == QDialog::Accepted){
+        param.scanSpeed = dlg.scanSpeed();
+        param.sensitivityLevel = dlg.sensitivityLevel();
+        param.dataPattern = dlg.dataPattern();
+        param.scanMode = dlg.scanMode();
+        param.rayVoltage = dlg.rayVoltage();
+        param.rayCurrent =dlg.rayCurrent();
+        param.rayExposeTime = dlg.rayExposeTime();
+       // param.autoSave = dlg.autoSave();
+        param.autoSavePath =  dlg.autoSavePath();
+        param.autoSaveSize = dlg.autoSaveSize();
+
+        param.startPixel = dlg.startPixel();
+        param.endPixel = dlg.endPixel();
+
     }
+    save();
 }

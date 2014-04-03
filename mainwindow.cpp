@@ -70,6 +70,12 @@ MainWindow::MainWindow(QWidget *parent)
     panel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     panel->setMinimumSize(64, 64);
 
+    panel->gain->setChecked(setting.isGainEnable());
+    axCommander->SetCorrectionGain(setting.isGainEnable());
+
+    panel->offset->setChecked(setting.isOffsetEnable());
+    axCommander->SetCorrectionOffset(setting.isOffsetEnable());
+    panel->autoSave->setChecked(setting.autoSave());
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(1);
     layout->setSpacing(1);
@@ -83,7 +89,6 @@ MainWindow::MainWindow(QWidget *parent)
     connectSignals();
 
     dualScanEnabled = false;
-    autoSaveEnabled = false;
     grabing = false;
     calibrationWiz = NULL;
 
@@ -94,6 +99,7 @@ MainWindow::~MainWindow()
 {
     fileServer.stop();
     fileServer.wait(2000);
+    setting.save();
 }
 
 void MainWindow::populateScene()
@@ -238,6 +244,7 @@ void MainWindow::FrameReady(int)
     framecount++;
     //qDebug()<< "Frame count: "<< framecount;
     //qDebug()<< "FramesPerFile : "<< framePerFile;
+
     updatePlot();
     if (setting.autoSave()) {
 
@@ -259,6 +266,7 @@ void MainWindow::FrameReady(int)
 
         fileServer.append(data, setting.autoSavePath(), setting.autoSaveSize());
     }
+
     panel->frameCountLabel->setFrameCount(framecount);
 }
 
@@ -332,6 +340,9 @@ void MainWindow::initAxWidget()
     QObject::connect(axImage, SIGNAL(SubFrameReady(int, int, int, int)), this, SLOT(SubFrameReady(int, int, int, int)));
     if(!openDetector()){
         QMessageBox::information(this, "", "Open Detector Failed", "OK", "CANCEL");
+    } else {
+        axCommander->LoadOffset();
+        axCommander->LoadGain(1);
     }
 }
 
@@ -401,6 +412,30 @@ int MainWindow::openDetector()
     return false;
 }
 
+void MainWindow::gainChanged(bool b)
+{
+    setting.setGainEnable(b);
+    if(setting.isGainEnable())
+        axCommander->SetCorrectionGain(1);
+    else
+        axCommander->SetCorrectionGain(0);
+}
+
+void MainWindow::offsetChanged(bool b)
+{
+    setting.setOffsetEnable(b);
+
+    if(setting.isOffsetEnable())
+        axCommander->SetCorrectionOffset(1);
+    else
+        axCommander->SetCorrectionOffset(0);
+}
+
+void MainWindow::autoSaveChanged(bool b)
+{
+    setting.setAutoSave(b);
+}
+
 void MainWindow::connectSignals()
 {
     QObject::connect(panel, &Panel::singleScanEnable, this, &MainWindow::singleScanEnable);
@@ -418,6 +453,9 @@ void MainWindow::connectSignals()
 
     QObject::connect(panel, &Panel::calibrationButton_click, this, &MainWindow::calibration_click);
     QObject::connect(panel, &Panel::plotButton_click, this, &MainWindow::switchDisplay);
+    QObject::connect(panel->autoSave, &QCheckBox::stateChanged, this, &MainWindow::autoSaveChanged);
+    QObject::connect(panel->gain, &QCheckBox::stateChanged, this, &MainWindow::gainChanged);
+    QObject::connect(panel->offset, &QCheckBox::stateChanged, this, &MainWindow::offsetChanged);
 
 //    QObject::connect(view->view(), &GraphicsView::increaseContrastEnd, this, &MainWindow::increaseContrastEnd);
 //    QObject::connect(view->view(), &GraphicsView::decreaseContrastEnd, this, &MainWindow::decreaseContrastEnd);
@@ -512,15 +550,15 @@ void MainWindow::setting_clicked()
     else
         axCommander->SetDataPattern(0);
 
-    if(setting.isGainEnable())
-        axCommander->SetCorrectionGain(1);
-    else
-        axCommander->SetCorrectionGain(0);
+//    if(setting.isGainEnable())
+//        axCommander->SetCorrectionGain(1);
+//    else
+//        axCommander->SetCorrectionGain(0);
 
-    if(setting.isOffsetEnable())
-        axCommander->SetCorrectionOffset(1);
-    else
-        axCommander->SetCorrectionOffset(0);
+//    if(setting.isOffsetEnable())
+//        axCommander->SetCorrectionOffset(1);
+//    else
+//        axCommander->SetCorrectionOffset(0);
     axCommander->SetSensitivityLevel(setting.sensitivityLevel());
     plot->setRange(0, setting.endPixel()-setting.startPixel());
 }
@@ -713,11 +751,11 @@ void MainWindow::calibrationProc (int id)
     } else if (3 == id) {
         //do gain operation
         axCommander->OnBoardGainCalibration(setting.targetValue());
+        axCommander->SaveGain(1);
+        axCommander->SetCorrectionGain(1);
        //change next
     } else if (4 == id) {
         //save to pos 1
-        axCommander->SaveGain(1);
-        axCommander->SetCorrectionGain(1);
        //finish
     }
 }

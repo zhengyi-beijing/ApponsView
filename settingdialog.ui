@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>490</height>
+    <width>510</width>
+    <height>444</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>460</y>
+     <x>120</x>
+     <y>400</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -34,12 +34,12 @@
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>501</width>
-     <height>431</height>
+     <width>491</width>
+     <height>361</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="DetectorTab">
     <attribute name="title">
@@ -200,63 +200,11 @@
       <string>Enable</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_19">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>270</y>
-       <width>54</width>
-       <height>12</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Offset</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="offset">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>260</y>
-       <width>71</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Enable</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_20">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>310</y>
-       <width>54</width>
-       <height>12</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Gain</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="gain">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>300</y>
-       <width>131</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Enable</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="normalize">
      <property name="geometry">
       <rect>
-       <x>280</x>
-       <y>340</y>
+       <x>20</x>
+       <y>270</y>
        <width>191</width>
        <height>31</height>
       </rect>
@@ -473,32 +421,6 @@
     <attribute name="title">
      <string>Data</string>
     </attribute>
-    <widget class="QLabel" name="label_15">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>71</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Auto save</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="autoSave">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>30</y>
-       <width>131</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Enable</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_16">
      <property name="geometry">
       <rect>

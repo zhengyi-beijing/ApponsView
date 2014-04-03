@@ -55,9 +55,12 @@ public:
     //void setRayCurrent(int c);
     int rayExposeTime();
     //void setRayExposeTime(int s);
+    void setAutoSave(bool bEnabel);
     bool autoSave();
     //int setAutoSave(int b);
 
+    void setOffsetEnable(bool bEnabel);
+    void setGainEnable(bool bEnabel);
     int isGainEnable();
     int isOffsetEnable();
 
@@ -68,12 +71,14 @@ public:
     int autoSaveSize();
     int autoSaveFrames();
     void LoadConfig();
+    void save();
 signals:
     void normalize();
 private slots:
     void normalize_slot();
 private:
     static SettingParam param;
+    QString path ;
 };
 
 #endif // APPONSSETTING_H

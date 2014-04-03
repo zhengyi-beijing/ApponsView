@@ -186,7 +186,6 @@ private:
 
     bool dualScanEnabled ;
     bool singleScanEnabled;
-    bool autoSaveEnabled;
     bool zoomEnabled;
     bool moveEnabled;
     bool contrastEnabled;
@@ -224,6 +223,9 @@ private slots:
     void fitToScene();
     void calibrationProc (int id);
     void updatePlot();
+    void gainChanged(bool b);
+    void offsetChanged(bool b);
+    void autoSaveChanged(bool b);
 };
 
 #endif // MAINWINDOW_H

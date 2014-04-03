@@ -51,6 +51,7 @@
 #include <QResizeEvent>
 #include <QTimer>
 #include <QPoint>
+#include <QCheckBox>
 class View;
 class QGLWidget;
 
@@ -153,7 +154,9 @@ public:
     PixelInfoLabel* pixelInfoLabel;
     FrameCountLabel* frameCountLabel;
     PanelButton *saveButton;
-
+    QCheckBox* autoSave ;
+    QCheckBox* gain;
+    QCheckBox* offset;
 public slots:
     void aboutButton_handle();
     void openButton_handle();

@@ -301,6 +301,20 @@ Panel::Panel(const QString &name, QWidget *parent)
     panelLayout->addWidget(dualScanButton);
     panelLayout->addWidget(settingButton);
     panelLayout->addWidget(plotButton);
+
+    autoSave = new QCheckBox(this);
+    autoSave->setText("Auto Save");
+    autoSave->setStyleSheet("font-size: 18pt;");
+    gain = new QCheckBox(this);
+    gain->setText("Gain");
+    gain->setStyleSheet("font-size: 18pt;");
+    offset = new QCheckBox(this);
+    offset->setText("Offset");
+    offset->setStyleSheet("font-size: 18pt;");
+    panelLayout->addWidget(autoSave);
+    panelLayout->addWidget(gain);
+    panelLayout->addWidget(offset);
+
 //    QGridLayout *panelLayout = new QGridLayout;
 //    panelLayout->addWidget(openButton, 0,0);
 //    panelLayout->addWidget(saveButton, 0,1);
