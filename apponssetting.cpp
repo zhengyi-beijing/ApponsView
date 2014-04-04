@@ -15,7 +15,7 @@ void ApponsSetting::LoadConfig()
     QString path =  QCoreApplication::applicationDirPath ();
     QSettings setting(path+"/config.ini", QSettings ::IniFormat);
     param.ip = setting.value("Network/ip", "192.168.1.25").toString();
-    param.width = setting.value("Image/width", 1536).toInt();
+    param.width = setting.value("Image/width", 1024).toInt();
     param.height = setting.value("Image/height", 1024).toInt();
 
     param.gainEnable = setting.value("Detector/gainEnable", 0).toInt();
