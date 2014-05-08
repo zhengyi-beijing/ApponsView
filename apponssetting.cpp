@@ -39,7 +39,9 @@ void ApponsSetting::LoadConfig()
     param.autoSavePath = setting.value("Image/autoSavePath", path).toString();
     param.autoSaveSize = setting.value("Image/autoSaveSize", 10).toInt();
     param.autoSaveFrames = setting.value("Image/autoSaveFrames", 10).toInt();
-
+    param.MixOrder = setting.value("Protocal/MixOrder",1).toBool();
+    param.dualMode = setting.value("Protocal/DualMode", 1).toBool();
+    param.revert = setting.value("Protocal/revert", 0).toBool();
 }
 
 QString ApponsSetting::ip()

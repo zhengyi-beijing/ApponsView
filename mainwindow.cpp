@@ -287,7 +287,7 @@ void MainWindow::createAxWidget()
 
     //plot = new QCustomPlot(this);
     plot = new PlotWidget(this);
-    plot->setRange(0, setting.endPixel()-setting.startPixel());
+   // plot->setRange(0, setting.endPixel()-setting.startPixel());
     plot->setVisible(true);
 }
 
@@ -315,7 +315,12 @@ void MainWindow::initAxWidget()
     axImage->SetBytesPerPixel(2);
  //   axImage->SetSubFrameHeight(32);
     axImage->setVisible(false);
-
+    if(setting.MixOrder()) {
+        axImage->SetPixelOrderEnable(true);
+    }
+    if(setting.revert()) {
+        axImage->SetRevert(1);
+    }
     axDisplay->SetDisplayScale(0);
     axDisplay->SetMapStart(100);
     axDisplay->SetMapEnd(10000);
@@ -341,8 +346,8 @@ void MainWindow::initAxWidget()
     if(!openDetector()){
         QMessageBox::information(this, "", "Open Detector Failed", "OK", "CANCEL");
     } else {
-        axCommander->LoadOffset();
-        axCommander->LoadGain(1);
+       // axCommander->LoadOffset();
+       // axCommander->LoadGain(1);
     }
 }
 
@@ -527,13 +532,16 @@ void MainWindow::singleScanEnable(bool enable)
 void MainWindow::dualScanEnable(bool enable)
 {
     qDebug()<<__FUNCTION__<<enable;
-    dualScanEnabled = enable;
+    dualScanEnabled = setting.dualMode();
 
     if(dualScanEnabled) {
         axImage->SetDualScanMode(1);
-        if(!grabing) {
-            scan();
-        }
+    } else {
+        axImage->SetDualScanMode(0);
+    }
+
+    if(!grabing) {
+        scan();
     } else {
         stop();
     }
@@ -560,7 +568,7 @@ void MainWindow::setting_clicked()
 //    else
 //        axCommander->SetCorrectionOffset(0);
     axCommander->SetSensitivityLevel(setting.sensitivityLevel());
-    plot->setRange(0, setting.endPixel()-setting.startPixel());
+  //  plot->setRange(0, setting.endPixel()-setting.startPixel());
 }
 
 void MainWindow::open_clicked()

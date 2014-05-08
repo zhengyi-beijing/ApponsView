@@ -686,6 +686,16 @@ public:
     inline void ColNoise(double& pNoise);
 
     /*
+    Method DoColStatistic
+    */
+    inline void DoColStatistic();
+
+    /*
+    Method DoRowStatistic
+    */
+    inline void DoRowStatistic();
+
+    /*
     Method ImageLineAddress
 
     property ImageLineAddress
@@ -1003,6 +1013,12 @@ public:
     inline void SetExFrameTrigger(int value); //Sets the value of the ExFrameTrigger property
 
     /*
+    Property GainEnable
+    */
+    inline uint GainEnable() const; //Returns the value of GainEnable
+    inline void SetGainEnable(uint value); //Sets the value of the GainEnable property
+
+    /*
     Property ImageObject
 
     property ImageObject
@@ -1070,6 +1086,24 @@ public:
     inline IUnknown* ObjectHandle() const; //Returns the value of ObjectHandle
 
     /*
+    Property OffsetEnable
+    */
+    inline uint OffsetEnable() const; //Returns the value of OffsetEnable
+    inline void SetOffsetEnable(uint value); //Sets the value of the OffsetEnable property
+
+    /*
+    Property PixelOrderEnable
+    */
+    inline uint PixelOrderEnable() const; //Returns the value of PixelOrderEnable
+    inline void SetPixelOrderEnable(uint value); //Sets the value of the PixelOrderEnable property
+
+    /*
+    Property Revert
+    */
+    inline int Revert() const; //Returns the value of Revert
+    inline void SetRevert(int value); //Sets the value of the Revert property
+
+    /*
     Property SubFrameHeight
 
     property SubFrameHeight
@@ -1088,6 +1122,12 @@ public:
     inline void SetTimeOut(int value); //Sets the value of the TimeOut property
 
     /*
+    Property arrayCorrectionEnable
+    */
+    inline uint arrayCorrectionEnable() const; //Returns the value of arrayCorrectionEnable
+    inline void setArrayCorrectionEnable(uint value); //Sets the value of the arrayCorrectionEnable property
+
+    /*
     Method Close
 
     method Close
@@ -1096,12 +1136,32 @@ public:
     inline void Close();
 
     /*
+    Method GainArrayCal
+    */
+    inline void GainArrayCal();
+
+    /*
+    Method GainCalSnap
+    */
+    inline void GainCalSnap();
+
+    /*
+    Method GainCalibration
+    */
+    inline void GainCalibration(int target);
+
+    /*
     Method Grab
 
     method Grab
 
     */
     inline int Grab(int FrameNum);
+
+    /*
+    Method OffsetCalibration
+    */
+    inline void OffsetCalibration();
 
     /*
     Method Open
@@ -1829,6 +1889,16 @@ public:
     inline void ColNoise(double& pNoise);
 
     /*
+    Method DoColStatistic
+    */
+    inline void DoColStatistic();
+
+    /*
+    Method DoRowStatistic
+    */
+    inline void DoRowStatistic();
+
+    /*
     Method ImageLineAddress
 
     property ImageLineAddress
@@ -2156,6 +2226,12 @@ public:
     inline void SetExFrameTrigger(int value); //Sets the value of the ExFrameTrigger property
 
     /*
+    Property GainEnable
+    */
+    inline uint GainEnable() const; //Returns the value of GainEnable
+    inline void SetGainEnable(uint value); //Sets the value of the GainEnable property
+
+    /*
     Property ImageObject
 
     property ImageObject
@@ -2223,6 +2299,24 @@ public:
     inline IUnknown* ObjectHandle() const; //Returns the value of ObjectHandle
 
     /*
+    Property OffsetEnable
+    */
+    inline uint OffsetEnable() const; //Returns the value of OffsetEnable
+    inline void SetOffsetEnable(uint value); //Sets the value of the OffsetEnable property
+
+    /*
+    Property PixelOrderEnable
+    */
+    inline uint PixelOrderEnable() const; //Returns the value of PixelOrderEnable
+    inline void SetPixelOrderEnable(uint value); //Sets the value of the PixelOrderEnable property
+
+    /*
+    Property Revert
+    */
+    inline int Revert() const; //Returns the value of Revert
+    inline void SetRevert(int value); //Sets the value of the Revert property
+
+    /*
     Property SubFrameHeight
 
     property SubFrameHeight
@@ -2241,6 +2335,12 @@ public:
     inline void SetTimeOut(int value); //Sets the value of the TimeOut property
 
     /*
+    Property arrayCorrectionEnable
+    */
+    inline uint arrayCorrectionEnable() const; //Returns the value of arrayCorrectionEnable
+    inline void setArrayCorrectionEnable(uint value); //Sets the value of the arrayCorrectionEnable property
+
+    /*
     Method Close
 
     method Close
@@ -2249,12 +2349,32 @@ public:
     inline void Close();
 
     /*
+    Method GainArrayCal
+    */
+    inline void GainArrayCal();
+
+    /*
+    Method GainCalSnap
+    */
+    inline void GainCalSnap();
+
+    /*
+    Method GainCalibration
+    */
+    inline void GainCalibration(int target);
+
+    /*
     Method Grab
 
     method Grab
 
     */
     inline int Grab(int FrameNum);
+
+    /*
+    Method OffsetCalibration
+    */
+    inline void OffsetCalibration();
 
     /*
     Method Open
@@ -3314,56 +3434,68 @@ inline void CImageObject::ColNoise(double& pNoise)
     qt_metacall(QMetaObject::InvokeMetaMethod, 11, _a);
 }
 
+inline void CImageObject::DoColStatistic()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 12, _a);
+}
+
+inline void CImageObject::DoRowStatistic()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 13, _a);
+}
+
 inline int CImageObject::ImageLineAddress(int LineIndex)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&LineIndex};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 12, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 14, _a);
     return qax_result;
 }
 
 inline void CImageObject::Open(int Width, int Height, int BytesPerPixel)
 {
     void *_a[] = {0, (void*)&Width, (void*)&Height, (void*)&BytesPerPixel};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 13, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 15, _a);
 }
 
 inline int CImageObject::Pixel(int X, int Y)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&X, (void*)&Y};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 14, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 16, _a);
     return qax_result;
 }
 
 inline void CImageObject::RowAverage(int& pAvg)
 {
     void *_a[] = {0, (void*)&pAvg};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 15, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 17, _a);
 }
 
 inline void CImageObject::RowMax(int& pMax)
 {
     void *_a[] = {0, (void*)&pMax};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 16, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 18, _a);
 }
 
 inline void CImageObject::RowMin(int& pMin)
 {
     void *_a[] = {0, (void*)&pMin};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 17, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 19, _a);
 }
 
 inline void CImageObject::RowNoise(double& pNoise)
 {
     void *_a[] = {0, (void*)&pNoise};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 18, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 20, _a);
 }
 
 inline void CImageObject::SetPixel(int X, int Y, int rhs)
 {
     void *_a[] = {0, (void*)&X, (void*)&Y, (void*)&rhs};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 20, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 22, _a);
 }
 
 
@@ -3420,56 +3552,68 @@ inline void IImageObject::ColNoise(double& pNoise)
     qt_metacall(QMetaObject::InvokeMetaMethod, 11, _a);
 }
 
+inline void IImageObject::DoColStatistic()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 12, _a);
+}
+
+inline void IImageObject::DoRowStatistic()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 13, _a);
+}
+
 inline int IImageObject::ImageLineAddress(int LineIndex)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&LineIndex};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 12, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 14, _a);
     return qax_result;
 }
 
 inline void IImageObject::Open(int Width, int Height, int BytesPerPixel)
 {
     void *_a[] = {0, (void*)&Width, (void*)&Height, (void*)&BytesPerPixel};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 13, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 15, _a);
 }
 
 inline int IImageObject::Pixel(int X, int Y)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&X, (void*)&Y};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 14, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 16, _a);
     return qax_result;
 }
 
 inline void IImageObject::RowAverage(int& pAvg)
 {
     void *_a[] = {0, (void*)&pAvg};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 15, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 17, _a);
 }
 
 inline void IImageObject::RowMax(int& pMax)
 {
     void *_a[] = {0, (void*)&pMax};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 16, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 18, _a);
 }
 
 inline void IImageObject::RowMin(int& pMin)
 {
     void *_a[] = {0, (void*)&pMin};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 17, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 19, _a);
 }
 
 inline void IImageObject::RowNoise(double& pNoise)
 {
     void *_a[] = {0, (void*)&pNoise};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 18, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 20, _a);
 }
 
 inline void IImageObject::SetPixel(int X, int Y, int rhs)
 {
     void *_a[] = {0, (void*)&X, (void*)&Y, (void*)&rhs};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 20, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 22, _a);
 }
 
 
@@ -3842,6 +3986,14 @@ inline int CDTImage::ExFrameTrigger() const
 }
 inline void CDTImage::SetExFrameTrigger(int value){ setProperty("ExFrameTrigger", QVariant(value)); }
 
+inline uint CDTImage::GainEnable() const
+{
+    QVariant qax_result = property("GainEnable");
+    Q_ASSERT(qax_result.isValid());
+    return *(uint*)qax_result.constData();
+}
+inline void CDTImage::SetGainEnable(uint value){ setProperty("GainEnable", QVariant(value)); }
+
 inline IUnknown* CDTImage::ImageObject() const
 {
     QVariant qax_result = property("ImageObject");
@@ -3903,6 +4055,30 @@ inline IUnknown* CDTImage::ObjectHandle() const
     return *(IUnknown**)qax_result.constData();
 }
 
+inline uint CDTImage::OffsetEnable() const
+{
+    QVariant qax_result = property("OffsetEnable");
+    Q_ASSERT(qax_result.isValid());
+    return *(uint*)qax_result.constData();
+}
+inline void CDTImage::SetOffsetEnable(uint value){ setProperty("OffsetEnable", QVariant(value)); }
+
+inline uint CDTImage::PixelOrderEnable() const
+{
+    QVariant qax_result = property("PixelOrderEnable");
+    Q_ASSERT(qax_result.isValid());
+    return *(uint*)qax_result.constData();
+}
+inline void CDTImage::SetPixelOrderEnable(uint value){ setProperty("PixelOrderEnable", QVariant(value)); }
+
+inline int CDTImage::Revert() const
+{
+    QVariant qax_result = property("Revert");
+    Q_ASSERT(qax_result.isValid());
+    return *(int*)qax_result.constData();
+}
+inline void CDTImage::SetRevert(int value){ setProperty("Revert", QVariant(value)); }
+
 inline int CDTImage::SubFrameHeight() const
 {
     QVariant qax_result = property("SubFrameHeight");
@@ -3919,52 +4095,84 @@ inline int CDTImage::TimeOut() const
 }
 inline void CDTImage::SetTimeOut(int value){ setProperty("TimeOut", QVariant(value)); }
 
+inline uint CDTImage::arrayCorrectionEnable() const
+{
+    QVariant qax_result = property("arrayCorrectionEnable");
+    Q_ASSERT(qax_result.isValid());
+    return *(uint*)qax_result.constData();
+}
+inline void CDTImage::setArrayCorrectionEnable(uint value){ setProperty("arrayCorrectionEnable", QVariant(value)); }
+
 inline void CDTImage::Close()
 {
     void *_a[] = {0};
     qt_metacall(QMetaObject::InvokeMetaMethod, 39, _a);
 }
 
+inline void CDTImage::GainArrayCal()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 40, _a);
+}
+
+inline void CDTImage::GainCalSnap()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 41, _a);
+}
+
+inline void CDTImage::GainCalibration(int target)
+{
+    void *_a[] = {0, (void*)&target};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 42, _a);
+}
+
 inline int CDTImage::Grab(int FrameNum)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&FrameNum};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 40, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 43, _a);
     return qax_result;
+}
+
+inline void CDTImage::OffsetCalibration()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 44, _a);
 }
 
 inline int CDTImage::Open()
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 41, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 45, _a);
     return qax_result;
 }
 
 inline void CDTImage::OpenMemImage(int Width, int Height, uint& data)
 {
     void *_a[] = {0, (void*)&Width, (void*)&Height, (void*)&data};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 42, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 46, _a);
 }
 
 inline void CDTImage::PrintErrMsg(int ErrID, QString& ErrMsg)
 {
     void *_a[] = {0, (void*)&ErrID, (void*)&ErrMsg};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 43, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 47, _a);
 }
 
 inline int CDTImage::Snap(int FrameNum)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&FrameNum};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 54, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 62, _a);
     return qax_result;
 }
 
 inline void CDTImage::Stop()
 {
     void *_a[] = {0};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 55, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 63, _a);
 }
 
 
@@ -4018,6 +4226,14 @@ inline int IDTImage::ExFrameTrigger() const
     return *(int*)qax_result.constData();
 }
 inline void IDTImage::SetExFrameTrigger(int value){ setProperty("ExFrameTrigger", QVariant(value)); }
+
+inline uint IDTImage::GainEnable() const
+{
+    QVariant qax_result = property("GainEnable");
+    Q_ASSERT(qax_result.isValid());
+    return *(uint*)qax_result.constData();
+}
+inline void IDTImage::SetGainEnable(uint value){ setProperty("GainEnable", QVariant(value)); }
 
 inline IUnknown* IDTImage::ImageObject() const
 {
@@ -4080,6 +4296,30 @@ inline IUnknown* IDTImage::ObjectHandle() const
     return *(IUnknown**)qax_result.constData();
 }
 
+inline uint IDTImage::OffsetEnable() const
+{
+    QVariant qax_result = property("OffsetEnable");
+    Q_ASSERT(qax_result.isValid());
+    return *(uint*)qax_result.constData();
+}
+inline void IDTImage::SetOffsetEnable(uint value){ setProperty("OffsetEnable", QVariant(value)); }
+
+inline uint IDTImage::PixelOrderEnable() const
+{
+    QVariant qax_result = property("PixelOrderEnable");
+    Q_ASSERT(qax_result.isValid());
+    return *(uint*)qax_result.constData();
+}
+inline void IDTImage::SetPixelOrderEnable(uint value){ setProperty("PixelOrderEnable", QVariant(value)); }
+
+inline int IDTImage::Revert() const
+{
+    QVariant qax_result = property("Revert");
+    Q_ASSERT(qax_result.isValid());
+    return *(int*)qax_result.constData();
+}
+inline void IDTImage::SetRevert(int value){ setProperty("Revert", QVariant(value)); }
+
 inline int IDTImage::SubFrameHeight() const
 {
     QVariant qax_result = property("SubFrameHeight");
@@ -4096,52 +4336,84 @@ inline int IDTImage::TimeOut() const
 }
 inline void IDTImage::SetTimeOut(int value){ setProperty("TimeOut", QVariant(value)); }
 
+inline uint IDTImage::arrayCorrectionEnable() const
+{
+    QVariant qax_result = property("arrayCorrectionEnable");
+    Q_ASSERT(qax_result.isValid());
+    return *(uint*)qax_result.constData();
+}
+inline void IDTImage::setArrayCorrectionEnable(uint value){ setProperty("arrayCorrectionEnable", QVariant(value)); }
+
 inline void IDTImage::Close()
 {
     void *_a[] = {0};
     qt_metacall(QMetaObject::InvokeMetaMethod, 8, _a);
 }
 
+inline void IDTImage::GainArrayCal()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 9, _a);
+}
+
+inline void IDTImage::GainCalSnap()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 10, _a);
+}
+
+inline void IDTImage::GainCalibration(int target)
+{
+    void *_a[] = {0, (void*)&target};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 11, _a);
+}
+
 inline int IDTImage::Grab(int FrameNum)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&FrameNum};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 9, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 12, _a);
     return qax_result;
+}
+
+inline void IDTImage::OffsetCalibration()
+{
+    void *_a[] = {0};
+    qt_metacall(QMetaObject::InvokeMetaMethod, 13, _a);
 }
 
 inline int IDTImage::Open()
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 10, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 14, _a);
     return qax_result;
 }
 
 inline void IDTImage::OpenMemImage(int Width, int Height, uint& data)
 {
     void *_a[] = {0, (void*)&Width, (void*)&Height, (void*)&data};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 11, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 15, _a);
 }
 
 inline void IDTImage::PrintErrMsg(int ErrID, QString& ErrMsg)
 {
     void *_a[] = {0, (void*)&ErrID, (void*)&ErrMsg};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 12, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 16, _a);
 }
 
 inline int IDTImage::Snap(int FrameNum)
 {
     int qax_result;
     void *_a[] = {(void*)&qax_result, (void*)&FrameNum};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 23, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 31, _a);
     return qax_result;
 }
 
 inline void IDTImage::Stop()
 {
     void *_a[] = {0};
-    qt_metacall(QMetaObject::InvokeMetaMethod, 24, _a);
+    qt_metacall(QMetaObject::InvokeMetaMethod, 32, _a);
 }
 
 

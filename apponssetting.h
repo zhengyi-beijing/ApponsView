@@ -26,6 +26,9 @@ public:
     QString autoSavePath;
     int autoSaveSize;
     int autoSaveFrames;
+    bool MixOrder;
+    bool dualMode;
+    bool revert;
 };
 
 class ApponsSetting: public QObject
@@ -72,6 +75,9 @@ public:
     int autoSaveFrames();
     void LoadConfig();
     void save();
+    bool MixOrder () { return param.MixOrder;}
+    bool dualMode () { return param.dualMode;}
+    bool revert () { return param.revert;}
 signals:
     void normalize();
 private slots:
