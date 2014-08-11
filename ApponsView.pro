@@ -17,7 +17,6 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     view.cpp \
-    dtcontrol.cpp \
     filestoreserver.cpp \
     QLogger.cpp \
     pixelorderconverter.cpp \
@@ -25,12 +24,12 @@ SOURCES += main.cpp \
     settingdialog.cpp \
     apponssetting.cpp \
     qcustomplot.cpp \
-    plotwidget.cpp
+    plotwidget.cpp \
+    apponscontrol.cpp
 
 HEADERS  += \
     mainwindow.h \
     view.h \
-    dtcontrol.h \
     QLogger.h \
     filestoreserver.h \
     pixelorderconverter.h \
@@ -38,7 +37,8 @@ HEADERS  += \
     settingdialog.h \
     apponssetting.h \
     qcustomplot.h \
-    plotwidget.h
+    plotwidget.h \
+    apponscontrol.h
 
 OTHER_FILES +=
 RC_FILE = .\rc.rc.txt

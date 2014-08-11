@@ -272,17 +272,17 @@ void MainWindow::FrameReady(int)
 
 void MainWindow::createAxWidget()
 {
-    axDetector = new DTControl::CDTDetector(this);
+    axDetector = new ApponsControl::CDTDetector(this);
     axDetector->setVisible(false);
 
-    axDisplay = new DTControl::CDTDisplay(this);
+    axDisplay = new ApponsControl::CDTDisplay(this);
    // axDisplay = new Display(this);
     axDisplay->setVisible(false);
 
-    axCommander = new DTControl::CDTCommanderF3(this);
+    axCommander = new ApponsControl::CDTCommanderF3(this);
     axCommander->setVisible(false);
 
-    axImage = new DTControl::CDTImage(this);
+    axImage = new ApponsControl::CDTImage(this);
     axImage->setVisible(false);
 
     //plot = new QCustomPlot(this);
@@ -390,12 +390,12 @@ int MainWindow::openDetector()
         initDetector();
         qDebug()<< "Detector Opened";
         int rt = axImage->Open();
-        axImageObject = new DTControl::IImageObject((IDispatch*)axImage->ImageObject());
+        axImageObject = new ApponsControl::IImageObject((IDispatch*)axImage->ImageObject());
 
         if(rt) {
             qDebug()<<"open image ";
             rt = axDisplay->Open();
-            axDisplayObject = new DTControl::IImageObject((IDispatch*)axDisplay->ImageObject());
+            axDisplayObject = new ApponsControl::IImageObject((IDispatch*)axDisplay->ImageObject());
             if(rt) {
                 qDebug()<<"open Display sucesful";
             }

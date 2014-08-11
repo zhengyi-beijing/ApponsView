@@ -48,7 +48,7 @@
 #include <ActiveQt/QAxWidget>
 #include "view.h"
 #include <QGraphicsScene>
-#include "dtcontrol.h"
+#include "apponscontrol.h"
 #include "filestoreserver.h"
 #include <QGraphicsProxyWidget>
 #include <QSettings>
@@ -71,7 +71,7 @@ public :
 
 };
 
-class Display : public DTControl::CDTDisplay
+class Display : public ApponsControl::CDTDisplay
 {
     Q_OBJECT
 public:
@@ -197,14 +197,14 @@ private:
 
     //QGraphicsProxyWidget* proxy;
     Proxy* proxy;
-    DTControl::CDTDisplay* axDisplay;
+    ApponsControl::CDTDisplay* axDisplay;
     //Display* axDisplay;
     //DTControl::CDTDisplay* axDisplayWidget;
-    DTControl::CDTImage* axImage;
-    DTControl::CDTDetector* axDetector;
-    DTControl::CDTCommanderF3* axCommander;
-    DTControl::IImageObject* axDisplayObject;
-    DTControl::IImageObject* axImageObject;
+    ApponsControl::CDTImage* axImage;
+    ApponsControl::CDTDetector* axDetector;
+    ApponsControl::CDTCommanderF3* axCommander;
+    ApponsControl::IImageObject* axDisplayObject;
+    ApponsControl::IImageObject* axImageObject;
 
     //QCustomPlot* plot;
     PlotWidget* plot;
