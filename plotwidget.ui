@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>532</width>
-    <height>563</height>
+    <width>692</width>
+    <height>573</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,6 +34,13 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QCheckBox" name="autoRange">
+         <property name="text">
+          <string>Auto</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QLabel" name="label">
          <property name="maximumSize">

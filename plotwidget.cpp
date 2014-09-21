@@ -17,6 +17,7 @@ PlotWidget::PlotWidget(QWidget *parent) :
     ui->ymax->setValidator(new QIntValidator(0, MAX));
     ui->ymin->setValidator(new QIntValidator(0, MAX));
     QObject::connect(ui->rangeApply, &QPushButton::clicked, this, &PlotWidget::rangeApply);
+    QObject::connect(ui->autoRange, &QCheckBox::stateChanged, this, &PlotWidget::rangeApply);
     rangeApply();
 }
 
@@ -32,6 +33,9 @@ void PlotWidget::setRange(int min, int max)
     rangeApply();
 
 }
+
+
+
 void PlotWidget::rangeApply()
 {
     int xmax, xmin, ymax, ymin;
@@ -48,6 +52,30 @@ void PlotWidget::rangeApply()
 
 void PlotWidget::setData(QVector<double>* x, QVector<double>* y)
 {
+    double _minValue = 0;
+    double _maxValue = 0;
+    double v= 0;
+    int _maxValueIndex = 0;
+    if(ui->autoRange->checkState() == Qt::Checked) {
+        for (int i=1; i<y->size(); i++)
+        {
+            v = (*y)[i];
+            if ( v < _minValue)
+            {
+                _minValue = v;
+
+            }
+            if (v > _maxValue)
+            {
+                _maxValue = v;
+
+            }
+        }
+
+        ui->plot->yAxis->setRange(_minValue, _maxValue);
+
+    }
     ui->plot->graph(0)->setData(*x, *y);
     ui->plot->replot();
+
 }
