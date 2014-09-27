@@ -31,9 +31,9 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     setRayExposeTime(param->rayExposeTime);
     //setAutoSave(param->autoSave);
     setAutoSavePath(param->autoSavePath);
-    setAutoSaveSize(param->autoSaveSize/1000000);
     setStartPixel(param->startPixel);
     setEndPixel(param->endPixel);
+    setAutoSaveFrames(param->autoSaveFrames);
 
 
     QObject::connect(ui->browseButton, SIGNAL(clicked()), this, SLOT(browseBtn_click()));
@@ -89,12 +89,12 @@ void SettingDialog::setAutoSavePath(QString path)
     ui->path->setText(path);
 }
 
-int SettingDialog::autoSaveSize()
+int SettingDialog::autoSaveFrames()
 {
-    return ui->singleFileSize->text().toInt()*1000*1000;
+    return ui->singleFileSize->text().toInt();
 }
 
-void SettingDialog::setAutoSaveSize (int size)
+void SettingDialog::setAutoSaveFrames(int size)
 {
     ui->singleFileSize->setText(QString::number(size));
 }

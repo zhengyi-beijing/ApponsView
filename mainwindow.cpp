@@ -87,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowTitle(tr("ApponsView"));
     connectSignals();
+    singleScanEnabled = 1;
 
     dualScanEnabled = false;
     grabing = false;
@@ -246,25 +247,52 @@ void MainWindow::FrameReady(int)
     //qDebug()<< "FramesPerFile : "<< framePerFile;
 
     updatePlot();
-    if (setting.autoSave()) {
+    //if (setting.autoSave()) {
+    if(panel->autoSave->isChecked()){
+        qDebug() << "autoSave checked \n";
+        if(framecount == 1) {
+            qDebug()<<"Clear Buffer\n";
+            fileServer.clearBuffer();
+        }
+        int startPixel = setting.startPixel();
+        int endPixel = setting.endPixel();
 
-    int startPixel = setting.startPixel();
-    int endPixel = setting.endPixel();
+        if((endPixel > axImageObject->Width()) || (endPixel <= 0))
+            endPixel = axImageObject->Width();
+        if(startPixel >= endPixel)
+            startPixel = 0;
+        int width = endPixel-startPixel+1;
 
-    if((endPixel > axImageObject->Width()) || (endPixel <= 0))
-        endPixel = axImageObject->Width();
-    if(startPixel >= endPixel)
-        startPixel = 0;
-    int width = endPixel-startPixel+1;
-    int bytesPerPixel = axImageObject->BytesPerPixel();
-    int size = width*axImageObject->Height()*bytesPerPixel;
-        ImageData* data = NULL;
-        if(framecount%framePerFile)
-            data = new ImageData((char*)(axImageObject->ImageDataAddress()+startPixel*bytesPerPixel),size, false);
-        else
-            data = new ImageData((char*)(axImageObject->ImageDataAddress()+startPixel*bytesPerPixel),size, true);
+        int bytesPerPixel = axImageObject->BytesPerPixel();
 
-        fileServer.append(data, setting.autoSavePath(), setting.autoSaveSize());
+        int sizePerLine = width*bytesPerPixel;
+            ImageData* data = NULL;
+            int i = 0;
+            char* temp = NULL;
+            int blockSize = sizePerLine * axImageObject->Height();
+            qDebug() << "blockSize = " << blockSize;
+            temp = (char*)malloc (blockSize);
+            int offset = 0;
+            for(i = 0; i < axImageObject->Height(); i++) {
+                memcpy(temp+offset, (void*)(axImageObject->ImageLineAddress(i)+(startPixel<<1)),sizePerLine);
+                offset += sizePerLine;
+            }
+
+            if(framecount%framePerFile) {
+
+                data = new ImageData(temp,blockSize, false);
+
+            } else {
+
+                data = new ImageData(temp,blockSize, true);
+
+            }
+            fileServer.append(data, setting.autoSavePath(), setting.autoSaveSize());
+            if(temp) {
+                free(temp);
+                temp = NULL;
+            }
+
     }
 
     panel->frameCountLabel->setFrameCount(framecount);
@@ -315,6 +343,8 @@ void MainWindow::initAxWidget()
     axImage->SetBytesPerPixel(2);
  //   axImage->SetSubFrameHeight(32);
     axImage->setVisible(false);
+    axImage->SetDualScanMode(1);
+
     if(setting.MixOrder()) {
         axImage->SetPixelOrderEnable(true);
     }
@@ -349,6 +379,10 @@ void MainWindow::initAxWidget()
        // axCommander->LoadOffset();
        // axCommander->LoadGain(1);
     }
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeroutHandle()));
+    timer->setInterval(1000);
+
 }
 
 void MainWindow::pixelInfo(int x, int y, int v)
@@ -439,6 +473,8 @@ void MainWindow::offsetChanged(bool b)
 void MainWindow::autoSaveChanged(bool b)
 {
     setting.setAutoSave(b);
+    framecount = 0;
+    fileServer.clearBuffer();
 }
 
 void MainWindow::connectSignals()
@@ -477,7 +513,10 @@ void MainWindow::stop()
     axImage->Stop();
     grabing = false;
     //timer.stop();
+    fileServer.clearBuffer();
     QTimer::singleShot(1000, this, SLOT(grabStatus()));
+    timer->stop();
+    lostLineCount = 0;
 }
 
 void MainWindow::grabStatus()
@@ -488,6 +527,8 @@ void MainWindow::grabStatus()
     } else {
         axDetector->SendCommand(QString("[SDR,0]"), rt);
     }
+
+
 }
 
 void MainWindow::scan()
@@ -512,15 +553,18 @@ void MainWindow::scan()
     //QObject::connect(&timer,SIGNAL(timeout()), scene, SLOT(update()));
     //timer.start();
     grabing = true;
-    QTimer::singleShot(1000, this, SLOT(grabStatus()));
+    QTimer::singleShot(2000, this, SLOT(grabStatus()));
+    timer->start(1000);
+    qDebug() << "timer start";
+
 }
 
 void MainWindow::singleScanEnable(bool enable)
 {
     qDebug()<<__FUNCTION__<<enable;
-    singleScanEnabled = enable;
+    //singleScanEnabled = enable;
     if(singleScanEnabled) {
-        axImage->SetDualScanMode(0);
+        axImage->SetDualScanMode(1);
         if(!grabing) {
             scan();
         }
@@ -537,7 +581,7 @@ void MainWindow::dualScanEnable(bool enable)
     if(dualScanEnabled) {
         axImage->SetDualScanMode(1);
     } else {
-        axImage->SetDualScanMode(0);
+        axImage->SetDualScanMode(1);
     }
 
     if(!grabing) {
@@ -875,4 +919,13 @@ void MainWindow::contrastEnable(bool enable)
     } else {
         view->view()->setMouseOpMode(GraphicsView::None);
     }
+}
+
+void MainWindow::timeroutHandle()
+{
+    QString msg;
+     //   qDebug() << "call timer";
+    axDetector->SendCommand(QString("[SDQ]"), msg);
+    //qDebug() << "msg is " <<  msg ;
+    panel->setProxyInfo(msg);
 }

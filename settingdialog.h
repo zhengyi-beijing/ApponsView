@@ -37,8 +37,8 @@ public:
     QString autoSavePath();
     void setAutoSavePath(QString path);
 
-    int autoSaveSize();
-    void setAutoSaveSize (int size);
+    int autoSaveFrames();
+    void setAutoSaveFrames (int size);
 
     void  setStartPixel(int start);
     int  startPixel();

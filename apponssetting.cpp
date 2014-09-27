@@ -179,7 +179,7 @@ void ApponsSetting::save()
         setting.setValue("RaySource/rayExposeTime", param.rayExposeTime);
         setting.setValue("Image/autoSave", param.autoSave);
         setting.setValue("Image/autoSavePath", param.autoSavePath);
-        setting.setValue("Image/autoSaveSize", param.autoSaveSize);
+
         setting.setValue("Image/autoSaveFrames", param.autoSaveFrames);
 
 }
@@ -198,7 +198,7 @@ void ApponsSetting::showSettingDialog()
         param.rayExposeTime = dlg.rayExposeTime();
        // param.autoSave = dlg.autoSave();
         param.autoSavePath =  dlg.autoSavePath();
-        param.autoSaveSize = dlg.autoSaveSize();
+        param.autoSaveFrames = dlg.autoSaveFrames();
 
         param.startPixel = dlg.startPixel();
         param.endPixel = dlg.endPixel();

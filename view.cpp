@@ -297,6 +297,8 @@ Panel::Panel(const QString &name, QWidget *parent)
     frameCountLabel = new FrameCountLabel(this);
     pixelInfoLabel = new PixelInfoLabel(this);
 
+    proxyInfo = new QLabel(this);
+
     QVBoxLayout* panelLayout = new QVBoxLayout;
     panelLayout->addWidget(dualScanButton);
     panelLayout->addWidget(settingButton);
@@ -314,7 +316,9 @@ Panel::Panel(const QString &name, QWidget *parent)
     panelLayout->addWidget(autoSave);
     panelLayout->addWidget(gain);
     panelLayout->addWidget(offset);
-
+    panelLayout->addWidget(proxyInfo);
+    proxyInfo->setStyleSheet("font-size: 18pt;");
+    proxyInfo->setText("0 line");
 //    QGridLayout *panelLayout = new QGridLayout;
 //    panelLayout->addWidget(openButton, 0,0);
 //    panelLayout->addWidget(saveButton, 0,1);
@@ -351,7 +355,9 @@ Panel::Panel(const QString &name, QWidget *parent)
     moveEnabled = false;
     contrastEnabled = false;
     autoSaveEnabled = false;
+
 }
+
 
 void Panel::setBackgroundImage()
 {
@@ -511,4 +517,15 @@ void Panel::signalInit()
     connect(rotateButton, SIGNAL(clicked()), this, SLOT(rotateButton_handle()));
     connect(calButton, SIGNAL(clicked()), this, SLOT(calibrationButton_handle()));
     connect(plotButton, SIGNAL(clicked()), this, SLOT(plotButton_handle()));
+
+}
+
+void Panel::setProxyInfo(QString msg)
+{
+    int lines = 0;
+    qDebug() << msg;
+    char c1,c2,c3,c4;
+    sscanf(msg.toLatin1().data(), "%c%c%c%d%c",&c1,&c2,&c3,&lines,&c4);
+    QString info = QString::number(lines) + " lines";
+    proxyInfo->setText(info);
 }

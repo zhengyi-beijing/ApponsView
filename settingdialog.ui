@@ -467,7 +467,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Single File Size</string>
+      <string>Single File Frames</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="singleFileSize">
@@ -490,7 +490,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>M</string>
+      <string>Frames</string>
      </property>
     </widget>
    </widget>

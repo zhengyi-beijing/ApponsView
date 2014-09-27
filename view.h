@@ -133,6 +133,7 @@ class Panel: public QFrame
     Q_OBJECT
 public:
     explicit Panel(const QString &name, QWidget *parent = 0);
+    void setProxyInfo(QString msg);
 signals:
     void openButton_click();
     void autoSaveEnable(bool enable);
@@ -197,6 +198,8 @@ private:
     QPushButton *plotButton;
     PanelButton *calButton;
 
+    QLabel *proxyInfo;
+
 
     DigitalClock* clock;
 
@@ -211,6 +214,7 @@ private:
     bool zoomEnabled;
     bool moveEnabled;
     bool contrastEnabled;
+
 };
 
 #endif // VIEW_H

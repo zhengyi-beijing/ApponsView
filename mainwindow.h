@@ -178,7 +178,7 @@ private:
     int contrastStep();
     void setSpeed(int speed);
 
-    QTimer timer;
+   // QTimer timer;
     Scene *scene;
     Panel *panel;
     View *view;
@@ -213,6 +213,8 @@ private:
 
     QString ip;
 
+    QTimer* timer;
+
 private slots:
     void grabStatus();
     void ImageOpened();
@@ -226,6 +228,7 @@ private slots:
     void gainChanged(bool b);
     void offsetChanged(bool b);
     void autoSaveChanged(bool b);
+        void timeroutHandle();
 };
 
 #endif // MAINWINDOW_H

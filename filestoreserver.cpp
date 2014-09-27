@@ -65,6 +65,17 @@ void FileStoreServer::stop()
     running = false;
 }
 
+void FileStoreServer::clearBuffer()
+{
+    qDebug()<< "waiting for lock\n";
+    lock.lockForWrite();
+    while (!dataList.isEmpty())
+        delete dataList.takeFirst();
+    lock.unlock();
+    closeFile();
+    qDebug()<< "free lock\n";
+}
+
 void FileStoreServer::run(){
     running = true;
     while (running) {
@@ -91,8 +102,10 @@ void FileStoreServer::closeFile()
 {
     QLogger::QLog_Trace("Appons", "File close");
     qDebug() << "File Close";
-    file->close();
-    delete file;
+    if(file) {
+        file->close();
+        delete file;
+    }
     file = NULL;
     fileSize = 0;
 }

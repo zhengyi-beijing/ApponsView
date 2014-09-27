@@ -18,16 +18,18 @@ public:
         imgsize = size;
         islastone = last;
     }
+
     ~ImageData()
     {
         if(imgdata)
-            delete imgdata;
+            free(imgdata);
         imgdata = NULL;
     }
 
     char* data() { return imgdata; }
     const long size() { return imgsize;}
     bool islast() { return islastone;}
+
 };
 
 class FileStoreServer: public QThread
@@ -40,6 +42,7 @@ public:
     void append(ImageData* block, QString path, int sizelimit);
 
     void stop();
+    void clearBuffer();
 protected:
     void run();
     void write(ImageData* block);
