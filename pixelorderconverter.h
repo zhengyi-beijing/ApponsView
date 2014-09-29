@@ -1,7 +1,7 @@
 #ifndef PIXELORDERCONVERTER_H
 #define PIXELORDERCONVERTER_H
 #include <QDebug>
-#include "apponscontrol.h"
+#include "dtcontrol.h"
 #include "QLogger.h"
 class PixelOrderConverter
 {
@@ -13,7 +13,7 @@ public:
     }
 
     virtual ~PixelOrderConverter() {}
-    virtual void process(ApponsControl::IImageObject* src)=0;
+    virtual void process(DTControl::IImageObject* src)=0;
 protected:
     int boardNum;
     int pixelNum;
@@ -33,7 +33,7 @@ public:
         delete[] buffer;
     }
 
-    virtual void process(ApponsControl::IImageObject* src)
+    virtual void process(DTControl::IImageObject* src)
     {
         int width = src->Width();
         int height = src->Height();
