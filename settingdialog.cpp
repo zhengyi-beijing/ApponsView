@@ -11,10 +11,16 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     ui(new Ui::SettingDialog)
 {
     ui->setupUi(this);
-    ui->sensitivty->addItem("Low");
-    ui->sensitivty->addItem("High");
-    ui->scanMode->addItem("Frame");
-    ui->scanMode->addItem("Continues");
+    //ui->scanMode->addItem("Frame");
+    //ui->scanMode->addItem("Continues");
+
+    //ui->startPixel->setValidator(new QIntValidator(0, 1536));
+    //ui->endPixel->setValidator(new QIntValidator(0, 1536));
+   // ui->RaySourceTab->setVisible(false);
+   // ui->DisplayTab->setVisible(false);
+    ui->tabWidget->removeTab(1);
+    ui->tabWidget->removeTab(1);
+    ui->scanMode->setEnabled(false);
 
     setScanMode(param->scanMode);
     setScanSpeed(param->scanSpeed);
@@ -23,10 +29,15 @@ SettingDialog::SettingDialog(SettingParam* param, QWidget *parent) :
     setRayVoltage(param->rayVoltage);
     setRayCurrent(param->rayCurrent);
     setRayExposeTime(param->rayExposeTime);
-    setAutoSave(param->autoSave);
+    //setAutoSave(param->autoSave);
     setAutoSavePath(param->autoSavePath);
-    setAutoSaveSize(param->autoSaveSize/1000000);
+    setStartPixel(param->startPixel);
+    setEndPixel(param->endPixel);
+    setAutoSaveFrames(param->autoSaveFrames);
+
+
     QObject::connect(ui->browseButton, SIGNAL(clicked()), this, SLOT(browseBtn_click()));
+    QObject::connect(ui->normalize, SIGNAL(clicked()), this, SLOT(normalize_click()));
 }
 
 
@@ -46,6 +57,28 @@ void SettingDialog::browseBtn_click()
 
 }
 
+int  SettingDialog::startPixel()
+{
+    return ui->startPixel->text().toInt();
+}
+
+void  SettingDialog::setStartPixel(int start)
+{
+    ui->startPixel->setText(QString::number(start));
+}
+
+int SettingDialog::endPixel()
+{
+    return ui->endPixel->text().toInt();
+}
+
+void SettingDialog::setEndPixel(int end)
+{
+    ui->endPixel->setText(QString::number(end));
+}
+
+
+
 QString SettingDialog::autoSavePath()
 {
     return ui->path->text();
@@ -56,12 +89,12 @@ void SettingDialog::setAutoSavePath(QString path)
     ui->path->setText(path);
 }
 
-int SettingDialog::autoSaveSize()
+int SettingDialog::autoSaveFrames()
 {
-    return ui->singleFileSize->text().toInt()*1000*1000;
+    return ui->singleFileSize->text().toInt();
 }
 
-void SettingDialog::setAutoSaveSize (int size)
+void SettingDialog::setAutoSaveFrames(int size)
 {
     ui->singleFileSize->setText(QString::number(size));
 }
@@ -78,12 +111,12 @@ void SettingDialog::setScanSpeed(int s)
 
 int SettingDialog::sensitivityLevel()
 {
-    return ui->sensitivty->currentIndex();
+    return ui->sensitivty->currentIndex()+1;
 }
 
 void SettingDialog::setSensitivityLevel(int s)
 {
-    ui->sensitivty->setCurrentIndex(s);
+    ui->sensitivty->setCurrentIndex(s-1);
 }
 
 int SettingDialog::scanMode()
@@ -139,10 +172,17 @@ void SettingDialog::setRayExposeTime(int s)
 
 int SettingDialog::autoSave()
 {
-    return ui->autoSave->isChecked();
+    //return ui->autoSave->isChecked();
+    return 0;
 }
 
 void SettingDialog::setAutoSave(int b)
 {
-    return ui->autoSave->setChecked(b);
+    //return ui->autoSave->setChecked(b);
+}
+
+void SettingDialog::normalize_click()
+{
+    emit normalize();
+    this->accept();
 }

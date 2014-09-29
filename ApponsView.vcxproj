@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{21955E9D-D684-38FE-81DC-0164F57BF4F1}</ProjectGuid>
+    <RootNamespace>ApponsView</RootNamespace>
+    <Keyword>Qt4VSv1.0</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="Configuration">
+    <OutputDirectory>release\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>Application</ConfigurationType>
+    <IntermediateDirectory>release\</IntermediateDirectory>
+    <PrimaryOutput>ApponsView</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="Configuration">
+    <OutputDirectory>debug\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>Application</ConfigurationType>
+    <IntermediateDirectory>debug\</IntermediateDirectory>
+    <PrimaryOutput>ApponsView</PrimaryOutput>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
+  </ImportGroup>
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">ApponsView</TargetName>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">false</LinkIncremental>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">ApponsView</TargetName>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</IgnoreImportLibrary>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">
+    <ClCompile>
+      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot;;&quot;release&quot;;&quot;.&quot;;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>release\</ObjectFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_NO_DEBUG;QT_AXCONTAINER_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_AXBASE_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_OPENGL_ES_2;QT_OPENGL_ES_2_ANGLE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>qtmain.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5AxContainer.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5OpenGL.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5PrintSupport.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5AxBase.lib;ole32.lib;oleaut32.lib;advapi32.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5Widgets.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5Gui.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5Core.lib;libEGL.lib;libGLESv2.lib;gdi32.lib;user32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; %(AdditionalOptions)</AdditionalOptions>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkIncremental>false</LinkIncremental>
+      <OutputFile>$(OutDir)\ApponsView.exe</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_NO_DEBUG;QT_AXCONTAINER_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_AXBASE_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_OPENGL_ES_2;QT_OPENGL_ES_2_ANGLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
+    <ClCompile>
+      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot;;&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot;;&quot;debug&quot;;&quot;.&quot;;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>debug\</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_AXCONTAINER_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_AXBASE_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_OPENGL_ES_2;QT_OPENGL_ES_2_ANGLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>qtmaind.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5AxContainerd.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5OpenGLd.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5PrintSupportd.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5AxBased.lib;ole32.lib;oleaut32.lib;advapi32.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5Guid.lib;C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib\Qt5Cored.lib;libEGLd.lib;libGLESv2d.lib;gdi32.lib;user32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Qt\Qt5.2.1\5.2.1\msvc2010\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; %(AdditionalOptions)</AdditionalOptions>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <OutputFile>$(OutDir)\ApponsView.exe</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;QT_AXCONTAINER_LIB;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_AXBASE_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;QT_OPENGL_ES_2;QT_OPENGL_ES_2_ANGLE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="QLogger.cpp" />
+    <ClCompile Include="apponssetting.cpp" />
+    <ClCompile Include="digitalclock.cpp" />
+    <ClCompile Include="dtcontrol.cpp" />
+    <ClCompile Include="filestoreserver.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="pixelorderconverter.cpp" />
+    <ClCompile Include="plotwidget.cpp" />
+    <ClCompile Include="qcustomplot.cpp" />
+    <ClCompile Include="settingdialog.cpp" />
+    <ClCompile Include="view.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QLogger.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">QLogger.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 QLogger.h -o release\moc_QLogger.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC QLogger.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_QLogger.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">QLogger.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 QLogger.h -o debug\moc_QLogger.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC QLogger.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_QLogger.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="apponssetting.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">apponssetting.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 apponssetting.h -o release\moc_apponssetting.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC apponssetting.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_apponssetting.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">apponssetting.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 apponssetting.h -o debug\moc_apponssetting.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC apponssetting.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_apponssetting.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="digitalclock.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">digitalclock.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 digitalclock.h -o release\moc_digitalclock.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC digitalclock.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_digitalclock.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">digitalclock.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 digitalclock.h -o debug\moc_digitalclock.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC digitalclock.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_digitalclock.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="dtcontrol.h" />
+    <CustomBuild Include="filestoreserver.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">filestoreserver.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 filestoreserver.h -o release\moc_filestoreserver.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC filestoreserver.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_filestoreserver.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">filestoreserver.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 filestoreserver.h -o debug\moc_filestoreserver.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC filestoreserver.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_filestoreserver.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="mainwindow.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">mainwindow.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 mainwindow.h -o release\moc_mainwindow.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC mainwindow.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_mainwindow.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">mainwindow.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 mainwindow.h -o debug\moc_mainwindow.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC mainwindow.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_mainwindow.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="pixelorderconverter.h" />
+    <CustomBuild Include="plotwidget.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">plotwidget.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 plotwidget.h -o release\moc_plotwidget.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC plotwidget.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_plotwidget.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">plotwidget.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 plotwidget.h -o debug\moc_plotwidget.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC plotwidget.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_plotwidget.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="qcustomplot.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">qcustomplot.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 qcustomplot.h -o release\moc_qcustomplot.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC qcustomplot.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_qcustomplot.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">qcustomplot.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 qcustomplot.h -o debug\moc_qcustomplot.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC qcustomplot.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_qcustomplot.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="settingdialog.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">settingdialog.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 settingdialog.h -o release\moc_settingdialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC settingdialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_settingdialog.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">settingdialog.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 settingdialog.h -o debug\moc_settingdialog.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC settingdialog.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_settingdialog.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="view.h">
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">view.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;release&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 view.h -o release\moc_view.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC view.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc_view.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">view.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\moc.exe  -DUNICODE -DWIN32 -DQT_AXCONTAINER_LIB -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_AXBASE_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_OPENGL_ES_2 -DQT_OPENGL_ES_2_ANGLE -D_MSC_VER=1600 -D_WIN32 -I&quot;.&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtOpenGL&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtPrintSupport&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\ActiveQt&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtWidgets&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtGui&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtANGLE&quot; -I&quot;..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\include\QtCore&quot; -I&quot;debug&quot; -I&quot;.&quot; -I..\..\..\..\..\Qt\Qt5.2.1\5.2.1\msvc2010\mkspecs\win32-msvc2010 view.h -o debug\moc_view.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC view.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc_view.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="debug\moc_QLogger.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_QLogger.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_apponssetting.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_apponssetting.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_digitalclock.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_digitalclock.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_filestoreserver.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_filestoreserver.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_mainwindow.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_mainwindow.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_plotwidget.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_plotwidget.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_qcustomplot.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_qcustomplot.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_settingdialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_settingdialog.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\moc_view.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\moc_view.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="debug\qrc_Appons.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="release\qrc_Appons.cpp">
+      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClInclude Include="ui_aboutDlg.h" />
+    <ClInclude Include="ui_plotwidget.h" />
+    <ClInclude Include="ui_settingdialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="aboutDlg.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">aboutDlg.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\uic.exe aboutDlg.ui -o ui_aboutDlg.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">UIC aboutDlg.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">ui_aboutDlg.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">aboutDlg.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\uic.exe aboutDlg.ui -o ui_aboutDlg.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">UIC aboutDlg.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">ui_aboutDlg.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="plotwidget.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">plotwidget.ui;qcustomplot.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\uic.exe plotwidget.ui -o ui_plotwidget.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">UIC plotwidget.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">ui_plotwidget.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">plotwidget.ui;qcustomplot.h;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\uic.exe plotwidget.ui -o ui_plotwidget.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">UIC plotwidget.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">ui_plotwidget.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="settingdialog.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">settingdialog.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\uic.exe settingdialog.ui -o ui_settingdialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">UIC settingdialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">ui_settingdialog.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">settingdialog.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\uic.exe settingdialog.ui -o ui_settingdialog.h</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">UIC settingdialog.ui</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">ui_settingdialog.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="32.ico" />
+    <CustomBuild Include="Appons.qrc">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">Appons.qrc;res\background-3.bmp;res\calibraition.jpg;res\move.ico;res\rotate.ico;res\about-logo-grey.png;res\autoContrast.ico;res\about-logo.png;res\invert.ico;res\gun.ico;res\zoomIn.ico;res\plot.jpg;res\grayScale.ico;res\exit.ico;res\setting.ico;res\background.bmp;res\ApponsView Icon 32.ico;res\down.ico;res\IMG_BACK.bmp;res\dm-web.png;res\singleScan.ico;res\ApponsView64.ico;res\save.ico;res\fakeColor.ico;res\dualScan.ico;res\open.ico;res\contrast.ico;res\DE.ico;res\up.ico;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\rcc.exe -name Appons Appons.qrc -o release\qrc_Appons.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">RCC Appons.qrc</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\qrc_Appons.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">Appons.qrc;res\dm-web.png;res\save.ico;res\singleScan.ico;res\IMG_BACK.bmp;res\gun.ico;res\DE.ico;res\dualScan.ico;res\calibraition.jpg;res\ApponsView Icon 32.ico;res\fakeColor.ico;res\move.ico;res\open.ico;res\setting.ico;res\rotate.ico;res\invert.ico;res\background-3.bmp;res\about-logo.png;res\up.ico;res\contrast.ico;res\about-logo-grey.png;res\plot.jpg;res\autoContrast.ico;res\zoomIn.ico;res\exit.ico;res\background.bmp;res\grayScale.ico;res\down.ico;res\ApponsView64.ico;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.2.1\5.2.1\msvc2010\bin\rcc.exe -name Appons Appons.qrc -o debug\qrc_Appons.cpp</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">RCC Appons.qrc</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\qrc_Appons.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <None Include="res\ApponsView64.ico" />
+    <None Include="res\ApponsView" />
+    <None Include="res\DE.ico" />
+    <None Include="res\IMG_BACK.bmp" />
+    <None Include="Icon" />
+    <None Include="res\about-logo-grey.png" />
+    <None Include="res\about-logo.png" />
+    <None Include="res\autoContrast.ico" />
+    <None Include="res\background-3.bmp" />
+    <None Include="res\background.bmp" />
+    <None Include="res\calibraition.jpg" />
+    <None Include="res\contrast.ico" />
+    <None Include="res\dm-web.png" />
+    <None Include="res\down.ico" />
+    <None Include="res\dualScan.ico" />
+    <None Include="res\exit.ico" />
+    <None Include="res\fakeColor.ico" />
+    <None Include="res\grayScale.ico" />
+    <None Include="res\gun.ico" />
+    <None Include="res\invert.ico" />
+    <None Include="res\move.ico" />
+    <None Include="res\open.ico" />
+    <None Include="res\plot.jpg" />
+    <None Include="res\rotate.ico" />
+    <None Include="res\save.ico" />
+    <None Include="res\setting.ico" />
+    <None Include="res\singleScan.ico" />
+    <None Include="res\up.ico" />
+    <None Include="res\zoomIn.ico" />
+  </ItemGroup>
+  <ItemGroup />
+</Project>
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+<ImportGroup Label="ExtensionTargets" />

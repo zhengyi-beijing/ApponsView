@@ -56,10 +56,14 @@
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include "apponssetting.h"
+#include <QWizard>
+#include "plotwidget.h"
+
 class Scene :public QGraphicsScene
 {
     Q_OBJECT
 public :
+
 void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
     qDebug()<<"scene mouse move pos is "<< mouseEvent->scenePos();
@@ -80,19 +84,19 @@ public:
 
     void mouseMoveEvent ( QMouseEvent * event )
     {
-        qDebug()<<"Display MouseMove Event " << event->pos();
+        qDebug()<<"------Display MouseMove Event " << event->pos();
         QAxWidget::mouseMoveEvent(event);
     }
 public slots:
-    bool eventFilter(QObject *object, QEvent *event){
-           qDebug()<<"Display event type  is " << event->type();
-           if(object==this && (event->type()==QEvent::Enter || event->type()==QEvent::Leave))
-               if(event->type()==QEvent::Enter)
-                   qDebug() << "Hovering";
-               else
-                   qDebug() << "Not Hovering";
-           return QWidget::eventFilter(object, event);
-       }
+//    bool eventFilter(QObject *object, QEvent *event){
+//           qDebug()<<"Display event type  is " << event->type();
+//           if(object==this && (event->type()==QEvent::Enter || event->type()==QEvent::Leave))
+//               if(event->type()==QEvent::Enter)
+//                   qDebug() << "Hovering";
+//               else
+//                   qDebug() << "Not Hovering";
+//           return QWidget::eventFilter(object, event);
+//       }
 
 };
 
@@ -103,6 +107,9 @@ public:
     {
         //setAcceptHoverEvents(true);
         setFlags(QGraphicsItem::ItemIsMovable |QGraphicsItem::ItemIsSelectable);
+        setAcceptHoverEvents(false);
+        setFlag(ItemIsFocusable);
+        setFlag(ItemIsSelectable);
     }
 
 
@@ -115,15 +122,13 @@ public:
         QGraphicsProxyWidget::hoverMoveEvent(event);
     }
 
-    void mousePressEvent (QGraphicsSceneMouseEvent* event)
-    {
-        event->ignore();
-    }
+
+
+
 
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
     {
-         qDebug()<<"Proxy mouse move pos "<< event->pos();
-         qDebug()<<"Proxy mouse move scence "<< event->scenePos();
+         qDebug()<<"-------Proxy mouse move scence "<< event->scenePos();
          QGraphicsProxyWidget::mouseMoveEvent(event);
     }
 };
@@ -149,12 +154,15 @@ public slots:
     void moveEnable(bool enable);
     void rotate_click();
     void invert_click();
+    void calibration_click();
     void widgetMoveto(QPoint pos);
 
     void increaseContrastStart();
     void decreaseContrastStart();
     void increaseContrastEnd();
     void decreaseContrastEnd();
+    void switchDisplay();
+
 protected:
     void resizeEvent(QResizeEvent * event);
     void showEvent (QShowEvent * event );
@@ -163,6 +171,7 @@ private:
     void setupMatrix();
     void populateScene();
     void initAxWidget();
+    void initCalibrationWiz ();
     void createAxWidget();
     int openDetector();
     void initDetector();
@@ -171,15 +180,18 @@ private:
     int contrastStep();
     void setSpeed(int speed);
 
-    QTimer timer;
-    //Scene *scene;
+
+
+
+   // QTimer timer;
+    Scene *scene;
+
     Panel *panel;
     //View *view;
     FileStoreServer fileServer;
 
     bool dualScanEnabled ;
     bool singleScanEnabled;
-    bool autoSaveEnabled;
     bool zoomEnabled;
     bool moveEnabled;
     bool contrastEnabled;
@@ -200,14 +212,32 @@ private:
     DTControl::IImageObject* axDisplayObject;
     DTControl::IImageObject* axImageObject;
 
+    //QCustomPlot* plot;
+    PlotWidget* plot;
+
+    QWizard* calibrationWiz;
+
     QString ip;
 
+    QTimer* timer;
+
 private slots:
+    void grabStatus();
     void ImageOpened();
     void SubFrameReady (int NumOfBlockLeft, int StartLine, int NumLines, int bLastBlock);
     void FrameReady(int);
     void Datalost(int num);
     void pixelInfo(int x, int y, int v);
+
+
+    //void fitToScene();
+    void calibrationProc (int id);
+    void updatePlot();
+    void gainChanged(bool b);
+    void offsetChanged(bool b);
+    void autoSaveChanged(bool b);
+        void timeroutHandle();
+
 };
 
 #endif // MAINWINDOW_H

@@ -9,16 +9,27 @@ class ImageData
 {
     char* imgdata;
     long  imgsize;
+    bool  islastone;
 public:
-    ImageData(void* src, size_t l)
+    ImageData(void* src, size_t size, bool last)
     {
-        imgdata = (char*)malloc(l);
-        memcpy(imgdata, src, l);
-        imgsize = l;
+        imgdata = (char*)malloc(size);
+        memcpy(imgdata, src, size);
+        imgsize = size;
+        islastone = last;
+    }
+
+    ~ImageData()
+    {
+        if(imgdata)
+            free(imgdata);
+        imgdata = NULL;
     }
 
     char* data() { return imgdata; }
     const long size() { return imgsize;}
+    bool islast() { return islastone;}
+
 };
 
 class FileStoreServer: public QThread
@@ -30,10 +41,13 @@ public:
     ~FileStoreServer();
     void append(ImageData* block, QString path, int sizelimit);
 
+    void stop();
+    void clearBuffer();
 protected:
     void run();
     void write(ImageData* block);
 private:
+    bool running;
     int id;
     QList<ImageData*> dataList;
     QReadWriteLock lock;

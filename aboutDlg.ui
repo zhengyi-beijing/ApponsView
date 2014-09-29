@@ -122,11 +122,11 @@
      <x>230</x>
      <y>240</y>
      <width>291</width>
-     <height>41</height>
+     <height>42</height>
     </rect>
    </property>
    <property name="text">
-    <string>www.apponsview.com</string>
+    <string>www.apponstec.com</string>
    </property>
    <property name="textFormat">
     <enum>Qt::AutoText</enum>

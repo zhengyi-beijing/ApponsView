@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'aboutDlg.ui'
 **
-** Created by: Qt User Interface Compiler version 5.2.0
+** Created by: Qt User Interface Compiler version 5.2.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -64,7 +64,7 @@ public:
         label_6->setGeometry(QRect(230, 190, 291, 41));
         label_7 = new QLabel(Dialog);
         label_7->setObjectName(QStringLiteral("label_7"));
-        label_7->setGeometry(QRect(230, 240, 291, 41));
+        label_7->setGeometry(QRect(230, 240, 291, 42));
         label_7->setTextFormat(Qt::AutoText);
 
         retranslateUi(Dialog);
@@ -83,7 +83,7 @@ public:
         label_4->setText(QApplication::translate("Dialog", "LDA Image Acquisation  System", 0));
         label_5->setText(QApplication::translate("Dialog", "Copyright 2013 Appons Technology", 0));
         label_6->setText(QApplication::translate("Dialog", "All Rights Reserved", 0));
-        label_7->setText(QApplication::translate("Dialog", "www.apponsview.com", 0));
+        label_7->setText(QApplication::translate("Dialog", "www.apponstec.com", 0));
     } // retranslateUi
 
 };

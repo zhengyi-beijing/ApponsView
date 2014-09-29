@@ -3,6 +3,7 @@
 #include <QDateTime>
 #include "QLogger.h"
 #include <QDebug>
+#include <QMessageBox>
 int MAX_SIZE = 2*1024 * 1024;
 FileStoreServer::FileStoreServer()
 {
@@ -58,8 +59,26 @@ void FileStoreServer::append(ImageData* block, QString path, int sizelimit)
     listEmpty.wakeAll();
 }
 
+void FileStoreServer::stop()
+{
+    listEmpty.wakeAll();
+    running = false;
+}
+
+void FileStoreServer::clearBuffer()
+{
+    qDebug()<< "waiting for lock\n";
+    lock.lockForWrite();
+    while (!dataList.isEmpty())
+        delete dataList.takeFirst();
+    lock.unlock();
+    closeFile();
+    qDebug()<< "free lock\n";
+}
+
 void FileStoreServer::run(){
-    while (1) {
+    running = true;
+    while (running) {
         if (dataList.size() == 0) {
             qDebug()<<"List Emty wait........";
             mutex.lock();
@@ -67,6 +86,8 @@ void FileStoreServer::run(){
             mutex.unlock();
             qDebug()<<"Image data waked **********======";
         }
+        if(dataList.isEmpty())
+            break;
         lock.lockForWrite();
             ImageData* block = dataList.first();
             dataList.removeFirst();
@@ -81,8 +102,10 @@ void FileStoreServer::closeFile()
 {
     QLogger::QLog_Trace("Appons", "File close");
     qDebug() << "File Close";
-    file->close();
-    delete file;
+    if(file) {
+        file->close();
+        delete file;
+    }
     file = NULL;
     fileSize = 0;
 }
@@ -93,7 +116,11 @@ void FileStoreServer::write(ImageData* block)
     qDebug()<< "Write Image Data";
     if (!file) {
         file = newFile();
-        file->open(QIODevice::WriteOnly|QIODevice::Append);
+        if(!file->open(QIODevice::WriteOnly)) {
+            qDebug()<<"Open writing file failed\n";
+            return;
+        };
+
     }
     if (file) {
         long size = block->size();
@@ -105,11 +132,13 @@ void FileStoreServer::write(ImageData* block)
             size -= writed;
         }
         fileSize += block->size();
-        qDebug()<<"fileSize is "<<fileSize;
-        qDebug()<<"MAX_SIZE is "<<singleFileSize;
-        if (fileSize > (singleFileSize-1024)) {
+//        qDebug()<<"fileSize is "<<fileSize;
+//        qDebug()<<"MAX_SIZE is "<<singleFileSize;
+//        if (fileSize > (singleFileSize-1024)) {
+//            closeFile();
+//        }
+        if (block->islast())
             closeFile();
-        }
     }
 
 }

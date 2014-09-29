@@ -37,15 +37,22 @@ public:
     QString autoSavePath();
     void setAutoSavePath(QString path);
 
-    int autoSaveSize();
-    void setAutoSaveSize (int size);
+    int autoSaveFrames();
+    void setAutoSaveFrames (int size);
 
+    void  setStartPixel(int start);
+    int  startPixel();
 
+    void  setEndPixel(int start);
+    int  endPixel();
+signals:
+    void normalize();
 private:
     Ui::SettingDialog *ui;
     void SettingDialog::LoadConfig();
 private slots:
     void browseBtn_click();
+    void normalize_click();
 };
 
 #endif // SETTINGDIALOG_H

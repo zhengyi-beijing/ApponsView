@@ -51,6 +51,7 @@
 #include <QResizeEvent>
 #include <QTimer>
 #include <QPoint>
+#include <QCheckBox>
 class View;
 class QGLWidget;
 
@@ -132,6 +133,7 @@ class Panel: public QFrame
     Q_OBJECT
 public:
     explicit Panel(const QString &name, QWidget *parent = 0);
+    void setProxyInfo(QString msg);
 signals:
     void openButton_click();
     void autoSaveEnable(bool enable);
@@ -146,12 +148,16 @@ signals:
     void rotateButton_click();
     void settingButton_click();
 
+    void calibrationButton_click();
+    void plotButton_click();
 public:
 
     PixelInfoLabel* pixelInfoLabel;
     FrameCountLabel* frameCountLabel;
     PanelButton *saveButton;
-
+    QCheckBox* autoSave ;
+    QCheckBox* gain;
+    QCheckBox* offset;
 public slots:
     void aboutButton_handle();
     void openButton_handle();
@@ -165,6 +171,8 @@ public slots:
     void dualScanButton_handle();
     void invertButton_handle();
     void rotateButton_handle();
+    void calibrationButton_handle();
+    void plotButton_handle();
 
 private:
     void setBackgroundImage();
@@ -172,7 +180,8 @@ private:
     PanelButton *aboutButton;
 //    QPushButton *aboutButton;
     PanelButton *openButton;
-    PanelButton *settingButton;
+    //PanelButton *settingButton;
+    QPushButton *settingButton;
     PanelButton *powerButton;
     PanelButton *contrastButton;
     PanelButton *autoContrastButton;
@@ -180,10 +189,17 @@ private:
     PanelButton *zoomButton;
     PanelButton *moveButton;
     PanelButton *singleScanButton;
-    PanelButton *dualScanButton;
+    //PanelButton *dualScanButton;
+    QPushButton *dualScanButton;
 
     PanelButton *invertButton;
     PanelButton *rotateButton;
+    //PanelButton *plotButton;
+    QPushButton *plotButton;
+    PanelButton *calButton;
+
+    QLabel *proxyInfo;
+
 
     DigitalClock* clock;
 
@@ -198,6 +214,7 @@ private:
     bool zoomEnabled;
     bool moveEnabled;
     bool contrastEnabled;
+
 };
 
 #endif // VIEW_H
