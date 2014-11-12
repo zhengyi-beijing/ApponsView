@@ -128,7 +128,7 @@ void GraphicsView::mouseMoveEvent(QMouseEvent *event)
     //    event->accept();
     }
 
-    qDebug() << __FUNCTION__<< event->pos();
+    //qDebug() << __FUNCTION__<< event->pos();
     QGraphicsView::mouseMoveEvent(event);
 }
 
@@ -171,16 +171,18 @@ void View::resetView()
     setupMatrix();
     graphicsView->ensureVisible(QRectF(0, 0, 0, 0));
     graphicsView->fitInView(graphicsView->scene()->itemsBoundingRect(),Qt::KeepAspectRatio);
+    QMatrix matrix = graphicsView->matrix();
+    scale = matrix.m11();
+    qDebug() <<  "scale is " << scale;
 }
 
 void View::setupMatrix()
 {
-    //QMatrix matrix;
-    //graphicsView->setMatrix(matrix);
     QMatrix matrix;
     matrix.scale(scale, scale);
     matrix.rotate(rotate);
     graphicsView->setMatrix(matrix);
+
 }
 
 
@@ -268,44 +270,52 @@ Panel::Panel(const QString &name, QWidget *parent)
 
     saveButton = new PanelButton(":/Appons/res/save.ico", 0, false);
 
-    //settingButton = new PanelButton(":/Appons/res/setting.ico");
-    settingButton = new QPushButton("Setup");
-    settingButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    settingButton->setStyleSheet("font-size: 18pt;");
-    powerButton = new PanelButton(":/Appons/res/exit.ico");
-    contrastButton = new PanelButton(":/Appons/res/contrast.ico", 0, true);
-    autoContrastButton = new PanelButton(":/Appons/res/autoContrast.ico");
+    settingButton = new PanelButton(":/Appons/res/setting.png");
+
+    powerButton = new PanelButton(":/Appons/res/power.png",0, true);
+    contrastButton = new PanelButton(":/Appons/res/contrast.png", 0, true);
+    autoContrastButton = new PanelButton(":/Appons/res/autoContrast.png");
     //Todo proxy Panel
-    zoomButton = new PanelButton(":/Appons/res/zoomIn.ico", 0, true);
+    zoomButton = new PanelButton(":/Appons/res/zoom.png", 0, true);
     moveButton = new PanelButton(":/Appons/res/move.ico", 0, true);
-    singleScanButton = new PanelButton(":/Appons/res/singleScan.ico", 0, true);
-    //dualScanButton = new PanelButton(":/Appons/res/dualScan.ico", 0, true);
-    dualScanButton = new QPushButton("Scan/Stop");
-    dualScanButton->setStyleSheet("font-size: 18pt;");
-    dualScanButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    dualScanButton->setCheckable(true);
+    singleScanButton = new PanelButton(":/Appons/res/singlePlay.png", 0, true);
+    dualScanButton = new PanelButton(":/Appons/res/dualPlay.png", 0, true);
+
     invertButton = new PanelButton(":/Appons/res/invert.ico", 0);
     rotateButton = new PanelButton(":/Appons/res/rotate.ico", 0, false);
 
-    //calButton = new PanelButton(":/Appons/res/calibraition.jpg");
-    //plotButton = new PanelButton(":/Appons/res/plot.jpg");
-    plotButton = new QPushButton("Plot/Image");
-    plotButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    plotButton->setStyleSheet("font-size: 18pt;");
+    calButton = new PanelButton(":/Appons/res/calibration.png");
+    plotButton = new PanelButton(":/Appons/res/plot.png");
+    fakeColorButton = new PanelButton(":/Appons/res/fakeColor.png", 0, false);
+    objectButton_1= new PanelButton(":/Appons/res/number1.png", 0, true);
+    objectButton_2= new PanelButton(":/Appons/res/number2.png", 0, true);
 
-    xrayOnButton = new QPushButton("X-ray On/OFF");
-    xrayOnButton ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    xrayOnButton ->setStyleSheet("font-size: 18pt;");
-    xrayOnButton->setCheckable(true);
 
-    objectButton = new QPushButton("ObjectScan");
-    objectButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    objectButton->setStyleSheet("font-size: 18pt;");
-    objectButton->setCheckable(true);
+//    objectButton = new QPushButton("ObjectScan");
+//    objectButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+//    objectButton->setStyleSheet("font-size: 12pt;");
+//    objectButton->setCheckable(true);
 
-    calButton = new QPushButton("Calibraton");
-    calButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    calButton->setStyleSheet("font-size: 18pt;");
+
+    //settingButton = new QPushButton("Setup");
+    //settingButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //settingButton->setStyleSheet("font-size: 18pt;");
+    //    xrayOnButton = new QPushButton("X-ray On/OFF");
+//    xrayOnButton ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+//    xrayOnButton ->setStyleSheet("font-size: 12pt;");
+//    xrayOnButton->setCheckable(true);
+
+    //plotButton = new QPushButton("Plot/Image");
+    //plotButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //plotButton->setStyleSheet("font-size: 18pt;");
+
+    //dualScanButton = new QPushButton("Scan/Stop");
+    //dualScanButton->setStyleSheet("font-size: 18pt;");
+    //dualScanButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //dualScanButton->setCheckable(true);
+//    calButton = new QPushButton("Calibraton");
+//    calButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+//    calButton->setStyleSheet("font-size: 18pt;");
 
     clock = new DigitalClock(this);
     frameCountLabel = new FrameCountLabel(this);
@@ -317,34 +327,49 @@ Panel::Panel(const QString &name, QWidget *parent)
     xrayStrength->setSingleStep(1);
     xrayStrength->setPageStep(1);
 
-    QVBoxLayout* panelLayout = new QVBoxLayout;
-    panelLayout->addWidget(dualScanButton);
-    panelLayout->addWidget(settingButton);
-    panelLayout->addWidget(plotButton);
-    panelLayout->addWidget(xrayOnButton);
-    panelLayout->addWidget(xrayStrength);
-    panelLayout->addWidget(objectButton);
-    panelLayout->addWidget(calButton);
-//    QGridLayout *panelLayout = new QGridLayout;
-//    panelLayout->addWidget(openButton, 0,0);
-//    panelLayout->addWidget(saveButton, 0,1);
-//    panelLayout->addWidget(settingButton, 1,0);
-//    panelLayout->addWidget(powerButton, 1,1);
-//    panelLayout->addWidget(contrastButton, 2,0);
-//    panelLayout->addWidget(autoContrastButton, 2,1);
-//    panelLayout->addWidget(zoomButton, 3,0);
-//    panelLayout->addWidget(moveButton, 3,1);
-//    panelLayout->addWidget(invertButton, 4,0);
-//    panelLayout->addWidget(rotateButton, 4,1);
-//    panelLayout->addWidget(singleScanButton, 5,0);
-//    panelLayout->addWidget(dualScanButton, 5,1);
-//    panelLayout->addWidget(calButton, 6,0);
-//    panelLayout->addWidget(plotButton, 6,1);
+    offsetEnable = new QCheckBox("Offset");
+    offsetEnable->setStyleSheet("font-size: 18pt;");
+    gainEnable = new QCheckBox("Gain");
+    gainEnable->setStyleSheet("font-size: 18pt;");
+    arrayEnable = new QCheckBox("Array");
+    arrayEnable->setStyleSheet("font-size: 18pt;");
+
+
+
+    QGridLayout *panelLayout = new QGridLayout;
+    //panelLayout->addWidget(openButton, 0,0);
+    //panelLayout->addWidget(saveButton, 0,1);
+
+    panelLayout->addWidget(contrastButton, 2,0);
+    panelLayout->addWidget(autoContrastButton, 2,1);
+    panelLayout->addWidget(zoomButton, 3,0);
+    //panelLayout->addWidget(moveButton, 3,1);
+    panelLayout->addWidget(plotButton, 3,1);
+    panelLayout->addWidget(invertButton, 4,0);
+    panelLayout->addWidget(rotateButton, 4,1);
+    panelLayout->addWidget(singleScanButton, 5,0);
+    panelLayout->addWidget(dualScanButton, 5,1);
+    panelLayout->addWidget(calButton, 6,0);
+    panelLayout->addWidget(fakeColorButton, 6,1);
+    panelLayout->addWidget(objectButton_1, 7,0);
+    panelLayout->addWidget(objectButton_2, 7,1);
+    panelLayout->addWidget(settingButton, 8,0);
+    panelLayout->addWidget(powerButton, 8,1);
+
+    QVBoxLayout* buttonLayout = new QVBoxLayout;
+    //buttonLayout->addWidget(xrayOnButton);
+    buttonLayout->addWidget(xrayStrength);
+    buttonLayout->addWidget(offsetEnable);
+    buttonLayout->addWidget(gainEnable);
+    buttonLayout->addWidget(arrayEnable);
+    //buttonLayout->addWidget(objectButton);
+    //buttonLayout->addWidget(calButton);
+
 
     QVBoxLayout *vLayout = new QVBoxLayout;
-    vLayout->addWidget(aboutButton);
+    //vLayout->addWidget(aboutButton);
     vLayout->addLayout(panelLayout);
-
+    vLayout->addLayout(buttonLayout);
     vLayout->addStretch();
     vLayout->addWidget(pixelInfoLabel);
     vLayout->addWidget(frameCountLabel);
@@ -367,17 +392,8 @@ void Panel::setBackgroundImage()
 {
     setAutoFillBackground(true);
     //setStyleSheet("background-image: url(:Appons/res/background.bmp)}" );
-    setStyleSheet("background-color: rgb(34,139,34)}" );
-/*
-    QPalette palette;
-    palette.setColor(QPalette::Background, QColor(192,253,123));
-    QSize size = this->size();
-    //QPixmap img(":Appons/res/background.bmp");
-    //img.scaled(size);
-    //palette.setBrush(QPalette::Background, QBrush(img));
-    palette.setBrush(QPalette::Background, QBrush(QColor(Qt::darkGreen)));
-    setPalette(palette);
-    */
+    setStyleSheet("background-color: rgb(134,134,134)}" );
+
 }
 
 void Panel::aboutButton_handle()

@@ -27,6 +27,20 @@
         <file>res/dm-web.png</file>
         <file>res/about-logo-grey.png</file>
         <file>res/calibraition.jpg</file>
-        <file>res/plot.jpg</file>
+        <file>res/calibration.png</file>
+        <file>res/dualPlay.jpg</file>
+        <file>res/play.png</file>
+        <file>res/plot.jpeg</file>
+        <file>res/dualPlay.png</file>
+        <file>res/plot.png</file>
+        <file>res/singlePlay.png</file>
+        <file>res/setting.png</file>
+        <file>res/zoom.png</file>
+        <file>res/power.png</file>
+        <file>res/contrast.png</file>
+        <file>res/autoContrast.png</file>
+        <file>res/fakeColor.png</file>
+        <file>res/number1.png</file>
+        <file>res/number2.png</file>
     </qresource>
 </RCC>

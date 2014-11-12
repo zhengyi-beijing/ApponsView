@@ -47,6 +47,7 @@
 #include <QToolButton>
 #include "digitalclock.h"
 #include <QLabel>
+#include <QCheckBox>
 #include <QPushButton>
 #include <QResizeEvent>
 #include <QTimer>
@@ -154,9 +155,15 @@ public:
     PixelInfoLabel* pixelInfoLabel;
     FrameCountLabel* frameCountLabel;
     PanelButton *saveButton;
-    QPushButton *xrayOnButton;
-    QPushButton *objectButton;
+    //QPushButton *xrayOnButton;
+    PanelButton *calButton;
     QSlider*   xrayStrength;
+    QCheckBox *offsetEnable;
+    QCheckBox *gainEnable;
+    QCheckBox *arrayEnable;
+    PanelButton *powerButton;
+    PanelButton *objectButton_1;
+    PanelButton *objectButton_2;
 
 public slots:
     void aboutButton_handle();
@@ -181,8 +188,7 @@ private:
 //    QPushButton *aboutButton;
     PanelButton *openButton;
     //PanelButton *settingButton;
-    QPushButton *settingButton;
-    PanelButton *powerButton;
+    PanelButton *settingButton;
     PanelButton *contrastButton;
     PanelButton *autoContrastButton;
     //Todo proxy Panel
@@ -190,14 +196,15 @@ private:
     PanelButton *moveButton;
     PanelButton *singleScanButton;
     //PanelButton *dualScanButton;
-    QPushButton *dualScanButton;
+    PanelButton *dualScanButton;
 
     PanelButton *invertButton;
     PanelButton *rotateButton;
     //PanelButton *plotButton;
-    QPushButton *plotButton;
+    PanelButton *plotButton;
 //    PanelButton *calButton;
-    QPushButton *calButton;
+    PanelButton *fakeColorButton;
+
 
 
     DigitalClock* clock;

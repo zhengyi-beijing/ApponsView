@@ -162,7 +162,8 @@ public slots:
     void switchDisplay();
     void xrayOn();
     void xrayStrengthChange(int value);
-    void objectOn();
+    void object_1_On();
+    void object_2_On();
 protected:
     void resizeEvent(QResizeEvent * event);
     void showEvent (QShowEvent * event );
@@ -181,6 +182,7 @@ private:
     void setSpeed(int speed);
     void setXray(int value);
 
+    QTimer refreshTimer;
     QTimer timer;
     Scene *scene;
     Panel *panel;
@@ -227,7 +229,10 @@ private slots:
     void fitToScene();
     void calibrationProc (int id);
     void updatePlot();
-    void arrayCalibraion();
+    void arrayCalibration();
+    void offsetEnableChange(int state);
+    void gainEnableChange(int state);
+    void arrayEnableChange(int state);
 };
 
 #endif // MAINWINDOW_H

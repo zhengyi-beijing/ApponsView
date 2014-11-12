@@ -51,7 +51,7 @@
 #include <QFileDialog>
 #include <QWizard>
 #include <QWizardPage>
-
+#include <QProgressDialog>
 ApponsSetting MainWindow::setting;
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
@@ -73,9 +73,10 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(1);
     layout->setSpacing(1);
-   // layout->addWidget(view);
+    layout->addWidget(view);
     layout->addWidget(plot);
-    layout->addWidget(axDisplay);
+
+    //layout->addWidget(axDisplay);
     layout->addWidget(panel);
     setLayout(layout);
 
@@ -100,21 +101,8 @@ void MainWindow::populateScene()
 {
     createAxWidget();
     initAxWidget();
-    plot->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    plot->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Expanding);
     plot->setMinimumSize(512,512);
-
-    /*
-    scene = new Scene;
-    axDisplay->setParent(NULL);
-    proxy = new Proxy();
-    proxy->setWidget(axDisplay);
-    //proxy->setWidget(new QPushButton(NULL));
-    proxy->setFlags(QGraphicsItem::ItemIsMovable|QGraphicsItem::ItemIsSelectable);
-    scene->addItem(proxy);
-    //proxy = scene->addWidget(axDisplay);
-    //scene->setSceneRect(scene->itemsBoundingRect());
-    qDebug()<<"scene rect is "<<scene->sceneRect();
-    qDebug()<<"proxy rect is "<<proxy->rect();
 
     //axDisplay->show();
     axDisplay->setVisible(true);
@@ -123,13 +111,33 @@ void MainWindow::populateScene()
     axDisplay->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     qDebug()<<"Display size is "<<axDisplay->rect();
 
+    axDisplay->setParent(NULL);
+    proxy = new Proxy();
+    proxy->setWidget(axDisplay);
+    proxy->setFlags(QGraphicsItem::ItemIsMovable|QGraphicsItem::ItemIsSelectable);
+    //proxy->setPos(500,500);
+
+
+    scene = new Scene;
+    scene->addItem(proxy);
+
+
+    scene->setSceneRect(scene->itemsBoundingRect());
+    qDebug()<<"scene rect is "<<scene->sceneRect();
+    qDebug()<<"proxy rect is "<<proxy->rect();
+
+
+
 
     view = new View("X-ray view");
-    view->view()->setScene(scene);
     view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     view->setMinimumSize(512, 512);
+
+    view->view()->setScene(scene);
+
+    scene->update();
     view->resetView();
-    */
+
 }
 
 void MainWindow::widgetMoveto(QPoint dpos)
@@ -166,6 +174,8 @@ void MainWindow::fitToScene()
 
 void MainWindow::showEvent(QShowEvent* event)
 {
+    scene->update();
+   QTimer::singleShot(50,this,SLOT(fitToScene()));
     //fitToScene();
 }
 
@@ -174,12 +184,13 @@ void MainWindow::switchDisplay()
     if(!plot->isVisible()) {
         plot->setVisible(true);
         //view->setVisible(false);
-        axDisplay->setVisible(false);
+        //axDisplay->setVisible(false);
     } else {
         plot->setVisible(false);
         //view->setVisible(true);
-        axDisplay->setVisible(true);
+        //axDisplay->setVisible(true);
     }
+    fitToScene();
 
 
 }
@@ -241,16 +252,16 @@ void MainWindow::FrameReady(int)
     updatePlot();
     if (setting.autoSave()) {
 
-    int startPixel = setting.startPixel();
-    int endPixel = setting.endPixel();
+        int startPixel = setting.startPixel();
+        int endPixel = setting.endPixel();
 
-    if((endPixel > axImageObject->Width()) || (endPixel <= 0))
-        endPixel = axImageObject->Width();
-    if(startPixel >= endPixel)
-        startPixel = 0;
-    int width = endPixel-startPixel+1;
-    int bytesPerPixel = axImageObject->BytesPerPixel();
-    int size = width*axImageObject->Height()*bytesPerPixel;
+        if((endPixel > axImageObject->Width()) || (endPixel <= 0))
+            endPixel = axImageObject->Width();
+        if(startPixel >= endPixel)
+            startPixel = 0;
+        int width = endPixel-startPixel+1;
+        int bytesPerPixel = axImageObject->BytesPerPixel();
+        int size = width*axImageObject->Height()*bytesPerPixel;
         ImageData* data = NULL;
         if(framecount%framePerFile)
             data = new ImageData((char*)(axImageObject->ImageDataAddress()+startPixel*bytesPerPixel),size, false);
@@ -280,7 +291,7 @@ void MainWindow::createAxWidget()
     //plot = new QCustomPlot(this);
     plot = new PlotWidget(this);
     plot->setRange(0, setting.endPixel()-setting.startPixel());
-    plot->setVisible(true);
+    plot->setVisible(false);
 }
 
 void MainWindow::initAxWidget()
@@ -320,9 +331,7 @@ void MainWindow::initAxWidget()
         axDisplay->SetDataSource(imgsrcHandle);
     }
 
-    //QObject::connect(axDisplay, SIGNAL(MouseMove(int, int, int)), this->panel->pixelInfoLabel, SLOT(setInfo(int, int, int)));
     QObject::connect(axDisplay, SIGNAL(MouseMove(int, int, int)), this, SLOT(pixelInfo(int, int, int)));
-    //QObject::connect(axDisplay,&DTControl::CDTDisplay::MouseMove, this->panel->pixelInfoLabel, PixelInfoLabel::setInfo);
     qDebug()<<"Connected mousemove";
     QObject::connect(axImage, SIGNAL(FrameReady(int)), this, SLOT(FrameReady(int)));
     QObject::connect(axImage, SIGNAL(Datalost(int)), this, SLOT(Datalost(int)));
@@ -398,8 +407,7 @@ int MainWindow::openDetector()
 void MainWindow::connectSignals()
 {
     QObject::connect(panel, &Panel::singleScanEnable, this, &MainWindow::singleScanEnable);
-    QObject::connect(panel, &Panel::dualScanEnable, this, &MainWindow::singleScanEnable);
-    //QObject::connect(panel, &Panel::dualScanEnable, this, &MainWindow::dualScanEnable);
+    QObject::connect(panel, &Panel::dualScanEnable, this, &MainWindow::dualScanEnable);
     QObject::connect(panel, &Panel::settingButton_click, this, &MainWindow::setting_clicked);
     QObject::connect(panel, &Panel::openButton_click, this, &MainWindow::open_clicked);
     QObject::connect(panel->saveButton, &QToolButton::clicked, this, &MainWindow::saveButtonClick);
@@ -411,11 +419,17 @@ void MainWindow::connectSignals()
     QObject::connect(panel, &Panel::invertButton_click, this, &MainWindow::invert_click);
     QObject::connect(panel, &Panel::rotateButton_click, this, &MainWindow::rotate_click);
 
-    QObject::connect(panel, &Panel::calibrationButton_click, this, &MainWindow::arrayCalibraion);
+    QObject::connect(panel, &Panel::calibrationButton_click, this, &MainWindow::arrayCalibration);
     QObject::connect(panel, &Panel::plotButton_click, this, &MainWindow::switchDisplay);
-    QObject::connect(panel->xrayOnButton, &QPushButton::clicked, this, &MainWindow::xrayOn);
-    QObject::connect(panel->objectButton, &QPushButton::clicked, this, &MainWindow::objectOn);
+    QObject::connect(panel, &Panel::powerButton_click, this, &MainWindow::xrayOn);
+
+    QObject::connect(panel->objectButton_1, &PanelButton::clicked, this, &MainWindow::object_1_On);
+    QObject::connect(panel->objectButton_2, &PanelButton::clicked, this, &MainWindow::object_2_On);
     QObject::connect(panel->xrayStrength, &QSlider::valueChanged, this, &MainWindow::xrayStrengthChange);
+
+    QObject::connect(panel->offsetEnable, &QCheckBox::stateChanged, this, &MainWindow::offsetEnableChange);
+    QObject::connect(panel->gainEnable, &QCheckBox::stateChanged, this, &MainWindow::gainEnableChange);
+    QObject::connect(panel->arrayEnable, &QCheckBox::stateChanged, this, &MainWindow::arrayEnableChange);
 
 //    QObject::connect(view->view(), &GraphicsView::increaseContrastEnd, this, &MainWindow::increaseContrastEnd);
 //    QObject::connect(view->view(), &GraphicsView::decreaseContrastEnd, this, &MainWindow::decreaseContrastEnd);
@@ -426,11 +440,49 @@ void MainWindow::connectSignals()
 
     QObject::connect(&setting, &ApponsSetting::normalize, this, &MainWindow::calibration_click);
 }
+
+void MainWindow::offsetEnableChange(int state)
+{
+    if(state == 0) {
+        axImage->SetOffsetEnable(false);
+    }
+    else {
+        axImage->SetOffsetEnable(true);
+        panel->arrayEnable->setChecked(false);
+    }
+
+}
+
+void MainWindow::gainEnableChange(int state)
+{
+    if(state == 0) {
+        axImage->SetGainEnable(false);
+    }
+    else {
+        axImage->SetGainEnable(true);
+        panel->arrayEnable->setChecked(false);
+    }
+
+}
+
+void MainWindow::arrayEnableChange(int state)
+{
+    if(state == 0)
+        axImage->setArrayCorrectionEnable(false);
+    else {
+        axImage->setArrayCorrectionEnable(true);
+        panel->gainEnable->setChecked(false);
+        panel->offsetEnable->setChecked(false);
+    }
+
+}
+
 void MainWindow::xrayStrengthChange(int value)
 {
     QString rt;
     QString cmd;
-    if (panel->xrayOnButton->isChecked()){
+    //if (panel->xrayOnButton->isChecked()){
+    if (panel->powerButton->isChecked()){
         cmd.sprintf("[XO,W,%d]", value);
         if(axDetector->IsOpened()) {
             axDetector->SendCommand(cmd, rt);
@@ -439,13 +491,30 @@ void MainWindow::xrayStrengthChange(int value)
 
 }
 
-void MainWindow::objectOn()
+void MainWindow::object_1_On()
 {
     QString rt;
     QString cmd;
     int value = panel->xrayStrength->value();
-    if (panel->objectButton->isChecked()) {
-        cmd.sprintf("[OS,W,%d]", value);
+    if (panel->objectButton_1->isChecked()) {
+        cmd.sprintf("[OS,W,%d]", 0);
+        panel->objectButton_2->setChecked(false);
+    } else {
+        cmd.sprintf("[XO,W,%d]", value);
+    }
+    if(axDetector->IsOpened()) {
+            axDetector->SendCommand(cmd, rt);
+    }
+
+}
+void MainWindow::object_2_On()
+{
+    QString rt;
+    QString cmd;
+    int value = panel->xrayStrength->value();
+    if (panel->objectButton_2->isChecked()) {
+        panel->objectButton_1->setChecked(false);
+        cmd.sprintf("[OS,W,%d]", 1);
     } else {
         cmd.sprintf("[XO,W,%d]", value);
     }
@@ -459,8 +528,9 @@ void MainWindow::xrayOn()
 {
     QString rt;
     QString cmd;
+    qDebug() << "x-ray on";
     int value = panel->xrayStrength->value();
-    if (panel->xrayOnButton->isChecked()) {
+    if (panel->powerButton->isChecked()) {
         cmd.sprintf("[XO,W,%d]", value);
     } else {
         cmd.sprintf("[XO,W,%d]", 0);
@@ -474,7 +544,7 @@ void MainWindow::stop()
 {
     axImage->Stop();
     grabing = false;
-    //timer.stop();
+    refreshTimer.stop();
     QTimer::singleShot(1000, this, SLOT(grabStatus()));
 }
 
@@ -506,9 +576,9 @@ void MainWindow::scan()
     framecount = 0;
     lostLineCount = 0;
     axImage->Grab(0);
-    //timer.setInterval(17);
-    //QObject::connect(&timer,SIGNAL(timeout()), scene, SLOT(update()));
-    //timer.start();
+    refreshTimer.setInterval(17);
+    QObject::connect(&refreshTimer,SIGNAL(timeout()), scene, SLOT(update()));
+    refreshTimer.start();
     grabing = true;
     QTimer::singleShot(1000, this, SLOT(grabStatus()));
 }
@@ -607,7 +677,8 @@ void MainWindow::saveButtonClick()
 void MainWindow::power_clicked()
 {
     //exit
-    QApplication::quit();
+    //QApplication::quit();
+    xrayOn();
 }
 
 
@@ -656,12 +727,10 @@ void MainWindow::autoContrast_clicked()
     scene->update();
     view->view()->viewport()->update();
 }
-
 void MainWindow::zoomEnable(bool enable)
 {
     zoomEnabled = enable;
     if(zoomEnabled) {
-      //  view->zoomIn();
         view->view()->setMouseOpMode(GraphicsView::Zoom);
     } else {
         view->view()->setMouseOpMode(GraphicsView::None);
@@ -732,18 +801,28 @@ void MainWindow::calibration_click()
     calibrationWiz->show();
 }
 
-void MainWindow::arrayCalibraion()
+void MainWindow::arrayCalibration()
 {
     int i= 0;
+    QProgressDialog progress ("Make correction", "Abort", 0, 10, this);
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setValue(0);
     axImage->SetOffsetEnable(false);
     axImage->SetGainEnable(false);
     axImage->setArrayCorrectionEnable(false);
     for(i = 0; i<9; i++)
     {
+        if(progress.wasCanceled())
+            break;
+        progress.setValue(i+1);
         setXray(i);
         axImage->GainCalSnap();
+
     }
     axImage->setArrayCorrectionEnable(true);
+    panel->arrayEnable->setChecked(true);
+    panel->offsetEnable->setChecked(false);
+    panel->gainEnable->setChecked(false);
 
 }
 
@@ -773,6 +852,9 @@ void MainWindow::calibrationProc (int id)
         //finish
 
     }
+    panel->offsetEnable->setChecked(true);
+    panel->gainEnable->setChecked(true);
+    panel->arrayEnable->setChecked(false);
 }
 
 void MainWindow::initCalibrationWiz ()
